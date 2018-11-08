@@ -1,0 +1,35 @@
+﻿  
+
+@model IEnumerable<ASG.Models.BlogPost>
+
+
+<!-- Recent entries widget-->
+
+
+
+<div>
+
+
+
+    <!-- Recent portfolio widget-->
+    <aside class="widget widget_recent_works">
+        <div class="widget-title">Recent Portfolio</div>
+        <ul>
+            @foreach (var images in Model)
+            {
+              
+                <li><a href= "@Url.Action("Details", "BlogPosts", new { slug = images.Slug })"><img src="@Url.Content(images.MediaURL)" style="height:60px; width:auto;"alt=""></a></li>}
+         
+        </ul>
+    </aside>
+
+    <!-- Twitter widget-->
+    <div class="widget twitter-feed-widget">
+        <div class="widget-title">Twitter Feed</div>
+        <div class="twitter-feed" data-twitter="345170787868762112" data-number="2"></div>
+    </div>
+
+    <!-- Tags widget-->
+
+    @*<p style=""><br /><br />Administrator Login</p>*@
+</div>

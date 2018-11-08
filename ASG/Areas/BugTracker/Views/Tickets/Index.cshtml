@@ -1,0 +1,276 @@
+﻿@model IEnumerable<ASG.Areas.BugTracker.Models.Ticket>
+
+@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />  
+</head>
+
+<body  class="header-side in">
+    <div class="page-content" style="padding-bottom:200px">
+        <section class="page-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 header-inline">
+                        <div class="header-inline-content">
+                            <h2 class="page-title"></h2>
+                        </div>
+                        <div class="header-inline-content">
+                            <ul class="breadcrumb">
+                                <li class="button"><a href="@Url.Action("Index","Home",  new { area = "BugTracker" })" class="btn btn-dark-blue">Home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End of Page Header -->
+        <!-- Flot Basic -->
+        <div class="section-admin container-fluid">
+            <div class="row admin text-center">  
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-blue text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_ribbon color-dark-blue"></span>
+                                <span class="counter-extend"></span><span class="counter">
+                                    @ViewBag.projectcount
+                                </span>
+                                <h5>
+                                    Open Projects
+                                    @ViewBag.projectmessage
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-dark-blue text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_tags"></span>
+                                <span class="counter">@ViewBag.ticketcount</span>
+                                <h5>
+                                    Open Tickets
+                                    @ViewBag.message
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-purple text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_cart"></span>
+                                <span class="counter">@ViewBag.urgentticketcount</span>
+                                <h5>
+                                    Urgent Tickets
+                                    @ViewBag.urgentmessage
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-dark-green text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_chat color-green"></span>
+                                <span class="counter">@ViewBag.unassignedticketcount</span>
+                                <h5>@ViewBag.unassignedmessage</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div class="row">
+                <div class="well" style="border:none">
+                    <br />
+                    <h2 style="font-family:'Lato',sans-serif;">Tickets</h2><br />
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin"))
+                    {
+                        <p> Below you will find a list of All Tickets and the corresponding fields for each ticket.</p><p> To view only the Tickets you are assigned to, click My Tickets.</p><hr />
+                        <a href="@Url.Action("MyTickets", "Tickets", new { area = "BugTracker" })" class="btn btn-dark-blue" id="btn">My Tickets</a>
+                    }
+                    else if (User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                    {
+                        <p>Below you will find a list of All Tickets from All Projects you are assigned to.  To view only the Tickets assigned to you, click My Tickets.</p><hr />
+                        <a href="@Url.Action("MyTickets", "Tickets", new { area = "BugTracker" })" class="btn btn-dark-blue" id="btn">My Tickets</a>
+                    }
+                    else if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                    {
+                        <p>Below you will find a list of all Tickets from projects that you are assigned to. </p><br />
+                    }
+                    @{ var temporary = TempData["message"];}
+                    @temporary
+                    <hr />    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="section-admin container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="admin-content">
+                                <div class="table-responsive">
+
+                                    <table id="example1" class="table table-theme table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Ticket Priority</th>
+                                                <th>Ticket Name</th>
+                                                <th>Ticket Assigned To</th>
+                                                <th>Ticket Status</th>
+                                                <th>Project</th>
+                                                <th>Ticket Submitter</th>
+                                                <th>Ticket Created Date</th>
+                                                <th>Ticket Attachments</th>
+                                                @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                                {
+                                                    <th>Assign Ticket</th>
+                                                }                                              
+                                                <th>Actions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>                                     
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var ticket in Model)
+                                            {            
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelItem => ticket.TicketPriority.Name)</td>
+                                                    <td>                                                       
+                                                        @Html.DisplayFor(modelItem => ticket.Title)    
+                                                    </td>
+                                                    <td>@Html.DisplayFor(modelItem => ticket.AssignedToUser.DisplayName)</td>   
+                                                    <td>@Html.DisplayFor(modelItem => ticket.TicketStatus.Name)</td>
+                                                    <td><a href="@Url.Action("Details", "Projects", new { area = "BugTracker", id = ticket.Project.Id })"> @Html.DisplayFor(modelItem => ticket.Project.Name)</a></td>
+                                                    <td>@Html.DisplayFor(modelItem => ticket.SubmitterUser.FirstName) @Html.DisplayFor(modelItem => ticket.SubmitterUser.LastName)</td>
+                                                    <td>@Html.DisplayFor(modelItem => ticket.CreatedDate)</td>
+                                                    <td>   
+                                                        @foreach (var ticketattachment in ticket.TicketAttachments)
+                                                        {
+                                                            string filename = ticketattachment.FilePath.ToString();
+                                                            string word = ".docx";
+                                                            string excel = ".xls";
+                                                            string pdf = ".pdf";
+                                                            string jpeg = ".jpeg";
+                                                            string bmp = ".bmp";
+                                                            string gif = ".gif";
+                                                            string zip = ".zip";
+                                                            string rar = ".rar";
+                                                            if (filename.Contains(word))
+                                                            {
+                                                                <span class="fa fa-file-word-o " aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(excel))
+                                                            {
+                                                                <span class="fa fa-file-excel-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(pdf))
+                                                            {
+                                                                <span class="fa fa-file-pdf-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(jpeg))
+                                                            {
+                                                                <span class="fa fa-file-image-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(bmp))
+                                                            {
+                                                                <span class="fa fa-file-image-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(gif))
+                                                            {
+                                                                <span class="fa fa-file-image-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(zip))
+                                                            {
+                                                                <span class="icon-paperclip" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }
+                                                            else if (filename.Contains(rar))
+                                                            {
+                                                                <span class="icon-paperclip" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                            }    
+                                                        }
+                                                    </td>
+                                                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                                    {
+                                                        <td> @Html.ActionLink("Assign Ticket", "TicketAssign", new { area = "BugTracker", id = ticket.Id })</td>
+                                                    }                                                  
+                                                    @{ var projectId = ticket.Project.Id;}
+                                                    @{ var userId = ticket.SubmitterUserId;}
+                                                    <td>
+                                                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                                        {
+                                                            <a href="@Url.Action("Edit", "Tickets", new { area = "BugTracker", id = ticket.Id, UserId = userId, ProjectId = projectId })"><i class="fa fa-pencil-square-o" style="font-size:20px" aria-hidden="true" title="Edit"></i></a><span>&nbsp; &nbsp; &nbsp;</span>
+                                                        }
+                                                        else if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                                                        {
+                                                            if (ticket.AssignedToUserId == User.Identity.GetUserId())
+                                                            {
+                                                                <a href="@Url.Action("Edit", "Tickets", new { area = "BugTracker", id = ticket.Id, UserId = userId, ProjectId = projectId })"><i class="fa fa-pencil-square-o" style="font-size:20px" aria-hidden="true" title="Edit"></i></a><span>&nbsp; &nbsp; &nbsp;</span>
+                                                            }
+                                                        }
+                                                        else if (User.IsInRole("Submitter"))
+                                                        {
+                                                            if (ticket.SubmitterUserId == User.Identity.GetUserId())
+                                                            {
+                                                                <a href="@Url.Action("Edit", "Tickets", new { area = "BugTracker", id = ticket.Id, UserId = userId, ProjectId = projectId })"><i class="fa fa-pencil-square-o" style="font-size:20px" aria-hidden="true" title="Edit"></i></a><span>&nbsp; &nbsp; &nbsp;</span>
+                                                            }
+                                                        }
+                                                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                                        {
+                                                            <a href="@Url.Action("Archive", "Tickets", new { area = "BugTracker", id = ticket.Id })"><i class="fa fa-times" style="font-size:20px" aria-hidden="true" title="Close Ticket">&nbsp;</i></a>
+                                                        }
+                                                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                                        {
+                                                            <a href="@Url.Action("Details", "Tickets", new { area = "BugTracker", id = ticket.Id })"><i class="fa fa-question-circle-o" style="font-size:20px" aria-hidden="true" title="Details"></i></a>
+                                                        }
+                                                        else if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                                                        {
+                                                            if (ticket.AssignedToUserId == User.Identity.GetUserId())
+                                                            {
+                                                                <a href="@Url.Action("Details", "Tickets", new { area = "BugTracker", id = ticket.Id })"><i class="fa fa-question-circle-o" style="font-size:20px" aria-hidden="true" title="Details"></i></a>
+                                                            }
+                                                        }
+                                                        else if (User.IsInRole("Submitter"))
+                                                        {
+                                                            if (ticket.SubmitterUserId == User.Identity.GetUserId())
+                                                            {
+                                                                <a href="@Url.Action("Details", "Tickets", new {  area = "BugTracker", id = ticket.Id })"><i class="fa fa-question-circle-o" style="font-size:20px" aria-hidden="true" title="Details"></i></a>
+                                                            }
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- End of Page Content -->
+        <!-- Footer -->
+
+    </div>
+        @section scripts {
+            <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/jquery.dataTables.min.js"></script>
+            <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/dataTables.bootstrap.min.js"></script>         
+
+            <!-- Export functionality -->
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+            <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+            <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+            <!-- End of Export functionality -->
+
+            <script>        
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            </script>
+        }
+</body>
+</html>

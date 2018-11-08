@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    var trimmedName = "";
+    var name = User.Identity.GetUserName();
+    if (!String.IsNullOrEmpty(name))
+    {
+        int index = name.IndexOf("@");
+        if (index > 0)
+        {
+            trimmedName = name.Substring(0, index);
+        }
+    }
+    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-left" style="text-align:left">
+            <li>
+                @Html.ActionLink("Hello " + trimmedName + "!", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a onclick="openRegisterModal()">Register</a></li>
+        <li><a onclick="openLoginModal()">Login</a></li>
+    </ul>
+}

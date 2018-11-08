@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ASG.Areas.BugTracker.Models.Ticket>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page-content" style="padding-bottom:200px">
+        <section class="page-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 header-inline">
+                        <div class="header-inline-content">
+                        </div>
+                        <div class="header-inline-content">
+                            <ul class="breadcrumb">                               
+                                <li class="button"><a href="@Url.Action("Index","Home")" class="btn btn-dark-blue">Home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End of Page Header -->
+        <!-- Flot Basic -->
+        <div class="admin-content">
+            <div class="row">
+                <div class="well" style="border:none">
+                    <br />
+                    <h2 style="font-family:'Lato',sans-serif;">Your Closed Tickets</h2><br />
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                    {
+                        <p>Below you will find a list of Tickets you were assigned to that are now closed.</p><br />                      
+                    }                  
+                    <hr />
+                    <a href="@Url.Action("Index", "Projects")" class="btn btn-dark-blue">Back to Index</a>
+                </div>
+            </div> 
+        </div>
+        <div class="section-admin container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="admin-content">
+                        <div class="table-responsive">                          
+                            <table id="example1" class="table table-theme table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket Priority</th>
+                                        <th>Ticket Name</th>
+                                        <th>Ticket Description</th>
+                                        <th>Ticket Status</th>
+                                        <th>Ticket Closed Date</th>
+                                        <th>Ticket Closed By</th>
+                                        <th>Ticket Attachments</th>
+                                        <th>Ticket Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ticket in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketPriority.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.Title)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.Description)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketStatus.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketHistories.FirstOrDefault(th => th.NewValue == "Archived").DateChanged)  </td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketHistories.FirstOrDefault(th => th.NewValue == "Archived").User.FirstName) &nbsp; @Html.DisplayFor(modelItem => ticket.TicketHistories.FirstOrDefault(th => th.NewValue == "Archived").User.LastName) </td>
+                                            <td>
+                                                <i class="fa fa-file-excel-o" aria-hidden="true"></i><i class="fa fa-file-pdf-o" aria-hidden="true"></i><i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-file-word-o" aria-hidden="true"></i><i class="fa fa-file-archive-o" aria-hidden="true"></i><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                @foreach (var ticketattachment in ticket.TicketAttachments)
+                                                {
+                                                    @Html.DisplayFor(modelItem => ticketattachment.Description)
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("Details", "Tickets", new { id = ticket.Id })"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <br /><br /><br /><br /><hr />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End of Page Content -->
+        <!-- Footer -->
+    </div>
+        @section scripts {
+            <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/jquery.dataTables.min.js"></script>
+            <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/dataTables.bootstrap.min.js"></script>          
+            <!-- Export functionality -->
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+            <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+            <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+            <!-- End of Export functionality -->
+
+            <script>             
+                $('.table').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            </script>
+        }
+</body>
+</html>

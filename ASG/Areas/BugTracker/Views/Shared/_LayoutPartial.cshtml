@@ -1,0 +1,100 @@
+﻿
+
+
+
+@model ASG.Areas.BugTracker.Models.UsersRolesViewModel
+<div>
+    <ul class="nav navbar-nav navbar-left">
+
+        <!-- Sidebar Menu Trigger -->
+
+        <li class="menu-icon">
+            <a class="side-menu-trigger" href="#">
+                <ul class="bar-icon-wrapper">
+                    <li class="bar-icon"></li>
+                    <li class="bar-icon"></li>
+                    <li class="bar-icon"></li>
+
+                </ul>
+            </a>
+        </li><!-- End of Sidebar Menu Trigger -->
+        <!-- Account Dropdown -->
+
+        <li class="nav-account dropdown">
+            @*<img src="~/Areas/BugTracker/BugTracker_Images/team/man-test-2.jpg" />*@
+            <a href="#"><img alt="img" class="profile-picture" src="~/Areas/BugTracker/BugTracker_Images/team/man-test-2.jpg" /></a>
+            <ul class="dropdown-menu">
+                <li>
+
+                </li>
+
+            </ul>
+        </li><!-- End of Account Dropdown -->
+        <!-- Messages Dropdown -->
+
+
+        <li style="color:white">          
+                <span>
+                    Hello&nbsp;&nbsp;
+                    @if (Model.User.FirstName != null)
+                    {
+                        @Model.User.FirstName <span>&nbsp;&nbsp;</span>
+                    }
+                    @if (Model.Roles != null)
+                    {
+                        List<string> userRoles = new List<string>();
+                        foreach (var role in Model.Roles)
+                        {
+                            if ((role != "Submitter") && (role != "BugtrackerUser") && (role != "FinancialPlannerUser") && (role != "BlogUser"))
+                            {
+                                userRoles.Add(role);
+                            }
+                        }
+
+                        foreach (var role in userRoles)
+                        {
+                            <span>{ &nbsp;</span>@role<span>&nbsp;}&nbsp;</span>
+                        }                      
+                    }
+               
+                </span>       
+        </li>
+
+
+
+
+
+
+
+
+    </ul><!-- End of Left Aligned Icons -->
+    <!-- Right Aligned Icons -->
+    <div style="float:right; padding-top:20px; padding-right:50px">
+        <ul style="list-style:none">
+            <li >
+                @if (Request.IsAuthenticated)
+
+
+
+            {
+
+                var user = Model.User.Id;
+
+                using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm" }))
+                {
+
+                        @Html.AntiForgeryToken()
+
+                        <span><a style="color:white!important; font-size:11px; text-transform:uppercase" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></span>
+                    }
+
+
+                }
+            </li>
+        </ul>
+    </div>
+   
+
+</div>
+
+

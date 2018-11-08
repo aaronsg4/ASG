@@ -1,0 +1,39 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.Household
+@{
+    ViewBag.Title = "_MyHouseholdDetails";
+}
+@if (Model != null)
+{
+    <ul class="dropdown-menu">
+
+        @if (Request.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("BudgetHousehold", "Budgets", new { id = Model.Id })">My Household</a></li>
+        }
+        else
+        {
+            <li><a onclick="openRegisterModal()">Register</a></li>
+            <li><a onclick="openLoginModal()">Login</a></li>          
+        }
+    </ul>
+}
+else
+{
+    <ul class="dropdown-menu">
+        @if (Request.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("Details", "Households")">My Household</a></li>
+        }
+        else
+        {
+            <li><a onclick="openRegisterModal()">Register</a></li>
+            <li><a onclick="openLoginModal()">Login</a></li>
+        }
+    </ul>
+}
+
+
+
+
+
+

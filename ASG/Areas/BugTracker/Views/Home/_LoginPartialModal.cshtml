@@ -1,0 +1,35 @@
+﻿@using ASG.Models
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+
+}
+
+@{
+    ViewBag.Application = "BugTracker";
+
+}
+<div class="wrapper" style="color:white; padding:30px 80px 80px 80px">
+    <form class="form-signin" role="form" id="TestForm" onsubmit="return false">
+        <h4 class="form-signin-heading  letter-spacing-3" style="color:white; text-align:left; padding-top:20px; font-variant:small-caps">Login</h4>
+        <div class="form-group">
+            @Html.HiddenFor(m => m.Application, new { Value = "BugTracker" })
+            @Html.TextBoxFor(m => m.Email, new { @type = "text", @name = "username", @required = "", @class = "form-control", @placeholder = "Email Address" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @required = "" })
+        </div>
+        <div style="color:lime; text-align:left" id="LoginErrors">
+        </div>
+        <span style="float:left;padding-top:15px; padding-bottom:15px">
+            @Html.CheckBoxFor(m => m.RememberMe)
+            <span style="color:white;float:left">@Html.LabelFor(m => m.RememberMe)</span>
+        </span>
+        <input class="btn btn-lg btn-primary btn-block  letter-spacing-3" style="border:none" id="SubmitButton" type="submit" value="Login" />
+        <span>Not a member?</span><span onclick="openTab(event, 'Signup')">&nbsp;&nbsp;Sign up Now</span><br />
+        <a style="color:white" onclick="openForgotPasswordModal()">Forgot your password?</a>
+    </form>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

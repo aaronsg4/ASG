@@ -1,0 +1,728 @@
+﻿
+
+@*@model ASG.Areas.BugTracker.Models.ApplicationUser*@
+@model ASG.Models.ApplicationUser 
+
+@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Meta Tags -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bug Tracker</title>
+    <meta name="description" content="Premium HTML5 Template">
+    <meta name="keywords" content=" HTML5, Premium Template, Nucleus Theme">
+    <meta name="author" content="Amazyne Themes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Favicon -->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <!-- Loading Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Loading Third Party Styles -->    
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/bootstrap/css/bootstrap.min.css" rel="stylesheet" />    
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/et-line/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/elegant-icons/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/pe-icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/pe-icon-7-stroke/css/helper.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/nivo-lightbox/css/nivo-lightbox.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/nivo-lightbox/themes/default/default.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/animate/css/animate.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/owl/css/owl.carousel.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/owl/css/owl.theme.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/form-validation/css/formValidation.min.css" rel="stylesheet" />
+
+
+    <!-- Loading Theme's Styles -->  
+    <link href="~/Areas/BugTracker/BugTracker_css/style.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_css/custom.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_css/BugTracker.css" rel="stylesheet" />
+    <!-- Script for IE < 9 -->
+    <!--[if lt IE 9]>
+    <script src="third-party/respond/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="frontend one-page">
+    <!-- Page Loader -->
+    <div class="loader">
+        <div class="spinner"></div>
+    </div><!-- End of Page Loader -->
+    <!-- Page Content + Uncover Footer Body -->
+    <div class="page-content">
+        <!-- Header - Top -->
+        <header class="navigation nav-green nav-normal">
+            <!-- Header Wrapper -->
+            <div class="main-nav nav-icons-right header-icons header-right sticky full-width">
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container active">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <ul class="bar-icon-wrapper">
+                                    <li class="bar-icon"></li>
+                                    <li class="bar-icon"></li>
+                                    <li class="bar-icon"></li>
+                                </ul>
+                            </a><!-- Logo -->
+                            <a class="logo" href="~/index.html">                   
+                                <img alt="image" class="flicker" src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" />
+                            </a>
+                        </div>
+                        <div class="navbar-icons">
+                            @Html.Partial("_LoginPartial")                        
+                        </div>
+                        <div class="navbar-container">
+                            <div class="navbar-collapse nav-collapse collapse collapsing-nav">
+                                <!-- Header Links -->
+                                <ul class="nav navbar-nav">
+                                    <li class="active">
+                                        @if (Request.IsAuthenticated)
+                                        {                                        
+                                            <a style="color:lime !important" href="@Url.Action("Index", "Home", new { area = "" })">Return to Portfolio</a>                               
+                                        }
+                                        else
+                                        {
+                                            <a style="color:lime !important" href="@Url.Action("Index", "Home", new { area = "" })">Return to Portfolio</a>
+                                        }
+                                    </li>                                   
+                                    <li>
+                                        <a href="#features">Features</a>
+                                    </li>
+
+                                    @*<li>
+                                        <a href="@Url.Action("Login","Account")">Users</a>
+                                    </li>*@
+
+                                    <li>                           
+                                    </li>
+                                    <li>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header> <!-- End of Header -->
+        <!-- One Page Section - Home -->
+
+        <div class="theme-background-section fs-overlay full-screen one-page-section" id="home" style="background-image: url('../../BugTracker_Images/babu-1810147_1920.jpg'); background-position: 50%;" data-custom-height="" data-offset-container=".navigation">
+            <div class="content-container">
+                <div class="content-inner-container">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 text-center">
+                                <div class="no-margin pad-bot-30 text-vertical-large letter-spacing-1 text-light wow animate fadeInDown" data-wow-delay="1000ms">               
+                                    <a id="BugT" href="#Logins" class="btn btn-lg letter-spacing-3" style="border:1px solid white">Bug Tracker</a>
+                                    @if (TempData["registryResponse"] != null)
+                                    {
+                                        var errors = TempData["registryResponse"] as List<string>;
+                                    }
+                                </div>
+                                <div class="btn btn-curtain-light mar-bot-50 wow animated fadeInUp" data-wow-delay="2800ms" style="/*border:1px solid red;*/ background: rgba(0, 0, 0, 0.5); display:block !important">                    
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="mar-bot-50 wow animated fadeInUp" data-wow-delay="2800ms" style="padding-top:200px">
+                                            <div style="margin-bottom:100px">
+                                                <a href="@Url.Action("Landing", "Home")" class="letter-spacing-3" style="color:white !important">Welcome to BugTracker<br /><br /><br /><span class="btn btn-lg letter-spacing-3">Proceed</span></a><br /><br /><br /><br /><br /><a style="color:gray !important" href="javascript:document.getElementById('logoutForm').submit()">&nbsp;&nbsp;&nbsp; Logout</a>
+                                            </div>
+                                            <div class="wrapper" style="color:white; padding:50px">
+                                                <form class="form-signin">
+                                                    <h4 class="form-signin-heading  letter-spacing-3" style="color:white; text-align:left; padding-top:20px; font-variant:small-caps"></h4>
+                                                    @using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm", style = "color:white" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()                                                       
+                                                    }
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {                                       
+                                        <div class="tab" id="LoginTabs" style="display:block">
+                                            <button id="btnTrigger" class="tablinks btn btn-hollow btn-lg" style="border:none !important" onclick="openTab(event, 'Login')">Login</button>
+                                            <button class="tablinks btn btn-hollow btn-lg" style="border:none !important" onclick="openTab(event, 'Signup')">Register</button>
+                                            <button class="tablinks btn btn-hollow btn-lg" style="border:none !important" onclick="openTab(event, 'Demo'); toggleTabs()">DEMO</button>
+                                        </div>
+                                        <div id="Login" class="tabcontent" style="display:block">
+                                            @{ Html.RenderPartial("_LoginPartialModal"); }                                       
+                                        </div>      
+                                                <div id="Signup" class="tabcontent">
+                                                    @{ Html.RenderPartial("_RegisterPartial"); }
+                                                </div>
+                                                <div id="Demo" class="tabcontent">
+                                                    <div class="row">                                                    
+                                                        @{ Html.RenderPartial("_DemoLoginPartial"); }
+                                                    </div>
+                                                </div>  
+                                                            }
+
+                                </div>       
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one-page-intro-jump">
+                        <a href="#features" class="jump intro-center" data-jump-offset="60"><img alt="image" class="center-block" src="~/Areas/BugTracker/BugTracker_Images/scroll.png" /></a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End of Custom Theme Background Section + One Page Section - Home -->
+        <!-- One Page Section - Features -->
+        <div id="features" class="one-page-section">
+            <div class="container-fluid pad-top-bot-100">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 pad-bot-100">
+                        <!-- Vertically Centered Content Box - Desktop + Tablet -->
+                        <div class="row vertical-center-box vertical-center-box-tablet">                      
+                            <div class="col-sm-4 wow animated slideInLeft text-right text-center-mobile" data-wow-delay="200ms">
+                                <h1 class="pe-7s-gleam img-rounded text-light bg-green pad-top-15 pad-bot-15 pad-left-15 pad-right-15"></h1>
+                                <h4><i>Super Easy</i></h4>
+                                <p class="text-vertical-large">Bug Tracker is easy to navigate between screens and makes keeping track of your projects a breeze.</p>
+                                <h1 class="pe-7s-ribbon img-rounded text-light bg-green pad-top-15 pad-bot-15 pad-left-15 pad-right-15"></h1>
+                                <h4><i>Well Documented</i></h4>
+                                <p class="text-vertical-large">All of your files and projects are stored to a database and easily retrievable.</p>
+                            </div>
+                            <div class="col-sm-4">
+                                <img alt="img" class="img-responsive center-block" src="~/Areas/BugTracker/BugTracker_Images/frontend-screenshot-1c.png" />
+                            </div>
+                            <div class="col-sm-4 wow animated slideInRight text-center-mobile" data-wow-delay="200ms">
+                                <h1 class="pe-7s-timer img-rounded text-light bg-green pad-top-15 pad-bot-15 pad-left-15 pad-right-15"></h1>
+                                <h4><i>Fast </i></h4>
+                                <p class="text-vertical-large">Get quick answers to querys, find out who is working on what projects and which tickets are the highest priority.</p>
+                                <h1 class="pe-7s-like img-rounded text-light bg-green pad-top-15 pad-bot-15 pad-left-15 pad-right-15"></h1>
+                                <h4><i>Data Tables</i></h4>
+                                <p class="text-vertical-large">Sort through all of the data in the Bug Tracker system with easy to use data tables, and download to various file-types. </p>
+                            </div>
+                        </div><!-- End of Vertically Centered Content Box - Desktop +Tablet -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div id="Logins" class="one-page-section">
+            <section class="text-center pad-top-bot-100" style="background-image: url('../../BugTracker_Images/texture-2072344_1920.png');">
+                <div class="container-fluid " style="margin:0 150px 0 150px">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h3 class="text-uppercase text-light letter-spacing-2"><b>Bug Tracker Login</b></h3>
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <h5 class="text-lighter text-vertical-large">
+                                        <i>
+                                            Please login below using your designated role assignment for your login, or login as a guest to experience the BugTracker in a variety of roles.
+                                        </i>
+                                    </h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row pad-top-30">
+                                        <!-- Pricing Table 1 -->
+                                        <div class="col-md-3 col-sm-6 text-center">
+                                            <div class="plan">
+                                                <div class="plan-header">
+                                                    <p class="type">Admin Login</p>
+                                                    <div class="price"><span class="currency"></span><span class="timeframe"></span></div><br /><br />
+                                                    <p class="text">Click below to login if you are already registered, or continue below to login in a demo role</p><br /><br />
+                                                    <a href="@Url.Action("Login", "Account")" class="btn btn-hollow btn-lg">
+                                                        Admin Login
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <ul>
+                                                        <li>Assign Roles</li>
+                                                        <li>View Projects</li>
+                                                        <li>Edit Tickets</li>
+                                                        <li>View All Projects</li>
+                                                    </ul>
+                                                    <div class="buy">
+                                                        <a href="@Url.Action("GuestLogin", "Account", new { userName = "Admin@Mailinator.com" }, null)" class="btn btn-hollow btn-lg" style="width:200px">
+                                                            Administrator <br />DEMO
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Pricing Table 2 -->
+
+                                        <div class="col-md-3 col-sm-6 text-center">
+                                            <div class="plan plan-light">
+                                                <div class="plan-header">
+                                                    <p class="type">Project Manager</p>
+                                                    <div class="price"><span class="currency"></span><span class="timeframe"></span></div><br /><br />
+                                                    <p class="text">Click below to login if you are already registered, or continue below to login in a demo role</p><br /><br />
+                                                    <a href="@Url.Action("Login", "Account")" class="btn btn-theme btn-lg">
+                                                        PM Login
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <ul>
+                                                        <li>Create Projects</li>
+                                                        <li>Assign Users to Projects</li>
+                                                        <li>Assign Developers to Tickets</li>
+                                                        <li>View your own Projects</li>
+                                                    </ul>
+                                                    <div class="buy">
+                                                        <a href="@Url.Action("GuestLogin", "Account", new { userName =  "ProjectManager@Mailinator.com" }, null)" class="btn btn-theme btn-lg" style="width:200px">
+                                                            Project Manager <br />DEMO
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Pricing Table 3 -->
+
+                                        <div class="col-md-3 col-sm-6 text-center">
+                                            <div class="plan">
+                                                <div class="plan-header">
+                                                    <p class="type">Developer Login</p><br /><br />
+                                                    <div class="price"><span class="currency"></span><span class="timeframe"></span></div>
+                                                    <p class="text">Click below to login if you are already registered, or continue below to login in a demo role</p><br /><br />
+
+
+                                                    <a href="@Url.Action("Login", "Account")" class="btn btn-hollow btn-lg">
+                                                        Dev Login
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <ul>
+
+                                                        <li>View Your Projects and Tickets</li>
+                                                        <li>Submit New Tickets</li>
+                                                        <li>Upload Files</li>
+                                                        <li>Make Comments</li>
+                                                    </ul>
+                                                    <div class="buy">
+
+
+                                                        <a href="@Url.Action("GuestLogin", "Account", new { userName = "Developer@Mailinator.com" }, null)" class="btn btn-hollow btn-lg" style="width:200px">
+                                                            Developer<br /> DEMO
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3 col-sm-6 text-center">
+                                            <div class="plan plan-light">
+                                                <div class="plan-header">
+                                                    <p class="type">Guest User</p>
+                                                    <div class="price"><span class="currency"></span><span class="timeframe"></span></div><br /><br />
+                                                    <p class="text">Click below to login if you are already registered, or continue below to login in a demo role</p><br /><br />
+                                                    <a href="@Url.Action("Login", "Account")" class="btn btn-theme btn-lg">
+                                                        User Login
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <ul>
+
+
+                                                        <li>Submit Tickets</li>
+                                                        <li>View Your Submitted Tickets</li>
+                                                        <li>Edit Your Submitted Tickets</li>
+                                                        <li>View your User Profile</li>
+                                                    </ul>
+                                                    <div class="buy">
+                                                        @*here i want to login as GuestBugTrackerUser but first i need to create an account for guest bug tracker through register
+                                                        <a href="@Url.Action("GuestLogin", "Account", new { area="", userName = "GuestUser@Mailinator.com", type = "BugTracker" }, null)" class="btn btn-theme btn-lg" style="width:200px">
+                                                            User <br />DEMO
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>*@
+        @*<div class="row">
+            <div class="col-sm-12">
+                <button class="btn btn-brand" id="submit">Submit</button>
+
+            </div>
+        </div>*@     
+        @{Html.RenderAction("RegistrationConfirmation", "Home", new { area = "BugTracker" });}
+        @{Html.RenderAction("BugTrackerAccess", "Home", new { area = "BugTracker" });}
+        @{Html.RenderAction("BugTrackerForgotPassword", "Home", new { area = "BugTracker" });}
+        @{Html.RenderAction("BugTrackerForgotPasswordConfirmation", "Home", new { area = "BugTracker" });}
+        @{Html.RenderAction("BugTrackerResetPassword", "Home", new { area = "BugTracker" });}
+        @{Html.RenderAction("BugTrackerResetPasswordConfirmation", "Home", new { area = "BugTracker" });}
+        <hr class="no-margin" />
+
+        <!-- Footer - Light -->
+        @{
+            var x = TempData["registryResponse"] as List<string>;
+        }
+    </div><!-- End of Page Content-->
+    <!-- Loading Third Party Scripts --> 
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/jquery/jquery.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/easing/js/jquery.easings.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/nivo-lightbox/js/nivo-lightbox.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/owl/js/owl.carousel.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/counter-up/js/jquery.counterup.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/form-validation/js/formValidation.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/form-validation/js/framework/bootstrap.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/waypoint/js/waypoints.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/wow/js/wow.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+
+    <!-- Loading Theme's Scripts -->
+    <script src="~/Areas/BugTracker/BugTracker_js/scripts.js"></script>  
+    <script src="~/Areas/BugTracker/BugTracker_js/custom.js"></script>
+    <!-- Google Analytics Tracking -->
+    <script>
+      
+
+
+        $(document).ready(function () {
+            var resetPassword = false;
+           @if(TempData["resetPassword"] != null) {
+                @:resetPassword = true
+           }
+            if (resetPassword) {
+                openResetPasswordModal();
+            }
+            else {
+                @if(Request.IsAuthenticated)
+                {
+                    if(!User.IsInRole("BugtrackerUser"))
+                    {
+                        @:openAdditionalRoleNeededModal();
+                    }
+                }
+            }
+            $("#BugT").fadeOut(5000);
+        });
+
+        $('#BugTrackerAccess').on('hidden.bs.modal', function () {
+            debugger;
+          @if (Request.IsAuthenticated)
+          {
+              if (!User.IsInRole("BugtrackerUser"))
+              {
+                  @:logout();
+              }
+          }
+            //location.reload();
+
+        })
+
+        function openAdditionalRoleNeededModal() {
+            debugger;
+            $('#BugTrackerAccess').modal('toggle');
+        }
+
+        function openResetPasswordModal() {
+            document.getElementById('BugTrackerResetPasswordErrors').innerHTML = "";
+            $('#BugTrackerResetPassword').modal('toggle');
+        }
+
+        function openForgotPasswordModal(closeModals) {
+            if (closeModals) {
+            }
+            document.getElementById('BugTrackerForgotPasswordErrors').innerHTML = "";
+            $('#BugTrackerForgotPassword').modal('toggle');
+        }
+
+        function openForgotPasswordConfirmationModal(closeModals) {
+            if (closeModals) {
+                $('#BugTrackerForgotPassword').modal('hide');
+            }
+            $('#BugTrackerForgotPasswordConfirmation').modal('toggle');
+        }
+
+        $('#SubmitButton').click(function () {     
+            var form = $("#TestForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/SignIn",
+                data: $("#TestForm").serialize(),
+                success: function (data) {   
+                    if (!data.success) {           
+                        document.getElementById('LoginErrors').innerHTML = data.ex;
+                    }
+                    else {   
+                        if (!data.roleCheck) {
+                            location.reload();
+                            //$('#BugTrackerAccess').modal('toggle');
+                        }
+                        else {
+                            window.location.href = 'Home/Landing';
+                        }
+                    }
+                }
+            });
+        });
+
+        function openRegistrationConfirmationModal(closeModals) {
+            if (closeModals) {
+            }
+            $('#BugTrackerRegistrationConfirmation').modal('toggle');
+        }
+
+        $('#Register').click(function () {         
+            var form = $("#RegisterForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/Register",
+                data: $("#RegisterForm").serialize(),
+                success: function (data) {              
+                    if (!data.success) {                      
+                        document.getElementById('RegisterErrors').innerHTML = data.ex.join('<br />');
+                    }                       
+                    else {                      
+                        if (data.roles.length > 0) {
+                            if (data.roles.includes("BlogUser")) {
+                                document.getElementById('Blog').checked = true;
+                            }
+                            if (data.roles.includes("FinancialPlannerUser")) {
+                                document.getElementById('FinancialPlanner').checked = true;
+                            }
+                            if (data.roles.includes("BugtrackerUser")) {
+                                document.getElementById('BugTracker').checked = true;
+                            }
+                        }                     
+                        openRegistrationConfirmationModal(true); 
+                    }
+                }
+            });
+        });
+
+        $('#BugTrackerAddAccessSubmit').click(function () {
+            var form = $("#BugTrackerAccessForm").serialize();
+            addAccess = true;
+            $.ajax({
+                type: "POST",
+                url: "/Account/AddRegistration",
+                data: $("#BugTrackerAccessForm").serialize(),
+                success: function (data) {                
+                    if (!data.success) {
+                        document.getElementById('AdditionalBugTrackerAccessMessage').innerHTML = "A problem was encountered. Please try again."
+                    }
+                    else {
+                        if (data.accountList.length > 0) {
+                            document.getElementById('AdditionalBugTrackerAccessMessage').innerHTML = "Thank you.  You have now been registered!"
+                            setTimeout(function () {
+                                window.location.href = "/BugTracker/Home/Landing";
+                            }, 200);
+                        }
+                        else {
+                            document.getElementById('AdditionalBugTrackerAccessMessage').innerHTML = "Thank you.  To register for full access, click the full access link."
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
+                        }
+                    }
+                }
+            });
+        });
+
+        $('#BugTrackerAdditionalRegisterSubmit').click(function () {          
+            var form = $("#additionalRegistrationForm").serialize();
+            $.ajax({
+                type: "POST",              
+                url: "/Account/AddMultipleRegistration",
+                data: $("#additionalRegistrationForm").serialize(),
+                success: function (data) {                    
+                    if (!data.success) {
+                        document.getElementById('AdditionalRegistrationMessage').innerHTML = "A problem was encountered. Please try again."
+                    }
+                    else {                       
+                        document.getElementById('AdditionalRegistrationMessage').innerHTML = "Thank you.  You have now been registered!"
+                        setTimeout(function () {
+                            window.location.href = 'Home/Landing';
+                        }, 3000);                 
+                    }
+                }
+            });
+        });
+
+
+        $('#BugTrackerRegistrationConfirmation').on('hidden.bs.modal', function () {
+            @if(Request.IsAuthenticated)
+            {
+                @: window.location.href = 'Home/Landing';
+                        }
+            else
+            {
+               @: location.reload();
+                        }
+        });
+
+
+        function logout() {
+            $.ajax({
+                type: "POST",
+                url: "/Account/LogOut",
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('RegisterErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        location.reload();
+                    }
+                }
+            });
+        };
+
+        //if user declines bugtracker access, log them out, they can still view demo roles
+        $('#BugTrackerAddAccessDecline').click(function () {
+            logout();
+          
+        });
+       
+
+        $('#BugTrackerForgotPasswordSubmit').click(function () {          
+            var form = $("#BugTrackerForgotPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ForgotPassword",
+                data: $("#BugTrackerForgotPasswordForm").serialize(),
+                success: function (data) {                   
+                    if (!data.success) {
+                        document.getElementById('BugTrackerForgotPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        openForgotPasswordConfirmationModal(true);
+                    }
+                }
+            });
+        });
+
+        $('#BugTrackerResetPasswordSubmit').click(function () {         
+            var form = $("#BugTrackerResetPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ResetPassword",
+                data: $("#BugTrackerResetPasswordForm").serialize(),
+                success: function (data) {                 
+                    if (!data.success) {
+                        document.getElementById('BugTrackerResetPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        $('#BugTrackerResetPassword').modal('toggle');
+                        $('#BugTrackerResetPasswordConfirmation').modal('toggle');
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            var registryFailure = false;
+            @if(TempData["registryResponse"] != null) {
+                @:registryFailure = true
+                        }
+            if (registryFailure) {
+                openTab(event, 'Signup');
+            };
+        });
+
+
+        function openTab(evt, tabName) {           
+            document.getElementById('RegisterErrors').innerHTML = "";
+            document.getElementById('LoginErrors').innerHTML = "";
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            if (evt != null) {
+                evt.currentTarget.className += " active";
+            }
+            debugger;
+            if (tabName == "Demo") {
+                document.getElementById('AdministratorTab').className += " active";
+            }
+        }
+
+        function openTab2(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent2");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        };
+
+        function toggleTabs() {
+            document.getElementById("LoginTabs").style.display = "none";
+        }
+        function toggleHome(event) {
+            document.getElementById("LoginTabs").style.display = "block";
+            openTab(null, 'Login');
+        }
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-xxxxxxx-x', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

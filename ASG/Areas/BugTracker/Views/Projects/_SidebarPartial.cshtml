@@ -1,0 +1,167 @@
+﻿
+@model IEnumerable<ASG.Areas.BugTracker.Models.Project>
+
+@{
+    ViewBag.Title = "_SidebarPartial";
+}
+
+<h2>_SidebarPartial</h2>
+
+<div class="side-header active">
+    <div class="side-header-container">
+        <div class="side-header-inner-container">
+            <ul class="side-header-nav">
+                <li class="pad-left-30 pad-right-30 pad-bot-20 pad-top-20 text-center">
+                    <h4 class="text-light">TOTAL PROJECTS</h4>
+                    <h5 class="color-green"><b>$3,25,000</b></h5>
+                </li>
+                <li class="with-dropdown active">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-presentation"></i>Dashboards <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="index.html">Dashboard 1</a></li>
+                        <li><a href="index-2.html">Dashboard 2</a></li>
+                        <li class="active"><a href="index-3.html">Dashboard 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-heading">Features</li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-browser"></i>Projects <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3") || User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4") || User.IsInRole("Submitter"))
+                        {
+                        <li><a href="@Url.Action(" Index", "Projects" )">All Projects</a></li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") || User.IsInRole("Administrator"))
+                        {
+                        <li><a href="@Url.Action(" Create", "Projects" )">Create a new project</a></li>
+                        <li><a href="@Url.Action(" Create", "Projects" )">Edit an existing project</a></li>
+                        }
+                        <li><a href="ui-spinner-buttons.html">Spinner Buttons</a></li>
+                        <li class="with-dropdown-2">
+                            <a class="menu-dropdown-link inner" data-toggle="collapse" aria-expanded="true" href="#">Icons <span class="dropdown-icon"></span></a>
+                            <ul class="menu-dropdown collapse">
+                                <li><a href="ui-font-awesome-icons.html">Fontawesome</a></li>
+                                <li><a href="ui-elegant-icons.html">Elegant</a></li>
+                                <li><a href="ui-7-stroke-icons.html">7 Stroke</a></li>
+                                <li><a href="ui-et-line-icons.html">ET Line</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="ui-horizontal-timeline.html">Horizontal Timeline</a></li>
+                        <li><a href="ui-modal-boxes.html">Modal Boxes</a></li>
+                        <li><a href="ui-notifications.html">Notifications</a></li>
+                        <li><a href="ui-progress-bars.html">Progress Bars</a></li>
+                        <li><a href="ui-page-progress-bar.html">Page Progress Bar</a></li>
+                        <li><a href="ui-portlets.html">Portlets</a></li>
+                        <li><a href="ui-social-icons.html">Social Icons</a></li>
+                        <li><a href="ui-steps.html">Steps</a></li>
+                        <li><a href="ui-tabs.html">Tabs</a></li>
+                        <li><a href="ui-timeline.html">Timeline</a></li>
+                        <li><a href="ui-typography.html">Typography</a></li>
+                        <li><a href="ui-utility.html">Utility</a></li>
+                        <li><a href="ui-widgets.html">Widgets</a></li>
+                    </ul>
+              </li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-linegraph"></i>Tickets <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+
+                        <li><a href="@Url.Action("Index", "Tickets")">All Tickets</a></li>
+                        <li><a href="@Url.Action("Create", "Tickets")">Create a new ticket</a></li>
+                        <li><a href="charts-google.html">Google Charts</a></li>
+                        <li><a href="charts-morris.html">Morris Charts</a></li>
+                    </ul>
+                </li>
+                <li class="with-dropdown">
+                    <a href="#" class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true"><i class="icon-map"></i> Maps <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="maps-google.html">Google Maps</a></li>
+                        <li><a href="maps-vector.html">Vector Maps</a></li>
+                    </ul>
+                </li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link with-badge" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-grid"></i>Tables <span class="dropdown-icon"></span><span class="menu-badge bg-orange">2</span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="tables-static.html">Static Tables</a></li>
+                        <li><a href="tables-datatables.html">DataTables</a></li>
+                    </ul>
+                </li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-document"></i>Forms <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="form-code-viewer.html">Code Viewer</a></li>
+                        <li><a href="form-editor.html">Editor</a></li>
+                        <li><a href="form-elements.html">Elements</a></li>
+                        <li><a href="form-file-upload.html">File Upload</a></li>
+                        <li><a href="form-wizard.html">Form Wizard</a></li>
+                        <li><a href="form-picker.html">Picker</a></li>
+                        <li><a href="form-x-editable.html">X-Editable</a></li>
+                        <li class="with-dropdown-2">
+                            <a class="menu-dropdown-link inner" data-toggle="collapse" aria-expanded="true" href="#">Validations <span class="dropdown-icon"></span></a>
+                            <ul class="menu-dropdown collapse">
+                                <li><a href="form-custom-errors.html">Custom</a></li>
+                                <li><a href="form-recaptcha.html">Google Recaptcha</a></li>
+                                <li><a href="form-html5.html">HTML5 Attributes</a></li>
+                                <li><a href="form-live-validations.html">Live Validations</a></li>
+                                <li><a href="form-post-validations.html">Post Validations</a></li>
+                                <li><a href="form-tooltip-alerts.html">Tooltip-Alerts</a></li>
+                                <li><a href="form-within-tab.html">Within Tab</a></li>
+                                <li><a href="form-without-icons.html">Without Icons</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="with-badge" href="calendar.html"><i class="icon-calendar"></i> Calendar <span class="menu-badge bg-dark-green">New</span></a>
+                </li>
+                <li class="menu-heading">Layouts</li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-envelope"></i>Headers <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="header-side.html" class="with-badge">Header - Side</a></li>
+                        <li><a href="header-top.html">Header - Top</a></li>
+                        <li><a href="header-fullscreen.html">Header - Fullscreen</a></li>
+                        <li class="with-dropdown-2">
+                            <a class="menu-dropdown-link inner" data-toggle="collapse" aria-expanded="true" href="#">Colors <span class="dropdown-icon"></span></a>
+                            <ul class="menu-dropdown collapse">
+                                <li><a href="header-light.html">Light</a></li>
+                                <li><a href="header-dark-blue.html">Dark Blue</a></li>
+                                <li><a href="header-blue.html">Blue</a></li>
+                                <li><a href="header-blue-grey.html">Blue Grey</a></li>
+                                <li><a href="header-dark-green.html">Dark Green</a></li>
+                                <li><a href="header-green.html">Green</a></li>
+                                <li><a href="header-purple.html">Purple</a></li>
+                                <li><a href="header-red.html">Red</a></li>
+                                <li><a href="header-orange.html">Orange</a></li>
+                                <li><a href="header-yellow.html">Yellow</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-book-open"></i>Pages <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="blank-page.html">Blank Page</a></li>
+                        <li><a href="error-404.html">Error 404</a></li>
+                        <li><a href="error-500.html">Error 500</a></li>
+                        <li><a target="_blank" href="frontend.html">Frontend</a></li>
+                        <li><a href="login-register-1.html">Login/Register 1</a></li>
+                        <li><a href="login-register-2.html">Login/Register 2</a></li>
+                        <li><a href="lock-screen-1.html">Lock Screen 1</a></li>
+                        <li><a href="lock-screen-2.html">Lock Screen 2</a></li>
+                        <li><a href="user-account.html">User Account</a></li>
+                        <li><a href="user-help.html">User Help</a></li>
+                        <li><a href="user-profile.html">User Profile</a></li>
+                    </ul>
+                </li>
+                <li class="with-dropdown">
+                    <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-envelope"></i>Inbox <span class="dropdown-icon"></span></a>
+                    <ul class="menu-dropdown collapse">
+                        <li><a href="mailbox.html" class="with-badge">Mail Box <span class="menu-badge bg-blue">3</span></a></li>
+                        <li><a href="mail.html">Mail</a></li>
+                        <li><a href="compose.html">Compose Mail</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

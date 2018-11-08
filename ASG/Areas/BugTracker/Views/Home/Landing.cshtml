@@ -1,0 +1,329 @@
+﻿
+@using Microsoft.AspNet.Identity
+
+@model IEnumerable<ASG.Areas.BugTracker.Models.Project>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<body class="header-side in">
+    <!-- Page Loader -->
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
+    <section class="page-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 header-inline">
+                    <div class="header-inline-content">         
+                    </div>
+                    <div class="header-inline-content">
+                        <ul class="breadcrumb">                        
+                            <li class="button"><a href="@Url.Action("Index", "Home", new { area = "BugTracker"})" class="btn btn-dark-blue" id="home">Home</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End of Page Header -->
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="section-admin container-fluid">
+            <div class="row admin text-center">
+                <div class="col-md-12" style="background-size:1500px; background-repeat: no-repeat; background-color: #fafafa">
+                    <div class="row">
+                        <p style="font-variant:small-caps; font-size:20px">
+                            Welcome to the Bug Tracker.<br /><br />
+                            @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3") || User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                            {
+                                <span>Let's get you started</span>
+                            }
+                            else
+                            {
+                                <div class="alert alert-block">
+                                    You are currently logged in as a Submitter.  If you would like to experience the Bug Tracker's full functionality, please return to the Home page and login as a guest using one of
+                                    the demo roles.  If you have been registered as a Submitter but not yet assigned to any projects and you wish to submit tickets, please contact a system administrator or project manager. 
+                                </div>
+                            }
+                            <br /><br />
+                        </p>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10" style="margin:0 auto">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <i>
+                                    You are currently logged in as:
+                                </i>
+                                {
+                                    if (User.IsInRole("Admin"))
+                                    {
+                                        <i>Admin.</i>
+                                    }
+
+                                    else if (User.IsInRole("Administrator"))
+                                    {
+                                        <i>Administrator.</i>
+                                    }                                    
+                                    else if (User.IsInRole("Project Manager1"))
+                                    {
+                                        <i>Project Manager 1</i>
+                                    }
+                                    else if (User.IsInRole("Project Manager2"))
+                                    {
+                                        <i>Project Manager 2</i>
+                                    }
+                                    else if (User.IsInRole("Project Manager3"))
+                                    {
+                                        <i>Project Manager 3</i>
+                                    }
+                                    else if (User.IsInRole("Developer1"))
+                                    {
+                                        <i>Developer 1</i>
+                                    }
+                                    else if (User.IsInRole("Developer2"))
+                                    {
+                                        <i>Developer 2</i>
+                                    }
+                                    else if (User.IsInRole("Developer3"))
+                                    {
+                                        <i>Developer 3</i>
+                                    }
+
+                                    else if (User.IsInRole("Developer4"))
+                                    {
+                                        <i>Developer 4</i>
+                                    }
+
+
+                                    else if (User.IsInRole("Submitter"))
+                                    {
+                                        <i>Submitter</i>
+                                    }
+
+                                }
+                                <br /><br /><br /><br />
+                            }
+
+                            <p style="font-size:15px; text-align:left">
+                                <span class="glyphicon glyphicon-arrow-left"></span>To view projects / tickets / profiles, use the toolbar to the left.<br /><br />
+                                Inside you will be able to easily navigate the Bug Tracking system based on your designated role.  The Bug Tracker can be utilized for tracking all projects throughout the system
+                                as well as the tickets that pertain to each project.
+                                In addition to these features, you will also be able to view details of tickets, upload & download attachments to tickets,
+                                communicate back and forth on tickets through the comments section, and much more.
+                                Each authorized user for the Bug Tracker will also have access to their profile details.
+                            </p><br /><br />
+                            Take a look below at what's inside:  <br /><br /><br /><br /><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-admin container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- BEGIN PORTLET-->
+                    <div class="portlet portlet-bordered" style="height:640px !important">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject text-uppercase">Ticket Submissions for the past week</span>
+                            </div>
+                            <div class="actions">
+                                <div class="btn-group" data-toggle="buttons">
+
+                                    <label class="btn btn-grey">
+                                        <input type="radio" name="options" class="toggle" id="option2">Week
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body text-center">
+                            <ul class="list-inline pad-top-10">
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: rgb(11, 98, 164);"></i>Urgent Priority</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: rgb(122, 146, 163);"></i>Normal Priority</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: rgb(77, 167, 77);"></i>Low Priority</h5>
+                                </li>
+                            </ul>
+                            <div id="ThirdChart" style="height:400px"></div>
+                            <br /><br />
+                        </div>                        
+                    </div>
+                    <!-- END PORTLET-->
+                </div>
+                <div class="col-md-4">
+                    <!-- BEGIN PORTLET-->
+                    <div class="portlet portlet-bordered"  style="height:640px !important">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject text-uppercase">User Stats</span>
+                            </div>
+                            <div class="actions">
+                            </div>
+                        </div>
+                        <div class="portlet-body pad-top-10-desktop text-center">
+                            <ul class="list-inline">
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: #805bbe;"></i>Submitters</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: #faca39;"></i>Developers</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: #2eb7f3;"></i>Project Managers</h5>
+                                </li>
+                                <li>
+                                    <h5><i class="fa fa-circle mar-right-5" style="color: #2eb7f3;"></i>Administrators</h5>
+                                </li>
+                            </ul>
+                            <div id="SecondChart" style="height:430px"></div>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>               
+                @{Html.RenderAction("SystemUpdatesPartial", "Home", new { area = "BugTracker"});}
+            </div>
+            <br /><br /><br /><br /><br />
+        </div>
+        <div class="section-admin container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="admin-content">
+                        <h3><b>Bug Tracker Sytem Overview</b></h3><br />
+                        <div class="table-responsive">
+                            <table class="table table-theme table-clear table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Project Name
+                                        </th>
+                                        <th>
+                                            Project Manager
+                                        </th>
+                                        <th style="text-align:center">
+                                            Current Tickets
+                                        </th>
+                                        <th style="text-align:center">
+                                            Ticket Assignment Ratio
+                                        </th>
+                                        <th style="text-align:center">
+                                            Users on project
+                                        </th>
+                                        <th>
+                                            Project start date
+                                        </th>
+                                        <th>
+                                            Project Status
+                                        </th>
+                                        <th>
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-lighter">
+                                    @if (Model != null)
+                                    {
+                                        foreach (var project in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @project.Name
+                                                </td>
+                                                <td>
+                                                    @project.ProjectManagerName
+                                                </td>
+                                                <td style="text-align:center">
+                                                    @project.Tickets.Count()
+                                                </td>
+                                                <td style="text-align:center">
+                                                    @project.Tickets.Where(t => t.AssignedToUser != null).Count() / @project.Tickets.Count
+
+                                                </td>
+                                                <td style="text-align:center">
+                                                    @project.Users.Count()
+                                                </td>
+                                                <td>
+                                                    @project.ProjectStartDate
+                                                </td>
+                                                <td>
+                                                    <label class="label bg-green">@project.ProjectStatus</label>
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Index","Projects", new { area = "BugTracker"})#@project.Name" data-placement="top" data-toggle="tooltip" class="tip-top" data-original-title="View Details"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End of Page Content -->
+    <!-- Footer -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-10 text-center">
+                <a href="#home" data-jump-offset="70" class="jump clearfix text-uppercase letter-spacing-3">Back <span class="pe-7s-angle-up pe-5x pe-va"></span> Top</a>
+                <h2 class="text-uppercase letter-spacing-3 no-margin pad-bot-30 word-spacing-5 color-green wow animated fadeIn" data-wow-delay="1600ms"><b>BugTracker</b></h2>
+                <h6 class="text-lighter no-margin text-uppercase letter-spacing-2 pad-bot-30">A web - based software application bug - tracking system</h6>
+                <ul class="list-unstyled list-inline footer-inline-links pad-top-15 pad-bot-10">
+                    <li>
+                        <ul class="social-icons circle list-inline list-unstyled"></ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer class="footer container-fluid">
+        <div class="row">
+            <div class="col-md-12 ">
+
+            </div>
+        </div>
+    </footer><!-- End of Footer -->
+    @section scripts {
+        <script>
+
+            var data = [
+                  { y: '2014', a: 50, b: 90},
+                  { y: '2015', a: 65,  b: 75},
+                  { y: '2016', a: 50,  b: 50},
+                  { y: '2017', a: 75,  b: 60},
+                  { y: '2018', a: 80,  b: 65},
+                  { y: '2019', a: 90,  b: 70},
+                  { y: '2020', a: 100, b: 75},
+                  { y: '2021', a: 115, b: 75},
+                  { y: '2022', a: 120, b: 85},
+                  { y: '2023', a: 145, b: 85},
+                  { y: '2024', a: 160, b: 95}
+            ],
+                config = {
+                    element: 'ThirdChart',
+                    data: @Html.Raw(Json.Encode(ViewBag.ArrData)),
+                    xkey: 'DayofWeek',
+                    ykeys: ['StatusA','StatusB','StatusC'],
+                    labels: ['Urgent', 'Normal Priority', 'Low Priority'],
+                    preUnits: ''
+                };
+
+            Morris.Bar(config);         
+
+            new Morris.Donut({
+                element: 'SecondChart',
+                data: @Html.Raw(Json.Encode(ViewBag.ArrData2)),
+            })
+
+        </script>
+        <!-- Loading Third Party Scripts -->
+
+    }
+</body>
+
+</html>

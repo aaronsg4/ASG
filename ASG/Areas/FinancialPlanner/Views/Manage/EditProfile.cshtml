@@ -1,0 +1,57 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.EditProfileViewModel
+@{
+    ViewBag.Title = "Edit Profile";
+}
+
+@*<h2>@ViewBag.Title.</h2>*@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 well" style="align-content:center;margin-top:75px">
+            <br />
+            <div class="row">
+                <div class="col-sm-10"><h2 style="font-family:'Lato',sans-serif; font-variant:small-caps">Edit your display name</h2><br /></div>
+                <div class="col-sm-2">
+                    <img src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" style="height:50px" />
+
+                </div>
+            </div>
+
+            @using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Edit Profile Form</h4>
+                <hr />
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.OldDisplayName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.OldDisplayName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NewDisplayName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.NewDisplayName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmDisplayName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.ConfirmDisplayName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Edit Profile" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

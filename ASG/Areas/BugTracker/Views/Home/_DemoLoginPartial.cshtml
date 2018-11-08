@@ -1,0 +1,96 @@
+﻿@model ASG.Models.RegisterViewModel
+
+
+
+@{
+    ViewBag.Title = "Demo Login";
+
+}
+
+<div class="col-md-12">
+    <div class="row">
+        <!-- Pricing Table 1 -->
+        <div class="tab content">
+            <button class="tablinks btn-lg" style="border:none !important" onclick="toggleHome()">Back</button>
+            <button class="tablinks btn-lg" style="border:none !important" onclick="openTab2(event, 'User')">User</button>
+            <button class="tablinks btn-lg" style="border:none !important" onclick="openTab2(event, 'ProjectManager')">Project Manager</button>
+            <button class="tablinks btn-lg" style="border:none !important" onclick="openTab2(event, 'Developer')">Developer</button>
+            <button id="AdministratorTab" class="tablinks btn-lg" style="border:none !important" onclick="openTab2(event, 'Administrator')">Administrator</button>
+        </div>
+        <div id="Administrator" class="tabcontent2" style="display:block">
+            <div class="plan">     
+                <div class="content">
+                    <ul>
+                        <li>Assign Roles</li>
+                        <li>View Projects</li>
+                        <li>Edit Tickets</li>
+                        <li>View All Projects</li>
+                        <li class="buy" style="margin:25px">
+                            <a href="@Url.Action("GuestLogin", "Account", new { area="", userName = "Administrator@Mailinator.com",type = "BugTracker" }, null)" class="btn btn-hollow btn-lg" style="width:200px; color:lime !important">
+                                Administrator <br />DEMO
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Pricing Table 2 -->
+        <div id="ProjectManager" class="tabcontent2" style="display:none">           
+            <div class="plan">              
+                <div class="content">
+                    <ul>
+                        <li>Create Projects</li>
+                        <li>Assign Users to Projects</li>
+                        <li>Assign Developers to Tickets</li>
+                        <li>View your own Projects</li>
+                        <li class="buy" style="margin:25px">
+                            <a href="@Url.Action("GuestLogin", "Account", new { area="", userName="ProjectManager@Mailinator.com",type = "BugTracker" }, null)" class="btn btn-hollow btn-lg" @*class="btn btn-theme btn-lg"*@ style="width:200px; color:lime !important">
+                                Project Manager <br />DEMO
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Pricing Table 3 -->
+        <div id="Developer" class="tabcontent2" style="display:none">            
+            <div class="plan">              
+                <div class="content">
+                    <ul>
+                        <li>View Your Projects and Tickets</li>
+                        <li>Submit New Tickets</li>
+                        <li>Upload Files</li>
+                        <li>Make Comments</li>
+                        <li class="buy" style="margin:25px">
+                            <a href="@Url.Action("GuestLogin", "Account", new {area="", userName = "Developer@Mailinator.com", type = "BugTracker" }, null)" class="btn btn-hollow btn-lg" style="width:200px; color:lime !important">
+                                Developer <br />DEMO
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="User" class="tabcontent2" style="display:none">           
+            <div class="plan">             
+                <div class="content">
+                    <ul>
+                        <li>Submit Tickets</li>
+                        <li>View Your Submitted Tickets</li>
+                        <li>Edit Your Submitted Tickets</li>
+                        <li>View your User Profile</li>
+                        <li class="buy" style="margin:25px">
+                            <a href="@Url.Action("GuestLogin", "Account", new { area="", userName = "GuestUser@Mailinator.com", type = "BugTracker" }, null)" class="btn btn-hollow btn-lg" @*class="btn btn-theme btn-lg"*@ style="width:200px; color:lime !important">
+                                User <br />DEMO
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

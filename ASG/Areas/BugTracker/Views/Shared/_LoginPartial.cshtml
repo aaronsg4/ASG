@@ -1,0 +1,40 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using ASG.Areas.BugTracker.Models
+@using ASG.Models
+
+
+
+<div style="float:left; vertical-align:middle; padding-left:20px; color: #fff !important;
+    text-transform: uppercase;">
+    <br />
+    @if (Request.IsAuthenticated)
+    {
+        var db = new ApplicationDbContext();
+        var user = db.Users.Find(User.Identity.GetUserId());
+        using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+            if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3") || User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4") || User.IsInRole("Submitter"))
+            {
+
+
+            }
+            <a href="javascript:document.getElementById('logoutForm').submit()"> &nbsp; &nbsp; &nbsp; &nbsp;<span style="color:white">Log off</span></a>
+        }
+
+    }
+
+    else
+    {
+        <span class="nav navbar-nav" style="cursor:pointer">
+            <span class="active">
+                <a style="color:white; background-color:transparent !important; font-size:11px" onclick="openTab(event, 'Login')">&nbsp;&nbsp;Log In</a>
+            </span>
+            <span>
+                <a style="color:white;  font-size:11px" onclick="openTab(event, 'Signup')">&nbsp;&nbsp;Register</a>
+            </span>
+        </span>
+    }
+</div>
+

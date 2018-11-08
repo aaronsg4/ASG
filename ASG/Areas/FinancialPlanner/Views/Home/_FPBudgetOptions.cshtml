@@ -1,0 +1,117 @@
+﻿
+@using ASG.Models
+@model ASG.Areas.FinancialPlanner.Models.Budget
+
+
+@{
+    ViewBag.Title = "Budget Options";
+}
+
+
+<div class="modal fade" id="FPBudgetOptions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background-color:rgba(0, 0, 0, 0.7)">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><img src="~/Areas/FinancialPlanner/FP_Images/fp.png" /></h4>
+                </div>
+                <div class="modal-body fpModal" style="padding-bottom:35px">
+                    <div class="container">
+                        <div class="row">
+                        </div>
+                    </div>
+                    <div style="margin-left:30px">
+                        <form id="BudgetType">
+                            <h3>Let's get you started.</h3>
+                            <p>In order to track your expenses, we'll need to know if this budget is for yourself or for a household.</p><br /><br />
+                            <fieldset>
+                                <div>
+                                    <input type="radio" id="Self"
+                                           name="BudgetType" value="Self" checked />
+                                    <label for="Self">This budget will be for myself.</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="Household"
+                                           name="BudgetType" value="Household" />
+                                    <label for="Household">This budget will for a household.</label>
+                                </div>
+                            </fieldset><br /><br />
+                            <input type="button" value="Next" onclick="budgetTypeSelected(this)" class="btn btn-default" />
+                        </form>
+                        @using (Html.BeginForm("BudgetsCreate", "Budgets"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal" id="HouseholdSetup" style="display:none">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                What would you like the name of your household to be?
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Household.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Household.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                How would you describe your household?
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Household.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Household.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        <input style="float:left; margin-right:3px" type="button" value="Back" onClick="toggleBack()" class="btn btn-default" />
+                                        <input style="float:left;" type="button" value="Next" onClick="setUpBudget()" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                                    <div class="form-horizontal" id="BudgetSetup" style="display:none">
+                                        Enter a Budget Name
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        How much do you want to spend?
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        What is this budget for?
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        Duration
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("BudgetDurationPeriodId", null, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.BudgetDurationPeriodId, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                <input style="margin-right:3px" type="button" value="Back" onClick="toggleBack2()" class="btn btn-default" />
+                                                <input type="submit" value="Create Budget" class="btn btn-primary" style="color:white!important" />
+                                            </div>
+                                        </div>
+                                    </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

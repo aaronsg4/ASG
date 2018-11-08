@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<ASG.Areas.BugTracker.Models.SystemUpdates>
+
+
+<div class="col-md-4">
+    <!-- BEGIN PORTLET-->
+    <div class="portlet portlet-bordered " style="height:640px">
+        <div class="portlet-title">
+            <div class="caption">
+                <span class="caption-subject text-uppercase">Recent Updates</span>
+            </div>
+            <div class="actions">
+                <a href="#" class="btn btn-green btn-circle active tip-top" data-placement="top" data-toggle="tooltip" data-original-title="Refresh">
+                    <i class="glyphicon glyphicon-repeat"></i>
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body pad-top-10-desktop text-center">
+            <!-- Carousel with Pagination -->
+            <div class="owl-carousel owl-theme pad-top-25 pad-bot-25" data-auto-height="true" data-items="1" data-items-desktop="1" data-items-tablet="[991,1]" data-items-mobile="[767,1]">
+                <div class="item">
+                    <h4>This section will keep you updated on recent system-wide updates.</h4>
+                    <img class="img-circle" alt="image" src="~/Areas/BugTracker/BugTracker_Images/team/3-square.jpg" width="80" />             
+                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="item">
+                        <h4>@item.Description</h4>
+                        <img class="img-circle" alt="image" src="~/Areas/BugTracker/BugTracker_Images/team/2-square.jpg" width="80" />
+                    </div>
+                }
+            </div><!-- End of Carousel -->
+        </div>
+        <div style="text-align:center; padding-top:100px">
+            @if (User.IsInRole("Admin") || User.IsInRole("Administrator"))
+            {
+                <a class="button btn btn-dark-blue text-center" href="@Url.Action("Create","SystemUpdates")">Add New Update</a>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,173 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Meta Tags -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bug Tracker</title>
+    <meta name="description" content="Premium HTML5 Template">
+    <meta name="keywords" content="HTML5, Premium Template, Nucleus Theme">
+    <meta name="author" content="Amazyne Themes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <!-- Loading Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Loading Third Party Styles -->
+
+    <link rel="stylesheet" href="~/third-party/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/third-party/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/third-party/et-line/css/style.css">
+    <link rel="stylesheet" href="~/third-party/elegant-icons/css/style.css">
+    <link rel="stylesheet" href="~/third-party/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="~/third-party/pe-icon-7-stroke/css/helper.css">
+    <link rel="stylesheet" href="~/third-party/nivo-lightbox/css/nivo-lightbox.css" />
+    <link rel="stylesheet" href="~/third-party/nivo-lightbox/themes/default/default.css" />
+    <link rel="stylesheet" href="~/third-party/animate/css/animate.css">
+    <link rel="stylesheet" href="~/third-party/owl/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/third-party/owl/css/owl.theme.css">
+    <link rel="stylesheet" href="~/third-party/form-validation/css/formValidation.min.css">
+
+    <!-- Loading Theme's Styles -->
+
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/custom.css">
+
+    <!-- Script for IE < 9 -->
+    <!--[if lt IE 9]>
+    <script src="third-party/respond/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="frontend one-page">
+    <!-- Page Loader -->
+    <div class="loader">
+        <div class="spinner"></div>
+    </div><!-- End of Page Loader -->
+    <!-- Page Content + Uncover Footer Body -->
+    <div class="page-content">
+        <!-- Header - Top -->
+        <header class="navigation nav-green nav-normal">
+            <!-- Header Wrapper -->
+            <div class="main-nav nav-icons-right header-icons header-right sticky full-width">
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container active">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <ul class="bar-icon-wrapper">
+                                    <li class="bar-icon"></li>
+                                    <li class="bar-icon"></li>
+                                    <li class="bar-icon"></li>
+                                </ul>
+                            </a><!-- Logo -->
+
+                            <a class="logo" href="~/index.html">
+                                <img alt="image" src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" />
+                            </a>
+                        </div>
+                        <div class="navbar-icons">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>                                 
+                                    <span class="btn btn-theme-inverse pad-right-15 pad-top-5 pad-bot-5 mar-top-10-tablet mar-top-10-mobile"> @Html.Partial("_LoginPartial")</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="navbar-container">
+                            <div class="navbar-collapse nav-collapse collapse collapsing-nav">
+                                <!-- Header Links -->
+                                <ul class="nav navbar-nav">
+                                    <li class="active">
+                                        <a href="#home">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#features">Features</a>
+                                    </li>
+                                    <li>
+                                        <a href="#pricing">Pricing</a>
+                                    </li>
+                                    <li>
+                                        <a href="#contact">Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header> <!-- End of Header -->
+
+        <hr class="no-margin" />
+        @RenderBody()
+
+
+        <!-- Footer - Light -->
+        <footer class="footer footer-light no-margin" style="background-color:#f5f5f5;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <a href="#home" data-jump-offset="70" class="jump clearfix text-uppercase letter-spacing-3">Back <span class="pe-7s-angle-up pe-5x pe-va"></span> Top</a>
+                        <img alt="image" class="mar-bot-30" width="150" src="~/images/logo-dark.png" />
+                        <h6 class="text-lighter no-margin text-uppercase letter-spacing-2 pad-bot-30">#1 Ranked Admin Template across 21 countries</h6>
+                        <span><a href="#" class="btn btn-lg btn-green letter-spacing-2 mar-top-10"><span class="fa fa-shopping-cart fa-lg"></span>&nbsp;&nbsp;Buy On Wrapbootstrap</a></span>
+                        <ul class="list-unstyled list-inline footer-inline-links pad-top-15 pad-bot-10">
+                            <li>
+                                <ul class="social-icons circle list-inline list-unstyled">
+                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a class="youtube" href="#"><i class="fa fa-youtube"></i></a></li>
+                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h6 class="no-margin pad-bot-15 letter-spacing-2 word-spacing-5 text-uppercase"><i>©2016 Nucleus. All Rights Reserved.</i></h6>
+                    </div>
+                </div>
+            </div>
+        </footer><!-- End of Footer - Light -->
+
+    </div><!-- End of Page Content-->
+    <!-- Loading Third Party Scripts -->
+
+    <script src="~/third-party/jquery/jquery.min.js"></script>
+    <script src="~/third-party/easing/js/jquery.easings.min.js"></script>
+    <script src="~/third-party/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/third-party/nivo-lightbox/js/nivo-lightbox.min.js"></script>
+    <script src="~/third-party/owl/js/owl.carousel.js"></script>
+    <script src="~/third-party/counter-up/js/jquery.counterup.min.js"></script>
+    <script src="~/third-party/form-validation/js/formValidation.js"></script>
+    <script src="~/third-party/form-validation/js/framework/bootstrap.min.js"></script>
+    <script src="~/third-party/waypoint/js/waypoints.min.js"></script>
+    <script src="~/third-party/wow/js/wow.min.js"></script>
+    <script src="~/third-party/slimscroll/jquery.slimscroll.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+
+    <!-- Loading Theme's Scripts -->
+
+    <script src="~/js/scripts.js"></script>
+    <script src="~/js/custom.js"></script>
+
+    <!-- Google Analytics Tracking -->
+
+    <script>
+
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-xxxxxxx-x', 'auto');
+			ga('send', 'pageview');
+
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

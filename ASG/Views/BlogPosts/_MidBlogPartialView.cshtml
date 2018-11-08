@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ASG.Models.BlogPost>
+
+<aside class="widget widget_recent_entries_custom">
+    <div class="widget-title">Popular Posts</div>
+    <ul>
+        @foreach (var post in Model)
+        {
+        <li class="clearfix">
+            <div class="wi"><a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })"><img src="@Url.Content(post.MediaURL)" alt=""></a></div>
+            @*<a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })">@Html.DisplayFor(modelItem => item.Title)</a>*@
+            <div class="wb"><a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })">@Html.DisplayFor(modelItem => post.Title)</a> <span class="post-date">@Html.DisplayFor(modelItem => post.createdDate)</span></div>
+        </li>
+        }
+     
+    </ul>
+</aside>

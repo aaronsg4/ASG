@@ -1,0 +1,362 @@
+﻿
+
+@model ASG.Models.IndexViewModel
+@using Microsoft.AspNet.Identity
+
+@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Manage</title>
+    <!-- Favicons-->
+
+
+
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Suranna" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Fonts-->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <!-- Plugins-->
+    <link href="assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="assets/css/vertical.min.css" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="assets/css/template.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Barrio|Dr+Sugiyama|Herr+Von+Muellerhoff|Julius+Sans+One|Megrim|Mrs+Saint+Delafield|Permanent+Marker|Reenie+Beanie|Rock+Salt|Syncopate" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- Preloader-->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- Preloader end-->
+    <!-- Menu-->
+    <div class="overlay-menu overlay-menu-animation font-serif">
+        <a class="close-menu" href="#"><span class="ti-close"></span></a>
+        <div class="menu-table">
+            <div class="menu-table-cell">
+                <ul class="navigation">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "About" })">About Me</a></li>
+                    <li class="menu-item-has-children">
+
+                        <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
+
+
+                        <ul class="sub-menu">
+                            <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
+
+                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a></li>
+                </ul><br />
+            </div>
+        </div>
+    </div>
+    <!-- Menu end-->
+    <!-- Header-->
+    <header class="header">
+        <div class="container">
+            <div class="inner-header">
+                <a class="inner-brand" href="/">
+                    <img class="brand-dark" alt=""><b> Home</b>
+                </a>
+            </div>
+            <div class="header-nav-toogle">
+                <a class="show-menu-btn" style="color:white" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Header end-->
+
+    <div class="wrapper">
+     
+        <!-- Page Header-->
+     
+        <section class="module-header full-height parallax" data-background="NEWIMAGES/abstract-1780129_1920.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12" style="padding-bottom:50px;">
+                        <div class="container" style="color:#888!important; width:700px">
+
+                           
+
+                            <p class="text-success">@ViewBag.StatusMessage</p>
+                            <div>
+                                <h4 style="color:#888!important">Change your account settings</h4>
+                                <hr />
+                                <dl class="dl-horizontal">
+                                    <dt>Password:</dt>
+
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        var user = User.Identity.Name;
+                                        //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                        if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                        {
+                                            <dd style="text-align:left">
+                                                Not Available
+                                            </dd>
+                                        }
+                                        else
+                                        {
+                                            <dd style="text-align:left;">
+                                                [
+                                                @if (Model.HasPassword)
+                                                {
+                                                    @Html.ActionLink("Change your password", "ChangePassword", null, new { style = "color: white!important" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink("Create", "SetPassword", null, new { style = "color: white!important" })
+                                                }
+                                                ]
+                                            </dd>
+                                        }
+                                    }
+                                   
+                                    <dt>External Logins:</dt>
+                                    <dd style="text-align:left">
+                                        @Model.Logins.Count [
+                                        @Html.ActionLink("Manage", "ManageLogins", null, new { style = "color: white!important" }) ]
+                                    </dd>
+                                    @*
+                    Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+
+                     See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                        for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+
+                     Uncomment the following block after you have set up two-factor authentication
+                                    *@
+                                    @*
+                    <dt>Phone Number:</dt>
+                    <dd>
+                        @(Model.PhoneNumber ?? "None")
+                        @if (Model.PhoneNumber != null)
+                        {
+                            <br />
+                            <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+                            using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+                            }
+                        }
+                        else
+                        {
+                            <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+                        }
+                    </dd>
+                                    *@
+                                    <dt>Two-Factor Authentication:</dt>
+                                    <dd style="text-align:left">
+                                        <p>
+                                            There are no two-factor authentication providers configured. @*See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                                            for details on setting up this ASP.NET application to support two-factor authentication.*@
+                                        </p>
+                                        @*@if (Model.TwoFactor)
+                        {
+                            using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <text>Enabled
+                                <input type="submit" value="Disable" class="btn btn-link" />
+                                </text>
+                            }
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <text>Disabled
+                                <input type="submit" value="Enable" class="btn btn-link" />
+                                </text>
+                            }
+                        }*@
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts-->
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+    <script src="assets/js/plugins.min.js"></script>
+    <script src="assets/js/custom.min.js"></script>
+
+    <script>
+
+            var loading = function () {
+                debugger;
+                $('.page-loader').show()
+            }
+
+            $("#logoutForm2").submit(function (e) {
+                debugger;
+                $('.page-loader').delay(350).fadeOut('slow');
+                //$("#myLoadingElement").show();
+            });
+            //$(window).load(function () {
+            //    $('.page-loader').delay(350).fadeOut('slow');
+            //});
+
+            $(document).ready(function () {
+                debugger;
+                $('#animate').fadeIn(2000, function () {
+                    $animate({ "left": "300px" }, 4000);
+                });
+            });
+    </script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

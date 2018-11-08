@@ -1,0 +1,221 @@
+﻿@using ASG.Areas.BugTracker.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+@{Layout = null;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Register as a new user", "Register")
+                </p>
+                //Enable this once you have account confirmation enabled for password reset functionality
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>
+            }
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+<div class="page-content">
+    <div class="container-fluid mar-top-100 mar-bot-100">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="text-center">
+                    <div class="logo"><img alt="img" width="150" src="~/images/logo-dark.png"></div>
+                    <div class="tab-theme">
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- Main Form -->
+                                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                        {
+                                            <div class="login-form-1">
+                                                <form id="login-form" action="#" class="text-left">
+                                                    <div class="login-form-main-message"></div>
+
+                                                    @Html.AntiForgeryToken()
+                                                    <div class="login-group">
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                        <div class="form-group">
+                                                            <label class="sr-only">
+                                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                                        </label>
+                                                        <input type="text" class="form-control" id="lg_username" placeholder="Username">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="sr-only">
+                                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                                    </label>
+                                                    <input type="password" class="form-control" id="lg_password" placeholder="Password">
+                                                </div>
+                                                <div class="form-group form-group-remember no-margin no-padding login-group-checkbox">
+                                                    <input type="checkbox" id="lg_remember" name="lg_remember">
+                                                    <label for="lg_remember">Remember</label>
+                                                </div>
+                                            </div>
+                                            <input type="submit" value="Log in" class="btn btn-default" />
+                                            <button type="button" class="login-button" value="Log in"><i class="fa fa-chevron-right"></i></button>
+                                        </form>
+                                    </div>
+
+
+                                        }
+                                    </div>
+                                    <!-- End of Main Form -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab2" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Main Form -->
+                                    <div class="login-form-1">
+                                        <form id="login-form-2" action="#">
+                                            <h3 class="text-center no-margin-top">Forgot Password?</h3>
+                                            <p class="mar-bot-25 text-center">Enter your e-mail address below to reset your password.</p>
+                                            <div class="main-login-form text-left">
+                                                <div class="login-group">
+                                                    <div class="form-group">
+                                                        <label for="lg_username" class="sr-only">Email</label>
+                                                        <input type="email" class="form-control" id="lg_email" name="lg_email" placeholder="email">
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="login-button"><i class="fa fa-chevron-right"></i></button>
+                                            </div>
+                                            <div class="etc-login-form text-center text-main">
+                                                <p class="mar-top-15 no-margin-bottom"><a href="#tab1" data-toggle="tab"><b>Back</b></a></p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- End of Main Form -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab3" class="tab-pane">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Main Form -->
+                                    <div class="login-form-1">
+                                        <form id="login-form-3" action="#">
+                                            <h3 class="text-center no-margin-top">Sign Up</h3>
+                                            <p class="mar-bot-25 text-center">Enter your personal details below:</p>
+                                            <div class="main-login-form text-left">
+                                                <div class="login-group">
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">Name</label>
+                                                        <input type="text" class="form-control" id="nameNew" placeholder="name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">Email</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmailNew" placeholder="email">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">Address</label>
+                                                        <input type="text" class="form-control" id="addressNew" placeholder="address">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">City</label>
+                                                        <input type="text" class="form-control" id="cityNew" placeholder="city">
+                                                    </div>
+                                                    <div class="form-group mar-bot-30">
+                                                        <label class="control-label sr-only">State</label>
+                                                        <input type="text" class="form-control" id="townNew" placeholder="state">
+                                                    </div>
+                                                    <p class="mar-bot-25">Enter your account details below:</p>
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">Username</label>
+                                                        <input type="text" class="form-control" id="usernameNew" placeholder="username">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">Password</label>
+                                                        <input type="text" class="form-control" id="passNew" placeholder="password">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label sr-only">Re-enter Password</label>
+                                                        <input type="text" class="form-control" id="passNew1" placeholder="re-enter password">
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="login-button"><i class="fa fa-chevron-right"></i></button>
+                                            </div>
+                                            <div class="etc-login-form text-center text-main">
+                                                <p class="mar-top-15 no-margin-bottom"><a href="#tab1" data-toggle="tab"><b>Back</b></a></p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- End of Main Form -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mar-top-25 mar-bot-25" />
+                <small class="weight-400">©2016 Nucleus - T. +01 2345 6788 - F. +01 2345 6789</small>
+            </div>
+        </div>
+    </div>
+</div>
+</div><!-- End of Page Content -->
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

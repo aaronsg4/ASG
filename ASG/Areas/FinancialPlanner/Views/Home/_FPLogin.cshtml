@@ -1,0 +1,61 @@
+﻿@using ASG.Models
+@model LoginViewModel
+
+
+
+<div class="modal fade" id="FPLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background-color:rgba(0, 0, 0, 0.7)">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><img src="~/Areas/FinancialPlanner/FP_Images/fp.png" /></h4>
+                </div>
+                <div class="modal-body fpModal" style="padding-bottom:35px">
+                    <section id="loginForm" style="margin-top:50px">
+                        @using (Html.BeginForm("Login", "Account", new { area = "", ReturnUrl = ViewBag.ReturnUrl, Application = ViewBag.Application }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "FPLoginForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(m => m.Application, new { Value = "FinancialPlanner" })
+                            <div class="form-group">
+                                <div>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email Address" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                                    <div class="form-group">
+                                        <div>
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div style="color:lime; text-align:left; margin-top:15px; font-size:14px; line-height:1" id="FPLoginErrors"></div>
+                                    </div>
+                                            <div class="form-group" style="text-align: left; padding-left:25px">
+                                                <div class="checkbox">
+                                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                                    <span>@Html.LabelFor(m => m.RememberMe)</span>
+                                                </div>
+                                            </div>
+                                            <div style="margin-top:20px; text-align:center">
+                                                <a onclick="openRegisterModal(true)">Register as a new User</a><br />
+                                                <a onclick="openForgotPasswordModal(true)">Forgot your password?</a>
+                                            </div>
+                        }
+                    </section>
+                </div>
+                <div class="modal-footer" style="text-align:center; padding-top:20px">
+                    <div class="form-group">
+                        <input class="btn btn-lg btn-primary btn-block  letter-spacing-3" id="FPLoginSubmit" value="Login" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

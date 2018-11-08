@@ -1,0 +1,213 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.Transaction
+@{ Layout = null;}
+@using Microsoft.AspNet.Identity
+
+
+@{ var userid = User.Identity.GetUserId();
+
+}
+@{
+    ViewBag.Title = "TransactionModal";
+}
+
+<link href="~/Areas/FinancialPlanner/FP_css/FP_css.css" rel="stylesheet" />
+<style>
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><img src="~/Areas/FinancialPlanner/FP_Images/fp.png" /></h4>
+    </div>
+    <div class="modal-body fpModal">
+        <div>
+            <div class="row">
+                @ViewBag.AccountAlert
+                <br />
+                @ViewBag.BudgetAlert
+
+            </div>
+        </div>
+        <section id="">
+            @if (ViewBag.AccountAlert == null && ViewBag.BudgetAlert == null)
+            {
+                using (Html.BeginForm("CreateBudgetTransaction", "Transactions", new { area = "FinancialPlanner", ReturnUrl = ViewBag.ReturnUrl, Application = ViewBag.Application }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "TransactionForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal" id="">
+                        <div class="col-md-offset-1">
+                            Enter a transaction below<br /><br />
+                        </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                Transaction Description
+                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                How much was this transaction for?
+                                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                Was this a debit or a credit?
+                                @Html.DropDownList("TransactionTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TransactionTypeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                Find the type of transaction below or enter a new category
+                                @Html.TextBox("TransactionCategoryName", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TransactionCategory, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                Which of your budgets was the transaction for?
+                                @Html.DropDownList("BudgetId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.BudgetId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                Which of your accounts did you use?
+                                @Html.DropDownList("FinancialAccountId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.FinancialAccountId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <span style="text-align:center; color:lime;" id="tempMessage">
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                <input type="button" id="TransactionSubmit" value="Save" class="btn btn-default" style="float:right; width:120px" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <br /><br />
+                <a type="button" class="btn  btn-default" style="margin-bottom:7px" href="@Url.Action("Create", "FinancialAccounts")" data-toggle="modal" data-target="#myModal2">Add an Account</a><br />
+            }
+        </section>
+    </div>
+</div>
+<script>
+
+    function ready(callback){
+        // in case the document is already rendered
+        if (document.readyState!='loading') callback();
+            // modern browsers
+        else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+            // IE <= 8
+        else document.attachEvent('onreadystatechange', function(){
+            if (document.readyState=='complete') callback();
+        });
+    }
+
+    ready(function(){
+        @if(Model != null)
+        {
+            @:debugger;
+                    var x = @Html.Raw(Json.Encode(Model.BudgetId));
+        }
+        var budgetId = 0;
+
+        @if (ViewBag.currentBudgetId != null)
+        {
+            @:budgetId = @ViewBag.currentBudgetId;
+                }
+
+        var availableTags = []
+        $.ajax({
+            type: "POST",
+            data: { id: budgetId },
+            url: "/FinancialPlanner/Budgets/CatDropdown",
+            success: function (data) {
+                if (data) {
+                    availableTags = $.map(data, function (item) {
+                        return {
+                            label: item,
+                            value: item
+                        };
+                    });
+                    $('#TransactionCategoryName').autocomplete({
+                        source: availableTags,
+                        minLength: 0,
+                        scroll: true
+                    }).focus(function() {
+                        $(this).autocomplete("search", "");
+                    });
+
+                }
+            }
+        })
+    });
+    $(function () {
+        @if(Model != null)
+        {
+            @:debugger;
+                                    var x = @Html.Raw(Json.Encode(Model.BudgetId));
+        }
+        var budgetId = 0;
+
+        @if (ViewBag.currentBudgetId != null)
+        {
+            @:budgetId = @ViewBag.currentBudgetId;
+                        }
+
+        var availableTags = []
+        $.ajax({
+            type: "POST",
+            data: { id: budgetId },
+            url: "/FinancialPlanner/Budgets/CatDropdown",
+            success: function (data) {
+                if (data) {
+                    availableTags = $.map(data, function (item) {
+                        return {
+                            label: item,
+                            value: item
+                        };
+                    });
+                    $('#TransactionCategoryName').autocomplete({
+                        source: availableTags,
+                        minLength: 0,
+                        scroll: true
+                    }).focus(function() {
+                        $(this).autocomplete("search", "");
+                    });
+
+                }
+            }
+        })
+    });
+
+
+    $('#TransactionSubmit').click(function () {
+        var form = $("#TransactionForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/FinancialPlanner/Transactions/CreateBudgetTransaction",
+            data: $("#TransactionForm").serialize(),
+            success: function (data) {
+                if (!data.success) {
+                    document.getElementById('tempMessage').innerHTML = data.ex.join('<br />');
+                }
+                else {
+                    location.reload();
+                }
+            }
+        });
+    });
+</script>

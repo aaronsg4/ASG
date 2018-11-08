@@ -1,0 +1,525 @@
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bug Tracker</title>
+    <meta name="description" content="Premium HTML5 Template">
+    <meta name="keywords" content="HTML5, Premium Template, Nucleus Theme">
+    <meta name="author" content="Amazyne Themes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Favicon -->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <!-- Loading Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700' rel='stylesheet' type='text/css'>
+    <!-- Loading Third Party Styles -->
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/et-line/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/elegant-icons/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/pe-icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/pe-icon-7-stroke/css/helper.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/nivo-lightbox/css/nivo-lightbox.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/nivo-lightbox/themes/default/default.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/animate/css/animate.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/owl/css/owl.carousel.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/owl/css/owl.theme.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/form-validation/css/formValidation.min.css" rel="stylesheet" />
+
+    <!-- Loading Page's Styles -->
+
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/morris.js/morris.css" rel="stylesheet" />
+    <!-- Loading Theme's Styles -->
+    <link href="~/Areas/BugTracker/BugTracker_css/style.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_css/custom.css" rel="stylesheet" />
+    <script>
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var AMPM = (h >= 12) ? " PM" : " AM";
+            if (h > 12) h = h - 12;
+            if (h < 1) h = h + 12;
+
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('txt').innerHTML =
+            h + ":" + m + ":" + s + AMPM;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+            return i;
+        }
+    </script>
+    <!-- Script for IE < 9 -->
+    <!--[if lt IE 9]>
+    <script src="~/third-party/respond/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<!-- Remove "header-side" if side menu isn't present | Remove "in" if you want the side-header closed by default -->
+
+<body class="header-side in" onload="startTime()">
+    <!-- Page Loader -->
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
+    <!-- Page Content -->
+    @if (Request.IsAuthenticated)
+    {
+        <div class="page-content">
+            <!-- Header - Add "light" for light menu | "nav-dark-blue" for dark-blue accent | "nav-blue" for blue accent | "nav-blue-grey" for blue-grey accent |
+                 "nav-green" for green accent | "nav-dark-green" for dark-green accent | "nav-purple" for purple accent | "nav-red" for red accent |
+                  "nav-Orange" for Orange accent | "nav-yellow" for yellow accent -->
+            <header class="navigation">
+                <!-- Header Wrapper -->
+                <div class="main-nav dark-dropdown nav-icons-right header-icons header-right">
+                    <div class="navbar navbar-default" role="navigation">
+                        <div class="container active">
+                            <div class="navbar-header">
+                                <a href="#" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <ul class="bar-icon-wrapper">
+                                        <li class="bar-icon"></li>
+                                        <li class="bar-icon"></li>
+                                        <li class="bar-icon"></li>
+                                    </ul>
+                                </a>
+                                <!-- Logo -->
+                                <a class="logo" href="~/index.html">
+                                    <img alt="image" src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" />
+                                </a>
+                            </div>
+                            <!-- Top Bar Icons -->
+                            @if (Request.IsAuthenticated)
+                            {
+                                { Html.RenderAction("LayoutPartial", "Home", new { area = "BugTracker" }); }
+                            }
+                            <!-- Left aligned icons-->
+                        </div>
+                    </div>
+                    <!-- Search panel -->
+                    <div class="full-screen-search">
+                        <div class="search-container">
+                            <div class="search-holder">
+                                <form id="searchForm" method="post" action="search-results.html">
+                                    <input type="text" name="search" class="search-field" placeholder="Type and Press Enter to Submit" />
+                                    <input type="hidden" name="search" />
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- End of Search Panel -->
+                    <!-- Side Header | Remove "active" if you want side header closed by default -->
+                    <div class="side-header active">
+                        <div class="side-header-container">
+                            <div class="side-header-inner-container">
+                                <ul class="side-header-nav">
+                                    <li class="pad-left-30 pad-right-30 pad-bot-20 pad-top-20 text-center">
+                                        <div id="txt" class="text-light;" style="font-size:30px; color:white"></div>                           
+                                        <br /><br /><br /><br />
+                                    </li>
+                                    <li class="menu-heading">Projects</li>
+                                    <li class="with-dropdown">
+                                        <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-browser"></i>Projects<span class="dropdown-icon"></span></a>
+                                        <ul class="menu-dropdown collapse">
+                                            @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3") || User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4") || User.IsInRole("Submitter"))
+                                            {
+                                                <li><a href="@Url.Action("Index", "Projects")">All Projects</a></li>
+                                            }
+                                            <li class="with-dropdown-2">
+                                                <a class="menu-dropdown-link inner" data-toggle="collapse" aria-expanded="true" href="#">Projects By Name<span class="dropdown-icon"></span></a>
+                                                @if (Request.IsAuthenticated)
+                                                {
+                                                    { Html.RenderAction("SidebarPartial2", "Home", new { area = "BugTracker" }); }
+                                                }
+                                            </li>
+                                            @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                            {
+                                                <li><a href="@Url.Action("Create", "Projects", new { area = "BugTracker" })">Create a new project</a></li>                                         
+                                            }
+                                            <li><a href="@Url.Action("MyProjects", "Projects", new { area = "BugTracker"} )">My Projects</a></li>
+                                        </ul>
+                                        <br /><br />
+                                    </li>
+                                    <li class="with-dropdown">
+                                    </li>
+                                    <li class="with-dropdown">
+                                    </li>
+                                    <li class="with-dropdown">
+                                    </li>
+                                    <li>
+                                    </li>
+                                    <li class="menu-heading">Tickets</li>
+                                    <li class="with-dropdown">
+                                        <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-envelope"></i>Tickets <span class="dropdown-icon"></span></a>
+                                        <ul class="menu-dropdown collapse">
+                                            <li><a href="@Url.Action("Index", "Tickets", new { area = "BugTracker" })">All Tickets</a></li>
+                                            <li><a href="@Url.Action("MyTickets", "Tickets", new { area = "BugTracker" })">My Tickets</a></li>
+                                            @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                            {
+                                                <li><a href="@Url.Action("ArchivedTickets", "Tickets", new { area = "BugTracker" })">Archived Tickets</a></li>
+                                            }
+                                            <li><a href="@Url.Action("MyArchivedTickets", "Tickets", new { area = "BugTracker" })">My Archived Tickets</a></li>
+                                            <li><a href="@Url.Action("Create", "Tickets", new { area = "BugTracker" })">Create a new ticket</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-heading">Users</li>
+                                    <li class="with-dropdown active">
+                                        <a class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true" href="#"><i class="icon-presentation"></i>Users <span class="dropdown-icon"></span></a>
+                                        <ul class="menu-dropdown collapse">
+                                            @{ var x = User.Identity.GetUserId();}}
+                                            <li><a href="@Url.Action("Index", "Users", new { area = "BugTracker" })">User Dashboard</a></li>
+                                            <li><a href="@Url.Action("Details", "Users", new { area = "BugTracker", id = x})">My Profile </a></li>
+                                        </ul>
+                                        <br /><br />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header> <!-- End of Header -->
+            <!-- Sliding Chat : add "chat-light" along with "chat-slide" for light chat window-->
+            <div class="chat-slide">
+                <a href="#" class="chat-trigger"><i class="arrow_right"></i></a>
+                <!-- Tabs -->
+                <ul class="nav tab-theme tab-underline tab-light">
+                    <li class="active">
+                        <a href="#tab-chat" data-toggle="tab"><i class="pe-7s-chat"></i></a>
+                    </li>
+                    <li>
+                        <a href="#tab-settings" data-toggle="tab"><i class="pe-7s-config"></i></a>
+                    </li>
+                </ul>
+                <div class="tab-theme">
+                    <div class="tab-content">
+                        <div id="tab-chat" class="tab-pane active">
+                            <div class="list-pane">
+                                <div class="chat-top container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <h5>Friends List</h5>
+                                        </div>
+                                        <div class="col-xs-2 chat-top-icon">
+                                            <a href="#"><i class="icon_plus"></i></a>
+                                        </div>
+                                        <div class="col-xs-2 chat-top-icon">
+                                            <a href="#"><i class="pe-7s-more"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Search -->
+
+                                <div class="form-theme form-search">
+                                    <div class="input-group">
+                                        <input class="form-control" name="search" id="search" type="text">
+                                        <span class="input-group-btn">
+                                            <a class="btn" href="#"><i class="icon_search"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="slim-scroll-content-friends">
+                                    <div class="slim-scroll-div">
+
+                                        <!-- Friend List -->
+
+                                        <ul class="friend-list">
+                                            <li class="unread">
+                                                <a class="message-trigger" href="#">
+                                                    <div class="media">
+                                                        <div class="media-left friend-online">                                     
+                                                            <i></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">Jane Doe</h4>
+                                                            <small>Nulla vel metus</small>
+                                                        </div>
+                                                    </div>
+                                                    <span class="badge">1</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="message-trigger" href="#">
+                                                    <div class="media">
+                                                        <div class="media-left friend-busy">                                              
+                                                            <i></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">John Doe</h4>
+                                                            <small>Nulla vel metus</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="unread">
+                                                <a class="message-trigger" href="#">
+                                                    <div class="media">
+                                                        <div class="media-left friend-online">                                      
+                                                            <i></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">James Doe</h4>
+                                                            <small>Nulla vel metus</small>
+                                                        </div>
+                                                    </div>
+                                                    <span class="badge">3</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="message-trigger" href="#">
+                                                    <div class="media">
+                                                        <div class="media-left friend-away">                                                   
+                                                            <i></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">June Doe</h4>
+                                                            <small>Nulla vel metus</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="message-trigger" href="#">
+                                                    <div class="media">
+                                                        <div class="media-left friend-busy">                                             
+                                                            <i></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">Jack Doe</h4>
+                                                            <small>Nulla vel metus</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-pane">
+                                <div class="container-fluid message-top">
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            <a href="#" class="message-trigger"><i class="arrow_left"></i></a>
+                                        </div>
+                                        <div class="col-xs-8 name">
+                                            John
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <a href="#" class="message-trigger"><i class="pe-7s-more"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slim-scroll-content-messages">
+                                    <div class="slim-scroll-div">
+
+                                        <!-- Messages -->
+
+                                        <ul class="message-list">
+                                            <li>
+                                                <div class="message-body">
+                                                    <p class="message">Hi, how are you?</p>
+                                                    <p class="message">Could you give me a detailed report on the project we had discussed asap?</p>
+                                                </div>                                      
+                                            </li>
+                                            <li class="message-right">
+                                                <div class="message-body">
+                                                    <p class="message">Sure, I'll send it to you in a few minutes.</p>
+                                                </div>                                
+                                            </li>
+                                            <li>
+                                                <div class="message-body">
+                                                    <p class="message">Thanks.</p>
+                                                </div>               
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-theme form-big">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i class="icon_plus"></i></button>
+                                            </span>
+                                            <input type="text" class="form-control" placeholder="Enter message">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-settings" class="tab-pane">
+                            <h4>General Settings</h4>
+                            <div class="slim-scroll-content-settings">
+                                <div class="slim-scroll-div">
+                                    <ul class="settings-list">
+                                        <li>
+                                            <label class="setting-option">Notifications</label>
+                                            <div class="toggle">
+                                                <input type="checkbox" name="toggle" class="toggle-checkbox" id="set-toggle-1" checked>
+                                                <label class="toggle-label" for="set-toggle-1"></label>
+                                            </div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                        </li>
+                                        <li>
+                                            <label class="setting-option">Emails</label>
+                                            <div class="toggle">
+                                                <input type="checkbox" name="toggle" class="toggle-checkbox" id="set-toggle-2">
+                                                <label class="toggle-label" for="set-toggle-2"></label>
+                                            </div>
+                                            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </li>
+                                        <li>
+                                            <label class="setting-option">Enable SMS Alerts</label>
+                                            <div class="toggle">
+                                                <input type="checkbox" name="toggle" class="toggle-checkbox" id="set-toggle-3">
+                                                <label class="toggle-label" for="set-toggle-3"></label>
+                                            </div>
+                                            <p>Consectetur adipisicing elit.</p>
+                                        </li>
+                                        <li>
+                                            <label class="setting-option">Show Tasks</label>
+                                            <div class="toggle">
+                                                <input type="checkbox" name="toggle" class="toggle-checkbox" id="set-toggle-4" checked>
+                                                <label class="toggle-label" for="set-toggle-4"></label>
+                                            </div>
+                                            <p>Leiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End of Tabs -->
+                </div>
+            </div><!-- End of Chat -->
+        </div><!-- End of Page Content -->
+                                                }
+    @RenderBody()
+
+    <!-- Footer -->
+  
+    <!-- Loading Third Party Scripts -->
+
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/jquery/jquery.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/easing/js/jquery.easings.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/nivo-lightbox/js/nivo-lightbox.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/owl/js/owl.carousel.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/counter-up/js/jquery.counterup.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/form-validation/js/formValidation.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/form-validation/js/framework/bootstrap.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/waypoint/js/waypoints.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/wow/js/wow.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/slimscroll/jquery.slimscroll.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+
+    <!-- Loading Page's Script -->
+
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/morris.js/morris.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_Pages/morris-charts.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.time.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.pie.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.crosshair.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.threshold.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.stack.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_Pages/flot-charts.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_ThirdParty/sparkline/jquery.sparkline.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#sparkline1").sparkline([1, 1, 2], {
+                type: 'pie',
+                width: '250px',
+                height: '250px',
+                sliceColors: ['#805bbe', '#faca39', '#2eb7f3']
+            });
+            $("#sparkline2").sparkline([[1, 4, 1], [2, 3, 2], [3, 2, 2], [4, 1, 1], [6, 4, 7], [3, 5, 1], [6, 8, 1], [2, 3, 4], [5, 6, 7], [3, 3, 2], [1, 4, 1], [2, 3, 2], [3, 2, 2], [4, 1, 1], [6, 4, 7], [3, 5, 1]], {
+                type: 'bar',
+                height: '250px',
+                barWidth: 7,
+                barSpacing: 10,
+                stackedBarColor: ['#ff7f5a', '#3f4d9f', '#24caa1']
+            });
+        });
+    </script>
+
+    <script>
+        var d1 = [[0, 9], [1, 8], [2, 5], [3, 8], [4, 5], [5, 14], [6, 10], [7, 8], [8, 5], [9, 14], [10, 10]];
+        $.plot("#website-stats-1", [{
+            data: d1, color: '#2eb7f3',
+            lines: { show: true, fill: true, fillColor: "rgba(31, 35, 43, 0.9)" }
+        }
+        ], {
+            grid: {
+                show: false,
+                color: "rgb(48, 48, 48)",
+                tickColor: "rgba(3, 169, 243, 0)",
+                borderWidth: 1
+            },
+            series: {
+                lines: {
+                    show: false,
+                    fill: true
+                },
+                points: {
+                    show: false
+                },
+            },
+            legend: {
+                labelBoxBorderColor: "none",
+                position: "right"
+            }
+        });
+    </script>
+
+    <script src="~/Areas/BugTracker/BugTracker_js/scripts.js"></script>
+    <script src="~/Areas/BugTracker/BugTracker_js/custom.js"></script>
+
+
+    <script>
+        $(function () {
+            $('.slim-scroll-div').slimscroll({
+                height: 'auto'
+            })
+        });
+    </script>
+    <script>
+        $(document).ready(
+           function () {
+               //$("#NameSlide").hide();
+               $("#NameSlide").animate({
+                   left: '250px',
+                   opacity: '0.5',
+                   height: '150px',
+                   width: '150px'
+               });
+           });
+    </script>
+
+    <!-- Google Analytics Tracking -->
+    <script>
+
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-58677854-6', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

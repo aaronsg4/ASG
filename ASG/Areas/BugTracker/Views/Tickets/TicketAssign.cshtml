@@ -1,0 +1,65 @@
+﻿@model ASG.Areas.BugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "TicketAssign";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 well" style="align-content:center;margin-top:75px">
+            <br />
+            <div class="row">
+                <div class="col-sm-10"><h3 style="font-family:'Lato',sans-serif;">Assign ticket</h3><br /></div>
+                <div class="col-sm-2">
+                    <img src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" style="height:30px" />
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <p>
+                    When assigning tickets, you will see the available developers for each ticket.  Available developers are developers who have been assigned to the project to which the ticket belongs.
+                    If you do not see a developer you would like to add to a ticket, please first make sure they have been assigned to the project.<br /><br />
+                    Current developers in the system are:
+                </p>
+                <hr />
+                @using (Html.BeginForm("TicketAssign", "Tickets", FormMethod.Post, null))
+            {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="control-label col-md-2">Project Title:</div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.Project.Name)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label col-md-2">Ticket Title:</div>
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label col-md-2">Available Developers:</div>
+                        <div class="col-md-8">
+                            @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">                      
+                        <div class="col-md-10 col-md-offset-2">
+                            <input type="submit" value="Assign" name="button" class="btn btn-default" style="width:150px" /><br /><br />
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    </div>                    
+                }
+            </div>
+            <div>                
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

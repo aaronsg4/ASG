@@ -1,0 +1,284 @@
+﻿
+@using Microsoft.AspNet.Identity
+
+@{Layout = null;}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Contact - ASGay</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Suranna" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icon Fonts-->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/themify-icons.css" rel="stylesheet">
+    <!-- Plugins-->
+    <link href="~/assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/css/vertical.min.css" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="~/assets/css/template.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Preloader-->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- Preloader end-->
+    <!-- Menu-->
+    <div class="overlay-menu overlay-menu-animation font-serif">
+        <a class="close-menu" href="#"><span class="ti-close"></span></a>
+        <div class="menu-table">
+            <div class="menu-table-cell">
+                <ul class="navigation">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "About" })">About Me</a></li>
+                    <li class="menu-item-has-children">
+                        <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
+                        <ul class="sub-menu">
+                            <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
+                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a></li>
+                </ul><br />
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmationmessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1 class="modal-title" id="myModalLabel" style="text-align:center">Confirmation</h1>
+                </div>
+                <div class="modal-body" style="background-image: url('../../Areas/Contact/Contact_Images/tunnel.jpg'); opacity: 0.9; color: white">
+                    <h5>
+                        Email message has been sent.<br /><br /><br />
+                    </h5>
+                    <p>Message has been sent.</p>
+                </div>
+                <div class="modal-footer no-margin">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Menu end-->
+    <!-- Header-->
+    <header class="header">
+        <div class="container">
+            <div class="inner-header">
+               
+                <a class="inner-brand" href="/">
+                    Home               
+                </a>
+            </div>
+            <div class="header-nav-toogle">
+                <a class="show-menu-btn" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Header end-->
+    <!--<form action="/Home/Contact" method="post">-->
+    <div class="wrapper">
+        <!-- Page Header-->
+        <section class="module-header parallax" data-background="../../Areas/Contact/Contact_Images/white-painted-concrete-wall-888895_1920.jpg" style="padding:250px 0 250px !important">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4" style="background-color:rgba(255,255,255,0.2)">
+                        <h1 class="font-serif">Get in Touch.</h1>              
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Page Header end-->
+        <!-- Contact-->
+        <section class="module appear-childer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="module-title">
+                            <h5 class="m-b-5">Let´s Talk.</h5>
+                            <p><em>I'd love to hear from you.</em></p>
+                            <p>704-626-8583</p>
+                            <p><a href="mailto:aaronsg4@yahoo.com">AaronSG4@yahoo.com</a></p>
+                            <div class="detail-line"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="validation-summary-valid text-danger" data-valmsg-summary="true">
+                            <ul>
+                                <li style="display:none"></li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input class="form-control" data-val="true" data-val-required="The FromName field is required." id="FromName" name="FromName" type="text" value="" placeholder="Your Name">
+                                    <span class="field-validation-valid help-block text-danger" data-valmsg-for="FromName" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" data-val="true" data-val-email="The FromEmail field is not a valid e-mail address." data-val-required="The FromEmail field is required." id="FromEmail" name="FromEmail" type="text" value="" placeholder="Your Email">
+                                    <span class="field-validation-valid help-block text-danger" data-valmsg-for="FromEmail" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input class="form-control" data-val="true" data-val-required="The Subject field is required." id="Subject" name="Subject" type="text" value="" placeholder="Subject">
+                                    <span class="field-validation-valid help-block text-danger" data-valmsg-for="Subject" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input class="form-control" data-val="true" data-val-required="The Body field is required." id="Body" name="Body" type="text" value="" placeholder="Type message here">
+                                    <span class="field-validation-valid help-block text-danger" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <button class="btn btn-brand" id="submit">Submit</button>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Ajax response-->
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact end-->
+        <!-- Map-->
+        @*<section class="maps-container">
+            <div id="map" data-addresses="[35.227396, -80.843120]" data-info="[Lorem ipsum dolor sit amet.]" data-icon="../../Areas/Contact/Contact_Images/map-icon.png" data-zoom="16"></div>
+        </section>*@
+        <!-- Map end-->
+        <!-- Footer-->
+        <footer class="footer parallax" data-background="../../Areas/Contact/Contact_Images/white-painted-concrete-wall-888895_1920.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer end-->
+    </div>
+    <!--</form>-->
+    <!-- Scripts-->
+    <script src="~/assets/js/jquery-2.2.4.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/custom.min.js"></script>
+    <script>
+            $('#submit').click(function () {
+                var fromname = $('#FromName').val();
+                var fromemail = $('#FromEmail').val();
+                var subject = $('#Subject').val();
+                var body = $('#Body').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Contact",
+                    data: { FromName: fromname, FromEmail: fromemail, Subject: subject, Body: body },
+                    success: function ()
+                    {
+                        $('#FromName').val('');
+                        $('#FromEmail').val('');
+                        $('#Subject').val('');
+                        $('#Body').val('');
+
+                        $('#confirmationmessage').modal('show');
+                        $('#confirmationmessage').delay(1000).fadeOut(1000);
+                        setTimeout(function () {
+                            $('#confirmationmessage').modal('hide')
+                        }, 4000
+                        );
+                        //$(window).delay(1000).fadeOut(1000);
+                        //callbackfunc();
+                    }
+                });
+
+                //function callbackfunc() { window.location.replace('https://localhost:44363/index.html') };
+            });
+    </script>
+
+    <script>
+        var loading = function () {
+            $('.page-loader').show()
+        }
+    </script>
+</body>
+</html>
+

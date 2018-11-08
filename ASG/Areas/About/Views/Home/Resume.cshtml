@@ -1,0 +1,381 @@
+﻿
+@{Layout = null;}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ASGay</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Suranna" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Fonts-->
+    <link href="../../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../assets/css/themify-icons.css" rel="stylesheet">
+    <!-- Plugins-->
+    <link href="../../assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="../../assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="../../assets/css/vertical.min.css" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="../../assets/css/template.css" rel="stylesheet">
+
+</head>
+<body style="background-color:black">
+    <!-- Preloader-->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- Preloader end-->
+    <!-- Menu-->
+    <div class="overlay-menu overlay-menu-animation font-serif">
+        <a class="close-menu" href="#"><span class="ti-close"></span></a>
+        <div class="menu-table">
+            <div class="menu-table-cell">
+                <ul class="navigation">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "About" })">About Me</a></li>
+                    <li class="menu-item-has-children">
+                        <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
+                        <ul class="sub-menu">
+                            <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
+                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a></li>
+                </ul><br />
+            </div>
+        </div>
+    </div>
+    <!-- Menu end-->
+    <!-- Header-->
+    <header class="header">
+        <div class="container">
+            <div class="inner-header">
+                <a class="inner-brand" href="/">
+                    <img class="brand-dark" alt="">Home
+                </a>
+            </div>
+            <div class="header-nav-toogle">
+                <a class="show-menu-btn" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Header end-->
+    <div class="container" style="background-color:white; opacity:.95; color:black; padding-top:100px;">
+        <div class="row" style="background-color:#f8f4f4">
+            <div class="col-lg-4" style="opacity:.95; padding-left:55px">
+                <p id="resumeh1" style="font-size:50px">Aaron S. Gay</p>
+            </div>
+            <div class="col-lg-8 text-right" style="opacity:.95; padding-right:50px; font-size:18px; line-height:1.3; padding-top:20px">
+                <div class="row">Sharon Road, Charlotte, NC  28207              </div>
+                <div class="row">
+                    704-626-8583   AaronSG4@yahoo.com
+                    <hr />
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4" style="opacity:.95"><!--Business professional with 15 years of demonstrated success--></div>
+            <div class="col-lg-8" style="opacity:.95; padding-left:30px">
+                <br />
+                <!--<strong>Experience</strong>--><br />
+            </div>
+        </div>
+        <div class="row" style="line-height:1.3">
+            <div class="col-lg-4" style="padding-left:60px; padding-right:30px; border-right:double">
+                <div class="row"><!--<strong>-->Education<!--</strong>--><hr /></div>
+                <div class="row"><strong>The University of North Carolina at Charlotte</strong></div><br />
+                <div class="row" style="font-size: 16px">
+                    BA in Industrial Organizational Psychology<br />
+                    Minor in Organizational Communication<br /><br />
+                </div>
+                <div class="row">
+                    <ul>
+                        <li>GPA 3.9</li>
+                        <li>Graduated Magna Cum Laude, 2006<br /><br /><br /></li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <img src="~/Areas/About/About_Images/UNC_Charlotte_seal.png" id="uncc" style="padding-right:35px;" /><br /><br /><br /><br /><br />
+                </div>
+                <div class="row" style="padding-bottom:0px"><!--<strong>-->Awards and Recognition<!--</strong>--><hr /></div>
+                <div class="row">
+                    2014 Rising Stars of Charlotte<br />
+                    <p id="award">
+                        Recognition of rising landscape maintenance and installation
+                        companies in the NC market<br />
+                    </p>
+                </div>
+                <div class="row">
+                    National Dean's Society<br />
+                    <p id="award">National Academic Recognition</p>
+                </div>
+                <div class="row">
+                    2005 Significant Contribution Award<br />
+                    <p id="award">The Hearst Corporation</p>
+                </div>
+                <div class="row">2004 Psi Chi Honor Society</div><br /><br />
+
+                <br />
+
+                <div class="row"><!--<strong>-->Skills<!--</strong>--><hr /></div>
+                <div class="row" id="skills">
+                    <div class="col-lg-6" style="text-align:left; padding-right:80px; padding-bottom:50px; line-height: 180%">
+                        <div class="row">HTML</div>
+                        <div class="row">CSS</div>
+                        <div class="row">JavaScript</div>
+                        <div class="row">Jquery</div>
+                        <div class="row">Bootstrap</div>
+                        <div class="row">Word</div>
+                        <div class="row">Excel</div>
+                        <div class="row">Office</div>
+                        <div class="row">SAP</div>
+                        <div class="row">Oracle</div>
+                        <div class="row"></div>
+                        <div class="row"></div>
+                    </div>
+                    <div class="col-lg-6" style="line-height: 180%">
+                        <div class="row">MVC</div>
+                        <div class="row">C#</div>
+                        <div class="row">MS SQL Server</div>
+                        <div class="row">MS Visual Studio</div>
+                        <div class="row">Web Design</div>
+                        <div class="row">Knockout.js</div>
+                        <div class="row">Web API</div>
+                        <div class="row">ASP.NET</div>
+                        <div class="row"></div>
+                        <div class="row"></div>
+                    </div>
+                </div>
+                <div class="row"><!--<strong>-->Activities<!--</strong>--><hr /></div>
+                <div class="row" id="activities">
+                    <div class="col-lg-12" style="text-align:left; padding-bottom:100px; padding-left:0px !important; padding-right: 0px !important">
+                        <div row">
+                            <strong>The Community Center of Charlotte</strong><br />
+                            Assistant Director<br />
+                            <ul>
+                                <li>Encouraged membership, recruited volunteers, and supported operations</li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <strong>Self Determination Project - (RSS)</strong><br />
+                            Volunteer<br />
+                            <ul>
+                                <li>Fostered relationships between participants and families of special needs individuals</li>
+                                <li>Participated in 'buddy program' and events such as Special Olympics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="row" style="line-height:1.3; padding-bottom:40px;">
+                <div class="col-lg-8" style="opacity:.95; padding-left:30px; padding-bottom:50px ">
+                    <div class="row">
+                        <div class="row" style="padding-left:20px"><!--<strong>-->Experience<!--</strong>--><hr /></div>
+                        <div class="col-lg-10" style="opacity:.95; padding-top:0px; padding-bottom:0px;">
+                            <strong>Greatwide Truckload Management</strong><br /><br />
+                            IT Applications Analyst<br />
+                            <ul>
+                                <li>Designed and maintained web applications using ASP.NET, C, CSS, HTML, JavaScript, jQuery, Knockout.js, LINQ, OOP, SQL Server, and Visual Studio.  Worked in full-stack environment with exposure to both front-end and back-end procedures</li>
+                                <li>
+                                    Utilized RESTful API / JSON data requests, linking internal server-side and client-side logic
+                                </li>
+                                <li>Built console applications for consumine external Web API, utilizing HttpWebRequest/Response class to generate GPS coordinates and Electronic Logging Device data.  Ran as scheduled task, storing response results in SQL Server database tables</li>
+                                <li>
+                                    Developed an in-depth understanding of existing data model and participated in gathering of software requirements for application functionality and code implementation
+                                </li>
+                                <li>Utilized JIRA for issue tracking, agile process management, workflow documentation, and weekly scrum meetings, while communicating decisions and solutions to devlopment team on an ongoing basis</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2" style="opacity:.95; padding-top:0px; padding-bottom:30px; font-size:16px;padding-right:0px;padding-left:0px;">Mooresville, NC<br />2017-present</div>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="opacity:.95; padding-left:30px; padding-bottom:50px ">
+                    <div class="row">
+                        <div class="col-lg-10" style="opacity:.95; padding-top:0px; padding-bottom:0px;">
+                            <strong>Coder Foundry</strong><br /><br />
+                            Student<br />
+                            <ul>
+                                <li>Created a personal portfolio and blog website using C#, MVC5, and JavaScript</li>
+                                <li>
+                                    Created a fully functional MVC bug tracker web application, from scratch, implementing enhanced security and file uploading features
+                                </li>
+                                <li>Created a fully functional financial portal web application using .NET MVC framework.  Composed dynamic front-end design using partial views and AJAX.</li>
+                                <li>
+                                    Created a fully functioning mobile vehicle information application using Xamarin.  Accessed NHTSA's car recalls database using WebAPI2.  Included images
+                                    using Bing's Cognitive Image Search API. Built RESTful APIs and utilized Azure App Services.
+                                </li>
+                                <li>
+                                </li>
+                                <li>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2" style="opacity:.95; padding-top:0px; padding-bottom:30px; font-size:16px;padding-right:0px;padding-left:0px;">Charlotte, NC<br />2009-2016</div>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="opacity:.95; padding-left:30px; padding-bottom:50px ">
+                    <div class="row">
+                        <div class="col-lg-10" style="opacity:.95; padding-top:0px; padding-bottom:0px;">
+                            <strong>Commonwealth Landscape Management</strong><br /><br />
+                            General Manager<br />
+                            <ul>
+                                <li>Established and operated successful landscape company</li>
+                                <li>
+                                    Created processes and documentation for scheduling workload and
+                                    allocating resources for work orders
+                                </li>
+                                <li>Accurately accounted for revenue, material requirements, labor, and profit</li>
+                                <li>
+                                    Developed effective network of architects, business owners, clients,
+                                    community associations, property managers, real estate developers,
+                                    subcontractors, accountants, and employees
+                                </li>
+                                <li>Utilized ADP Payroll system for typically 3-5 employees</li>
+                                <li>
+                                    Generated monthly invoices through accounts receivable manager, with
+                                    receivables of 20-50k/month
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2" style="opacity:.95; padding-top:0px; padding-bottom:30px; font-size:16px;padding-right:0px;padding-left:0px;">Charlotte, NC<br />2009-2016</div>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="opacity:.95; padding-left:30px; padding-bottom:50px">
+                    <div class="row">
+                        <div class="col-lg-10" style="opacity:.95; padding-top:0px; padding-bottom:0px">
+                            <strong>Nortel Networks</strong><br /><br />
+                            North American Carrier Operations - Contract Analyst<br />
+                            <ul>
+                                <li>Led project team to increase cost savings in data processing</li>
+                                <li>Conducted process development/simplification through SAP automation and reduction of manual invoicing</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2" style="opacity:.95; padding-top:0px; padding-bottom:30px; font-size:16px;padding-right:0px;padding-left:0px;">Dallas, TX<br />2008-2009</div>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="opacity:.95; padding-left:30px; padding-bottom:50px">
+                    <div class="row">
+                        <div class="col-lg-10" style="opacity:.95; padding-top:0px; padding-bottom:0px">
+                            <strong>Real Estate Investment Group</strong><br /><br />
+                            Operations Director/Partner<br />
+                            <ul>
+                                <li>Coordinated operations as primary point of contact among team members</li>
+                                <li>Managed contractors and supervised operations for construction projects</li>
+                                <li>Performedand monitored daily construction operations to ensure timely project completion</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2" style="opacity:.95; padding-top:0px; padding-bottom:30px; padding-right:0px;padding-left:0px; font-size:16px;">Asheville, NC<br />2006-2008</div>
+                    </div>
+                </div>
+                <div class="col-lg-8" style="opacity:.95; padding-left:30px; padding-bottom:50px">
+                    <div class="row">
+                        <div class="col-lg-10" style="opacity:.95; padding-top:0px; padding-bottom:0px">
+                            <strong>The Hearst Corporation</strong><br /><br />
+                            Strategy Analyst<br />
+                            <ul>
+                                <li>
+                                    Performed regular auditing of ongoing initiatives to increase market share by providing
+                                    recommendations for expansion
+                                </li>
+                                <li>
+                                    Conducted extensive market research on company owned magazine titles to reconcile
+                                    costs and expand profitability
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-2" style="opacity:.95; padding-top:0px; padding-bottom:30px; font-size:16px;padding-right:0px;padding-left:0px;">Charlotte, NC<br />2001-2005</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts-->
+    <script src="../../assets/js/jquery-2.2.4.min.js"></script>
+    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+    <script src="../../assets/js/plugins.min.js"></script>
+    <script src="../../assets/js/custom.min.js"></script>
+
+    <script>
+        var loading = function () {
+            $('.page-loader').show()
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

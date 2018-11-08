@@ -1,0 +1,536 @@
+﻿
+@model ASG.Areas.BugTracker.Models.Ticket
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/dropzone/css/dropzone.min.css" rel="stylesheet" />  
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/full-calendar/css/fullcalendar.min.css" rel="stylesheet" />
+   
+
+    <!-- Loading Theme's Styles -->
+    <!-- Script for IE < 9 -->
+    <!--[if lt IE 9]>
+    <script src="~/third-party/respond/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- Page Loader -->
+    <!-- Page Content -->
+    <div class="page-content" style="padding-bottom:200px">
+        <!-- Header - Add "light" for light menu | "nav-dark-blue" for dark-blue accent | "nav-blue" for blue accent | "nav-blue-grey" for blue-grey accent |
+             "nav-green" for green accent | "nav-dark-green" for dark-green accent | "nav-purple" for purple accent | "nav-red" for red accent |
+              "nav-Orange" for Orange accent | "nav-yellow" for yellow accent -->
+        <!-- End of Header -->
+        <!-- Sliding Chat : add "chat-light" along with "chat-slide" for light chat window-->
+        <!-- End of Chat -->
+        <div class="section-admin container-fluid">
+            <div class="row admin text-center">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-blue text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_ribbon color-dark-blue"></span>
+                                <span class="counter-extend"></span><span class="counter">
+                                    @ViewBag.projectcount
+                                </span>
+                                <h3>
+                                    Open Projects
+                                    @ViewBag.projectmessage
+                                    <br />
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-dark-blue text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_tags"></span>
+                                <span class="counter">@ViewBag.ticketcount</span>
+                                <h3>
+                                    Open Tickets
+                                    @ViewBag.message<br />
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-purple text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_cart"></span>
+                                <span class="counter">@ViewBag.urgentticketcount</span>
+                                <h3>
+                                    Urgent Tickets
+                                    @ViewBag.urgentmessage
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="admin-content bg-dark-green text-light text-left" style="height:140px !important">
+                                <span class="counter-icon counter-icon-big icon_chat color-green"></span>
+                                <span class="counter">@ViewBag.unassignedticketcount</span>
+                                <h3>@ViewBag.unassignedmessage</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br /><br /><br />
+        </div>     
+        <div class="section-admin container-fluid" style="margin-bottom:50px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="admin-content" style="padding-bottom:50px">
+                        <h3><b>Ticket Overview</b></h3><br /><br />
+                        <div class="table-responsive">
+                            <table class="table table-theme table-clear table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Ticket Name
+                                        </th>
+                                        <th>
+                                            Project Name
+                                        </th>
+                                        <th>
+                                            Project Manager
+                                        </th>
+                                        <th>
+                                            Assigned
+                                        </th>
+                                        <th>
+                                            Ticket Currently Assigned To
+                                        </th>
+                                        @if (Model.TicketStatus.Name != "Archived")
+                                        {
+                                            <th>
+                                                Ticket Created Date
+                                            </th>
+                                        }
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                        {
+                                            if (Model.TicketStatus.Name != "Archived")
+                                            {
+                                                <th>
+                                                    Actions
+                                                </th>
+                                            }
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody class="text-lighter">
+                                    @if (Model != null)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Model.Title
+                                            </td>
+                                            <td>
+                                                @Model.Project.Name
+                                            </td>
+                                            <td>
+                                                @if (Model.TicketStatus.Name == "Archived")
+                                            {
+                                                <span class="glyphicon glyphicon-minus" style="font-size:25px;color:red"></span> <br /><i>Closed</i>
+                                            }
+                                            else
+                                            {
+                                                @Model.Project.ProjectManagerName
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (Model.TicketStatus.Name == "Archived")
+                                            {
+                                                <span class="glyphicon glyphicon-minus" style="font-size:25px;color:red"></span> <br /><i>Closed</i>
+                                            }
+                                            else if (Model.AssignedToUserId != null)
+                                            {
+                                                <span class="glyphicon glyphicon-check" style="font-size:25px;color:lawngreen"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="glyphicon glyphicon-minus" style="font-size:25px;color:red"></span>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @if (Model.TicketStatus.Name == "Archived")
+                                            {
+                                                <span class="glyphicon glyphicon-minus" style="font-size:25px;color:red"></span> <br /><i>Closed</i>
+                                            }
+                                            else if (Model.AssignedToUserId != null)
+
+                                            {
+                                                @Model.AssignedToUser.DisplayName                                             
+                                            }
+                                            else
+                                            {
+                                                <span class="glyphicon glyphicon-minus" style="font-size:25px;color:red"></span>
+                                            }
+                                        </td>
+                                        @if (Model.TicketStatus.Name != "Archived")
+                                        {
+                                            <td>
+                                                @Model.CreatedDate
+                                            </td>
+                                        }
+                                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                        {
+                                            if (Model.TicketStatus.Name != "Archived")
+                                            {
+                                                <td>
+                                                    <a href="@Url.Action("Edit", "Tickets", new { id = Model.Id })" data-placement="top" data-toggle="tooltip" class="tip-top" data-original-title="Edit"><span class="icon_pencil mar-right-10"></span></a>
+                                                    <a href="@Url.Action("Archive", "Tickets", new { id = Model.Id })" data-placement="top" data-toggle="tooltip" class="tip-top" data-original-title="Delete"><span class="icon_trash"></span></a>
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        @if (Model.TicketStatus.Name != "Archived")
+        {
+            <div class="section-admin container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">                     
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet portlet-bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-subject">TICKET HISTORY for:  @Model.Title</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="slim-scroll-content" style="height:500px!important">
+                                    <div class="slim-scroll-div"  style="height:500px!important">
+                                        <ul class="timeline timeline-left timeline-small timeline-purple">
+                                            @if (Model.TicketHistories.Any())
+                                            {
+                                                foreach (var history in Model.TicketHistories.OrderByDescending(th => th.DateChanged))
+                                                {
+                                                    <li>
+                                                        <div class="timeline-badge text-info"></div>
+                                                        <div class="timeline-panel">
+                                                            <div class="timeline-heading">
+                                                                <p><small class="timeline-time">@Html.DisplayFor(modelItem => history.DateChanged)</small></p><br />
+                                                                <h4 class="timeline-title">Item Changed: @Html.DisplayFor(modelItem => history.Property)</h4><br /><br />
+                                                            </div>
+                                                            <div class="timeline-body">
+                                                                <p>
+                                                                    Previous value: &nbsp;&nbsp;
+                                                                    @Html.DisplayFor(modelItem => history.OldValue)<br />
+                                                                </p><br /><br />
+                                                                <p>
+                                                                    New value:  &nbsp; &nbsp;
+                                                                    @Html.DisplayFor(modelItem => history.NewValue)
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PORTLET-->
+                    </div>
+                </div>
+            </div>
+            <div class="section-admin container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4 style="font-family: 'Lato' ,sans-serif; padding-left:20px">COMMENTS </h4><hr />
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet portlet-bordered" style="margin-bottom:100px">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-subject"></span><br /><br /><br /><br />
+                                    @{ var projectId = Model.Project.Id;}
+                                    <span class="caption-subject">ADD COMMENTS</span><br />
+                                    @{ var temporary2 = TempData["message"];}
+                                    @temporary2
+                                </div>
+                                @if (Request.IsAuthenticated)
+                                {      
+                                using (Html.BeginForm("Create", "TicketComments", new { id = Model.Id }, FormMethod.Post, null))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group col-sm-12">
+                                        <textarea class="form-control" rows="8" placeholder="Comment *" name="Comment"></textarea>
+                                        <input class="btn btn-brand" type="submit" value="Comment">
+                                    </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p style="font-variant:small-caps">@Html.ActionLink("Login to Add Comments", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</p><br /><br />
+                                }
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="portlet_tab1">
+                                        <div class="slim-scroll-content">
+                                            <div class="slim-scroll-div">
+                                                <section class="comments">
+                                                    <div>Comments:</div>
+                                                    @{string y = ""; }
+                                                    @foreach (var comment in Model.TicketComments.Reverse())
+                                                    {
+                                                        TimeSpan elapsed = DateTime.UtcNow - comment.CreatedDate;
+                                                        if (elapsed.TotalMinutes < 1)
+                                                        {
+                                                            y = "Just now";
+                                                        }
+                                                        else if (elapsed.TotalMinutes < 2)
+                                                        {
+                                                            y = "1 minute ago";
+                                                        }
+                                                        else if (elapsed.TotalMinutes < 60)
+                                                        {
+                                                            y = string.Format("{0} minutes ago", elapsed.Minutes);
+                                                        }
+                                                        else if (elapsed.TotalMinutes < 120)
+                                                        {
+                                                            y = "1 hour ago";
+                                                        }
+                                                        else if (elapsed.TotalHours < 24)
+                                                        {
+                                                            y = string.Format("{0} days ago", elapsed.Hours);
+                                                        }
+                                                        else if (elapsed.TotalDays < 2)
+                                                        {
+                                                            y = "yesterday";
+                                                        }
+                                                        else if (elapsed.TotalDays < 7)
+                                                        {
+                                                            y = string.Format("{0} days ago", elapsed.Days);
+                                                        }
+                                                        else if (elapsed.TotalDays < 14)
+                                                        {
+                                                            y = "Last week";
+                                                        }
+                                                        else if (elapsed.TotalDays < 21)
+                                                        {
+                                                            y = "Two weeks ago";
+                                                        }
+                                                        else if (elapsed.TotalDays < 28)
+                                                        {
+                                                            y = "3 weeks ago";
+                                                        }
+                                                        else if (elapsed.TotalDays < 60)
+                                                        {
+                                                            y = "last month";
+                                                        }
+                                                        else if (elapsed.TotalDays < 365)
+                                                        {
+                                                            y = string.Format("{0} months ago", Math.Round(elapsed.TotalDays / 30));
+                                                        }
+                                                        <ul>
+                                                            <li>                                                                
+                                                                <img alt="image" src="~/Areas/BugTracker/BugTracker_Images/team/man-test-2.jpg" />
+                                                                <span class="comment-name">@Html.DisplayFor(modelItem => comment.User.FirstName)</span>
+                                                                <span class="comment-date">@y</span>
+                                                                <div class="comment-content">@Html.DisplayFor(modelItem => comment.Comment)</div>
+                                                                <div class="comment-action">
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <hr />
+                                                    }
+                                                </section><!-- End of Post Comments -->
+                                            </div>
+                                        </div>
+                                        <div>
+                                            @Html.ActionLink("Back to List", "Index")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- END PORTLET-->
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- BEGIN PORTLET-->
+                        <h4 style="font-family: 'Lato' ,sans-serif; padding-left:20px">ATTACHMENTS @*FOR:  @Model.Title*@</h4><hr />
+                        <div class="portlet portlet-bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <span class="caption-subject"></span><br /><br /><br /><br />
+                                    <span class="caption-subject">ADD ATTACHMENT</span><br /><br /><br />
+                                </div>
+                                @{ var temporary3 = TempData["message"];}
+                                @temporary3
+                                @using (Html.BeginForm("Create", "TicketAttachments", new { Id = Model.Id }, FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.CreatedDate)
+                                    @Html.HiddenFor(model => model.SubmitterUserId)
+                                    @Html.HiddenFor(model => model.Description)
+                                    @ViewBag.ErrorMessage
+                                    <div class="form-group col-sm-12">
+                                        <div style="float:left">
+                                            <input type="file" name="File" class="form-control" rows="8" />
+                                        </div>
+                                        <input class="btn btn-brand" type="submit" value="Upload">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div><br /><br /><br /><br /><br /><br /></div>
+                                        </div>
+                                    </div>
+                                }
+                                @{ var temporary = TempData["attachmentmessage"];}
+                                @temporary
+                            </div>
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="portlet_tab3">
+                                        <div class="slim-scroll-content">
+                                            <div class="slim-scroll-div">
+                                                <div>Existing Ticket Attachments:<br /><br /><br /></div>
+                                                <ul class="notification-list">
+                                                    @foreach (var attachment in Model.TicketAttachments)
+                                                    {
+                                                        TimeSpan elapsed = DateTime.UtcNow - attachment.CreatedDate;
+                                                        if (elapsed.TotalMinutes < 1)
+                                                        {
+                                                            y = "Just now";
+                                                        }
+                                                        else if (elapsed.TotalMinutes < 2)
+                                                        {
+                                                            y = "1 minute ago";
+                                                        }
+                                                        else if (elapsed.TotalMinutes < 60)
+                                                        {
+                                                            y = string.Format("{0} minutes ago", elapsed.Minutes);
+                                                        }
+                                                        else if (elapsed.TotalMinutes < 120)
+                                                        {
+                                                            y = "1 hour ago";
+                                                        }
+                                                        else if (elapsed.TotalHours < 24)
+                                                        {
+                                                            y = string.Format("{0} days ago", elapsed.Hours);
+                                                        }
+                                                        else if (elapsed.TotalDays < 2)
+                                                        {
+                                                            y = "yesterday";
+                                                        }
+                                                        else if (elapsed.TotalDays < 7)
+                                                        {
+                                                            y = string.Format("{0} days ago", elapsed.Days);
+                                                        }
+                                                        else if (elapsed.TotalDays < 14)
+                                                        {
+                                                            y = "Last week";
+                                                        }
+                                                        else if (elapsed.TotalDays < 21)
+                                                        {
+                                                            y = "Two weeks ago";
+                                                        }
+                                                        else if (elapsed.TotalDays < 28)
+                                                        {
+                                                            y = "3 weeks ago";
+                                                        }
+                                                        else if (elapsed.TotalDays < 60)
+                                                        {
+                                                            y = "last month";
+                                                        }
+                                                        else if (elapsed.TotalDays < 365)
+                                                        {
+                                                            y = string.Format("{0} months ago", Math.Round(elapsed.TotalDays / 30));
+                                                        }
+                                                        string filename = attachment.FilePath.ToString();
+                                                        string word = ".docx";
+                                                        string excel = ".xls";
+                                                        string pdf = ".pdf";
+                                                        string jpeg = ".jpg";
+                                                        string bmp = ".bmp";
+                                                        string gif = ".gif";
+                                                        string zip = ".zip";
+                                                        string rar = ".rar";
+                                                        <li>
+                                                            <span class="details">                                                              
+                                                                <a class="fa fa-download" target="_blank" href="@attachment.FilePath" style="line-height:15px"></a>
+                                                            </span>
+                                                            <span class="pull-right">
+                                                                @if (filename.Contains(word))
+                                                                {
+                                                                    <span class="fa fa-file-word-o fa-2x" aria-hidden="true"></span>
+                                                                }
+                                                                else if (filename.Contains(excel))
+                                                                {
+                                                                    <span class="fa fa-file-excel-o" aria-hidden="true" style="font-size:35px"></span>
+                                                                }
+                                                                else if (filename.Contains(pdf))
+                                                                {
+                                                                    <span class="fa fa-file-pdf-o" aria-hidden="true"></span>
+                                                                }
+                                                                else if (filename.Contains(jpeg))
+                                                                {
+                                                                    <span class="fa fa-file-image-o" aria-hidden="true"></span>
+                                                                }
+                                                                else if (filename.Contains(bmp))
+                                                                {
+                                                                    <span class="fa fa-file-image-o" aria-hidden="true"></span>
+                                                                }
+                                                                else if (filename.Contains(gif))
+                                                                {
+                                                                    <span class="fa fa-file-image-o" aria-hidden="true"></span>
+                                                                }
+                                                                else if (filename.Contains(zip))
+                                                                {
+                                                                    <span class="icon-paperclip" aria-hidden="true"></span>
+                                                                }
+                                                                else if (filename.Contains(rar))
+                                                                {
+                                                                    <span class="icon-paperclip" aria-hidden="true"></span>
+                                                                }
+                                                                <br /><br />
+                                                                <span class="time-badge">@y</span><br /><br />
+                                                            </span>
+                                                            <i>
+                                                                @attachment.Description
+                                                            </i><br /><br />
+                                                            <div style="padding-left:40px">
+                                                                <a href="@Url.Action("Delete", "TicketAttachments", new { id = attachment.Id })">
+                                                                    Remove ||
+                                                                </a>
+                                                                <a href="@Url.Action("Details", "TicketAttachments", new { id = attachment.Id })">Details &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                            </div>
+                                                            <br /><br /><br /><br /><br /><br />
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <br />
+                            </div>
+                        </div><!-- END PORTLET-->
+                    </div>
+                </div>
+            </div>
+                                    }
+        </div>
+
+<!-- End of Page Content -->
+        <!-- Footer -->
+        @section scripts {
+
+
+
+        }
+
+</body>
+
+</html>

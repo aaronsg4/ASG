@@ -1,0 +1,110 @@
+﻿@model IEnumerable<ASG.Areas.BugTracker.Models.Ticket>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <section class="page-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 header-inline">
+                    <div class="header-inline-content">
+                        <h2 class="page-title">Data Tables</h2>
+                    </div>
+                    <div class="header-inline-content">
+                        <ul class="breadcrumb">
+                            <li><a href="~/index.html">Home</a></li>
+                            <li class="active">Tables</li>
+                            <li class="button"><a href="#" class="btn btn-dark-blue">Buy Now</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End of Page Header -->
+    <!-- Flot Basic -->
+    <div class="admin-content" style="padding-left:300px">
+        <h1 style="font-variant:small-caps">Ticket Owner</h1><br /><br />
+        <h3><b> Below you will find a list of Tickets that you have created.</b></h3><br /><hr />
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    <div class="section-admin container-fluid" style="padding-left:300px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="admin-content">
+                    <div class="table-responsive">
+                        @foreach (var ticket in Model)
+                        {
+                            <h2>@ticket.Title)</h2>
+                            @ViewBag.users
+                            <table id="example1" class="table table-theme table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket Created By</th>
+                                        <th>Ticket Priority</th>
+                                        <th>Ticket Description</th>
+                                        <th>Ticket Status</th>
+                                        <th>Created Date</th>
+                                        <th>Assigned To</th>
+                                        <th>Ticket Attachments</th>
+                                        <th>Functions</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ticketdescription in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.SubmitterUser.FirstName) @Html.DisplayFor(modelItem => ticketdescription.SubmitterUser.LastName)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.TicketPriority.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.Title)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.Description)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.TicketStatus.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.CreatedDate)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.AssignedToUser.FirstName) &nbsp; @Html.DisplayFor(modelItem => ticketdescription.AssignedToUser.LastName)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticketdescription.TicketAttachments)</td>
+                                            <td>@Html.ActionLink("Assign Ticket", "TicketAssign", new { id = ticket.Id })</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <br /><br /><br /><br /><hr />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End of Page Content -->
+    <!-- Footer -->
+
+
+    @section scripts {
+
+        <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/dataTables.bootstrap.min.js"></script>
+
+        <!-- Export functionality -->
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+        <!-- End of Export functionality -->
+
+        <script>
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        </script>
+    }
+</body>
+</html>

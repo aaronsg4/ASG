@@ -1,0 +1,192 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.Household
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Details";
+}
+
+@{ var userid = User.Identity.GetUserId();
+
+}
+<br /><br>
+
+<div class="pull-right">
+
+    @if (Request.IsAuthenticated)
+    {
+        <a type="button" class="btn btn-success" style="color:white; width:200px; margin-bottom:7px" href="@Url.Action("Create", "FinancialAccounts")" data-toggle="modal" data-target="#myModalAccountCreate">Add Accounts</a><br />
+        <a type="button" class="btn btn-success" style="color:white; width:200px; margin-bottom:7px" href="@Url.Action("BudgetsCreateModal","Budgets", new { id = userid })" data-toggle="modal" data-target="#myModal1">Create a New Budget</a><br />
+        if (ViewBag.UserBudgets.Count != 0)
+        {
+            <a type="button" class="btn btn-success" style="color:white; width:200px;" href="@Url.Action("Index","Budgets", new { id = userid })">View My Budgets</a>
+        }
+    }
+</div>
+<div style="background-image: url('../../FP_Images/eco-construction-1894026 (1).png'); height:500px">
+    <h2>My Household</h2>
+    <h4>Welcome  @Model.Users.FirstOrDefault(u => u.Id == userid).FullName</h4>
+    <hr />
+    <br /><br />
+    <div class="container">
+        @{ var temporaryaccountmessage = TempData["NotYourAccountmessage"];}
+        @temporaryaccountmessage
+        @{ var accountmessage = TempData["accountmessage"];}
+        @accountmessage
+        @if (accountmessage == null)
+        {
+            var budgetmessage = TempData["budgetmessage"];
+            @budgetmessage
+        }
+        <div class="col-md-7">
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Members</th>
+                            <th>Accounts</th>
+                            <th>Remove</th>
+                            <th>Budgets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var member in Model.Users)
+                        {
+                            <tr>
+                                <td><img src="~/img/avatar-294479.png" style="height:30px" /><span>&nbsp;&nbsp;&nbsp;</span></td>
+                                <td>@member.FullName</td>
+                                <td>
+                                    @foreach (var account in Model.Accounts)
+                                    {
+                                        if (account.AccountHolderUserId == member.Id)
+                                        {
+                                            if (userid == account.AccountHolderUserId)
+                                            {
+                                                <a href="@Url.Action("Details", "FinancialAccounts", new { id = account.Id })">
+                                                    @account.Name<br />
+                                                </a>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var account in Model.Accounts)
+                                    {
+                                        if (account.AccountHolderUserId == member.Id)
+                                        {
+                                            if (userid == account.AccountHolderUserId)
+                                            {
+                                                <a href="@Url.Action("Delete", "FinancialAccounts", new { id = account.Id })" data-toggle="modal" data-target="#DeleteAccount">x</a>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var budget in Model.Budgets)
+                                    {
+                                        if (budget.UserId == member.Id)
+                                        {
+                                            <a href="@Url.Action("Index","Budgets")">
+                                                @budget.Name<br />
+                                            </a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+            </div>
+        </div>
+        <div style="padding-top:350px">
+            Click <a href="@Url.Action("CreateInvitationsModal", "Invitations")" data-toggle="modal" data-target="#myModalInvite"><img src="~/img/branch-2029756.png" style="height:40px" /></a>
+            to send an invite to join your household!
+            <div class="pull-right">
+                <a href="@Url.Action("LeaveHousehold", "Households", new {id = Model.Id })" style="color:white" data-toggle="modal" data-target="#LeaveHousehold">Leave Household</a>
+                <a href="@Url.Action("Edit", "Households",new { id = Model.Id })" style="color:white" data-toggle="modal" data-target="#EditHousehold">Edit</a><br />
+            </div>
+        </div>
+    </div>
+    <br /><br />
+    <br /><br /><br />
+</div>
+<div id="myModalInvite" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModalAccountCreate" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="EditHousehold" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="LeaveHousehold" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="AccountDetails" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="DeleteAccount" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

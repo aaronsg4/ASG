@@ -1,0 +1,39 @@
+﻿@model ASG.Models.RegisterViewModel
+@using System.Text.RegularExpressions
+
+
+@{
+    ViewBag.Title = "Register";
+
+}
+@{
+    ViewBag.Application = "BugTracker";
+}
+
+<div class="wrapper" style="color:white; padding:30px 80px 80px 80px">
+    <form class="form-signin" role="form" id="RegisterForm" onsubmit="return false">
+        <h4 class="form-signin-heading  letter-spacing-3" style="color:white; text-align:left; padding-top:20px; font-variant:small-caps">Create a new account.</h4>
+        @*<h4 style="color:white">Create a new account.</h4>*@
+        @*<hr />*@
+        <div class="form-group">
+            @Html.HiddenFor(m => m.Application, new { Value = "BugTracker" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email Address" })
+            @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Display Name" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
+        </div>
+        <div style="color:lime; text-align:left; margin-bottom:15px" id="RegisterErrors">
+        </div>
+        <input class="btn btn-lg btn-primary btn-block  letter-spacing-3" style="border:none" id="Register" type="submit" value="Register" />
+    </form>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

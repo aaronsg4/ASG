@@ -1,0 +1,251 @@
+﻿
+@using Microsoft.AspNet.Identity
+
+@model IEnumerable<ASG.Areas.BugTracker.Models.UsersRolesViewModel>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+</head>
+
+
+<!-- Remove "header-side" if side menu isn't present | Remove "in" if you want the side-header closed by default -->
+<body class="header-side in">
+    <!-- Page Loader -->
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
+    <!-- Page Content -->
+    <div class="page-content" style="padding-bottom:200px">
+        <section class="page-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 header-inline">
+                        <div class="header-inline-content">
+                        </div>
+                        <div class="header-inline-content">
+                            <ul class="breadcrumb">
+                                <li class="button"><a href="@Url.Action("Index","Home")" class="btn btn-dark-blue">Home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End of Page Header -->
+        <!-- Flot Basic -->
+        <div class="section-admin container-fluid" style="padding-right:70px">
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <br />.
+                    <div class="well" style="border:none">
+                        <br />
+                        <h2 style="font-family:'Lato',sans-serif;">Bug Tracker Users</h2>
+                        <p>
+                            Below you will find a list of current users in the Bug Tracker System, along with their roles and the projects/tickets they are working on. <br />
+                            You can also view your personal profile by clicking 'My Profile' below.
+                        </p>
+                        <hr />
+                        @{ var x = User.Identity.GetUserId();}
+                        <a href="@Url.Action("Details", "Users", new { Id = x })" class="btn btn-dark-blue" id="btn">My Profile</a>
+                        <br /><br />
+                        @{ var temporary = TempData["message"];}
+                        @temporary
+                    </div>
+                    <br /><br /><br />
+                    <br />
+                    <div class="admin-content">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-theme table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>User Name</th>
+                                        <th>Position</th>
+                                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin"))
+                                        {
+                                            <th>Role Assignment</th>
+                                        }
+                                        <th>User Email</th>
+                                        <th style="text-align:center"> User Projects</th>
+                                        <th style="text-align:center">User Tickets</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var i = 1;
+                                        var basename = "aaronsBtn";
+                                        var basename1 = "slidingMenu";
+                                        var classname = basename + i.ToString();
+                                        var classname1 = basename1 + i.ToString();
+                                        var k = 1;
+                                        var basenameb = "aaronsBtnb";
+                                        var basenameb1 = "slidingMenub";
+                                        var classnameb = basenameb + k.ToString();
+                                        var classnameb1 = basenameb1 + k.ToString();
+                                    }
+                                    @foreach (var user in Model)
+                                    {
+                                        var ticketcount = user.Tickets.Count();
+                                        var projectcount = user.Projectsb.Count();
+                                        <tr>
+                                            <td><a href="@Url.Action("Details", "Users", new { id = user.User.Id})">@user.User.FirstName &nbsp; @user.User.LastName</a></td>
+                                            <td>
+                                                @if (user.Roles.Count != 1)
+                                                {
+                                                    foreach (var role in user.Roles)
+                                                    {
+                                                        if (/*role != "Submitter" && */role != "FinancialPlannerUser" && role != "BugtrackerUser" && role != "BlogUser")
+                                                        {
+                                                            <p>@role</p><br />
+                                                        }
+                                                    }
+                                                }
+                                                else if (user.Roles.Count == 1)
+                                                {
+                                                    <span> Submitter </span>
+                                                }
+                                            </td>
+                                            @if (User.IsInRole("Administrator") || User.IsInRole("Admin"))
+                                            {
+                                                <td style="color:black">
+                                                    @Html.ActionLink("Assign/Edit Roles", "Details", new { id = user.User.Id })
+                                                </td>
+                                            }
+                                            <td>
+                                                @user.User.Email
+                                            </td>
+                                            <td style="text-align:center">
+                                                <div class="btn-curtain btn : after">
+                                                    <button class="btn @classnameb">@projectcount Projects</button>
+                                                </div>
+                                                <div class="@classnameb1" style="display:none">
+                                                    @{ k++;
+                                                        classnameb = basenameb + k.ToString();
+                                                        classnameb1 = basenameb1 + k.ToString();
+                                                    }
+                                                    @foreach (var project in user.Projectsb)
+                                                    {
+                                                        @project.Name<br />
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td style="text-align:center">
+                                                <div class="btn-curtain btn : after">
+                                                    <button class="btn @classname ">@ticketcount Tickets</button>
+                                                </div>
+                                                <div class="@classname1" style="display:none">
+                                                    @{ i++;
+                                                        classname = basename + i.ToString();
+                                                        classname1 = basename1 + i.ToString();
+                                                    }
+                                                    @if (user.Tickets.Count != 0)
+                                                    {
+                                                        foreach (var ticket in user.Tickets)
+                                                        {
+                                                            @ticket.Title<br />
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>N/A</span>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                                        }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End of Page Content -->
+        <!-- Footer -->
+    </div>
+    <!-- Loading Third Party Scripts -->
+    @section scripts {
+
+        <!-- End of Export functionality -->
+
+
+
+        @{ basenameb = ".aaronsBtnb";
+            basenameb1 = ".slidingMenub";
+            var l = 1;
+            classnameb = basenameb + l.ToString();
+            classnameb1 = basenameb1 + l.ToString();
+
+        }
+        @foreach (var user in Model)
+    {
+
+            <script>
+                $('@classnameb').click(function () {
+                    $('@classnameb1').slideToggle();
+                })
+            </script>
+            l++;
+            classnameb = basenameb + l.ToString();
+            classnameb1 = basenameb1 + l.ToString();
+        }
+
+
+        @{ basename = ".aaronsBtn";
+            basename1 = ".slidingMenu";
+            var j = 1;
+            classname = basename + j.ToString();
+            classname1 = basename1 + j.ToString();
+
+        }
+        @foreach (var user in Model)
+        {
+            <script>
+                $('@classname').click(function () {
+                    $('@classname1').slideToggle();
+                })
+            </script>
+            j++;
+            classname = basename + j.ToString();
+            classname1 = basename1 + j.ToString();
+        }
+
+        <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/dataTables.bootstrap.min.js"></script>
+
+        <!-- Export functionality -->
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+        <script>
+
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        </script>
+    }
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

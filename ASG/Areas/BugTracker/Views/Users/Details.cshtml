@@ -1,0 +1,283 @@
+﻿
+@using Microsoft.AspNet.Identity
+@model ASG.Areas.BugTracker.Models.UsersRolesViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- Remove "header-side" if side menu isn't present | Remove "in" if you want the side-header closed by default -->
+<body class="header-side in">
+    <!-- Page Loader -->
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
+    <!-- Page Content -->
+    <div class="page-content" style="margin-bottom:100px">
+        <!-- Header - Add "light" for light menu | "nav-dark-blue" for dark-blue accent | "nav-blue" for blue accent | "nav-blue-grey" for blue-grey accent |
+             "nav-green" for green accent | "nav-dark-green" for sea-green accent | "nav-purple" for purple accent | "nav-red" for red accent |
+              "nav-orange" for peach accent | "nav-yellow" for yellow accent -->
+        <!-- End of Header -->
+        <!-- Sliding Chat : add "chat-light" along with "chat-slide" for light chat window-->
+        <section class="page-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 header-inline">
+                        <div class="header-inline-content">
+                            <h2 class="page-title"></h2>
+                        </div>
+                        <div class="header-inline-content">
+                            <ul class="breadcrumb">
+
+                                <li class="button"><a href="@Url.Action("Index","Home",  new { area = "BugTracker" })" class="btn btn-dark-blue">Home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End of Page Header -->
+        <div class="section-admin no-padding-bottom">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="profile-sidebar" style="width:500px">
+                            <div class="portlet portlet-bordered">
+                                <div class="portlet-body">
+                                    <div class="user-profile-block">
+                                        <img alt="img" src="~/Areas/BugTracker/BugTracker_Images/team/man-test-2.jpg" />
+                                        <h4 class="user-name">@Model.User.DisplayName</h4><hr />
+                                        @foreach (var role in Model.Roles)
+                                        {
+                                            if (role != "Submitter" && role != "FinancialPlannerUser" && role != "BugtrackerUser" && role != "BlogUser")
+                                            {
+                                                <h6 class="user-designation">@role</h6>
+                                            }
+                                        }
+                                        <br />
+                                        <!-- Profile Links -->
+                                        @using (Html.BeginForm("Details", "Users", FormMethod.Post, new { id = Model.User.Id }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            if (User.IsInRole("Administrator") || User.IsInRole("Admin"))
+                                            {
+                                                <div class="form-group">
+                                                    <br />
+                                                    Assign/Reassign @Model.User.FirstName's role(s)<br /><br />
+                                                    <div style="text-align:center">
+                                                        <select style="min-width:150px; min-height:150px" id="Roles" multiple="multiple" name="Roles" class="form-control">
+                                                            @foreach (var role in ViewBag.SubmitterlessRoles)
+                                                            {
+                                                                if (User.IsInRole(role))
+                                                                {
+                                                                    <option value="@role" selected>@role</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@role">@role</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                        @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    @{ var user = User.Identity;}
+                                                    @if (user.Name == "Administrator@Mailinator.com" || user.Name == "ProjectManager@Mailinator.com" || user.Name == "Developer@Mailinator.com" || user.Name == "GuestUser@Mailinator.com")
+                                                    {
+                                                        <input type="submit" value="Assign Role(s)" name="button" class="btn btn-dark-blue" style="display:block; float:right; margin-top:5px" disabled="disabled" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="submit" value="Assign Role(s)" name="button" class="btn btn-dark-blue" style="display:block; float:right; margin-top:5px" />
+                                                    }
+                                                </div>
+                                                            }
+                                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet portlet-bordered">
+                                <div class="portlet-body">
+                                    <div class="row text-center">
+                                        <div class="col-sm-4 col-xs-6">
+                                            @{var countb = 0; }
+                                            @foreach (var createdticket in Model.Tickets)
+                                            {
+                                                if (createdticket.SubmitterUserId == Model.User.Id)
+                                                {
+                                                    countb++;
+                                                }
+                                            }
+                                            <h4 class="weight-600 text-info no-margin">@countb</h4>
+                                            <h6 class="text-uppercase weight-600">Tickets submitted</h6>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-6">
+                                            <h4 class="weight-600 text-info no-margin">
+                                                @{ var count = 0;}
+                                                @{ var x = Model.User.Id;}
+                                                @*@{var x = User.Identity.GetUserId();}*@
+                                                @if (x != null)
+                                                {
+                                                    foreach (var ticket in Model.Tickets.Where(t => t.AssignedToUserId == x))
+                                                    {
+                                                        count++;
+                                                    }
+                                                }
+                                                @count
+                                            </h4>
+                                            <h6 class="text-uppercase weight-600">Tickets assigned</h6>
+                                        </div>
+                                        <div class="col-sm-4 col-xs-6">
+                                            <h4 class="weight-600 text-info no-margin">
+                                                @Model.User.Projects.Count
+                                            </h4>
+                                            <h6 class="text-uppercase weight-600">Projects assigned</h6>
+                                        </div>
+                                    </div>
+                                    @if (User.IsInRole("Administrator, Admin"))
+                                    {
+                                        using (Html.BeginForm("Details", "Users", FormMethod.Post, new { id = Model.User.Id }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.ListBox("Roles", null, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <input type="submit" value="Assign Projects)" name="button" class="btn btn-default" />
+                                        }
+                                    }
+                                    <br /><br />
+                                    <span class="fa fa-fw fa-globe mar-right-5"></span><a href="mailto:@Model.User.Email">@Model.User.Email</a><br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="admin-content bg-dark-blue text-left text-light">
+                                        <span class="counter-icon counter-icon-big icon-desktop"></span>
+                                        <span class="counter">@count</span>
+                                        <h3>Open Support Tickets(s)</h3>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <!-- BEGIN PORTLET-->
+                                        <div class="portlet portlet-bordered">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <span class="caption-subject">Projects</span>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="portlet_tab1">
+                                                        <div class="slim-scroll-content">
+                                                            <div class="slim-scroll-div">
+                                                                <ul class="notification-list">
+                                                                    <li>
+                                                                        <a href="#">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-theme table-clear table-hover">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>
+                                                                                                Project Name
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Project Manager
+                                                                                            </th>
+                                                                                            <th style="text-align:center">
+                                                                                                Project Status
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody class="text-lighter">
+                                                                                        @if (Model != null)
+                                                                                        {
+                                                                                            foreach (var project in Model.Projectsb)
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <i class="bg-blue icon_plus_alt2"></i><span>&nbsp;&nbsp;</span>@project.Name
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        @project.ProjectManagerName
+                                                                                                    </td>
+                                                                                                    <td style="text-align:center">
+                                                                                                        @project.ProjectStatus
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                        }
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- END PORTLET-->
+                                        <!-- BEGIN PORTLET-->
+                                        <div class="portlet portlet-bordered">
+                                            <div class="portlet-title">
+                                                <div class="caption">
+                                                    <span class="caption-subject">TICKETS</span>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="portlet_tab1">
+                                                        <div class="slim-scroll-content">
+                                                            <div class="slim-scroll-div">
+                                                                <ul class="notification-list">
+                                                                    <li>
+                                                                        <span class="details">
+                                                                            @foreach (var ticket in Model.Tickets)
+                                                                            {
+                                                                                if (Model.User.Id == ticket.AssignedToUserId)
+                                                                                {
+                                                                                    <a href="@Url.Action("Details","Tickets")/@ticket.Id">
+                                                                                        <i class="bg-blue icon_plus_alt2"></i><span>&nbsp;&nbsp;</span>@ticket.Title<br /><br /><br />
+                                                                                    </a>
+                                                                                }
+                                                                            }
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- END PORTLET-->
+                                    </div>
+                                    <div class="col-lg-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End of Page Content -->
+    <!-- Footer -->
+
+    <footer class="footer container-fluid">
+        <div class="row">
+            <div class="col-md-12 ">
+            </div>
+        </div>
+    </footer><!-- End of Footer -->
+    <!-- Loading Third Party Scripts -->
+
+    @section scripts {
+    }
+
+</body>
+</html>

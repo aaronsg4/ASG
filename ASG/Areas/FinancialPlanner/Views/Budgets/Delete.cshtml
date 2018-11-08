@@ -1,0 +1,74 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.Budget
+@*@{ Layout = null;}*@
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><img src="~/Areas/FinancialPlanner/FP_Images/fp.png" /></h4>
+    </div>
+    <div class="modal-body fpModal" style="padding-bottom:35px">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+        Are you sure you want to delete this Budget?
+        <div>
+            <hr />
+            <dl class="dl-flex">
+                <dt>
+                    Household Name
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Household.Name)
+                </dd>
+                <dt>
+                    Budget Name
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    Budget Amount
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Amount)
+                </dd>
+                <dt>
+                    Budget Description
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt>
+                    Start Date
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BudgetStartDate)
+                </dd>
+            </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    @{ var user = User.Identity;}
+                    @if (user != null)
+                    {
+                        if (user.Name == "Administrator@Mailinator.com" || user.Name == "ProjectManager@Mailinator.com" || user.Name == "Developer@Mailinator.com" || user.Name == "GuestUser@mailinator.com")
+                        {
+                            <input type="submit" value="Delete" class="btn btn-default" disabled="disabled" style="float:right;" />
+                        }
+                        else
+                        {
+                            <input type="submit" value="Delete" class="btn btn-default" style="float:right" />
+                        }
+                    }
+                </div>
+                        }
+            <br />
+        </div>
+    </div>
+</div>

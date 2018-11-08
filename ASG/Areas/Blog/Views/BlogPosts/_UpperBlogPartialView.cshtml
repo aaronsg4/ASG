@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ASG.Areas.Blog.Models.Topic>
+
+
+<aside class="widget widget_search">
+    @using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "Blog" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+            <ul class="nav navbar-nav navbar-right">
+                @if (!User.IsInRole("BlogUser"))
+                {
+                    <li>
+                        <a onclick="openBlogAccessModal()">Full Access</a>
+                    </li>
+                }
+                <li>
+                    @Html.ActionLink("Hello " + User.Identity.GetUserName().Substring(0, User.Identity.GetUserName().LastIndexOf("@")) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            </ul>
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right" style="padding-right:25px">
+            <li><a onclick="openRegisterModal()">Register</a></li>
+            <li><a onclick="openLoginModal()">Login</a></li>
+        </ul>
+    }
+    <br /><br />
+    <div style="margin-top: 130px">
+        @using (Html.BeginForm("Search", "BlogPosts"))
+        {
+            <input class="form-control" type="search" placeholder="Search Blog" value="@ViewBag.Query" name="query">
+            <button class="search-button" style="top:15px !important" type="submit"><span class="ti-search"></span></button>
+        }
+    </div>
+</aside>
+<!-- Categories widget-->
+<aside class="widget widget_categories">
+    <div class="widget-title"><a href="@Url.Action("Index", "Topics")">Categories</a></div>
+    <ul>
+        @foreach (var topics in Model)
+        {
+            if (topics.Posts.Any())
+            {
+                <li><a href="@Url.Action("Details", "Topics", new { id = topics.Id })">@Html.DisplayFor(modelItem => topics.TopicName) (@topics.Posts.Count())</a></li>
+            }
+        }
+    </ul>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

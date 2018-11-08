@@ -1,0 +1,16 @@
+﻿
+@model ASG.Areas.BugTracker.Models.UsersRolesViewModel
+
+<ul class="menu-dropdown collapse">
+    @if (Model.Projectsb != null)
+    {
+
+        foreach (var project in Model.Projectsb)
+        {
+            <li><a href="@Url.Action("Index" ,"Projects")#@project.Name"> @project.Name</a></li>
+        }
+    }
+    
+</ul>
+
+

@@ -1,0 +1,45 @@
+﻿
+
+@model ASG.Areas.FinancialPlanner.Models.Household
+@{
+    ViewBag.Title = "BudgetPartial";
+}
+@if (Model != null)
+{
+    <ul class="dropdown-menu">
+        @if (Request.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("BudgetHousehold", "Budgets", new { id = Model.Id })">My Budgets</a></li>
+        }
+        else
+        {
+            <li><a onclick="openRegisterModal()">Register</a></li>
+            <li><a onclick="openLoginModal()">Login</a></li>
+        }
+    </ul>
+}
+
+else
+{
+    <ul class="dropdown-menu">
+        @if (Request.IsAuthenticated)
+        {
+            if (Model != null)
+            {
+                <li><a href="@Url.Action("BudgetHousehold", "Budgets", new { id = Model.Id })">My Budgets</a></li>
+            }
+            else
+            {
+                // here when you go to set up a budget, you will want to ask whether they want to set up an individual budget or a household budget
+                <li><a onclick="budgetOptions()">Set Up a Budget</a></li>
+            }
+        }
+        else
+        {
+            <li><a onclick="openRegisterModal()">Register</a></li>
+            <li><a onclick="openLoginModal()">Login</a></li>
+        }
+    </ul>
+}
+
+

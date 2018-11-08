@@ -1,0 +1,39 @@
+﻿@model ASG.Areas.BugTracker.Models.TicketAttachment
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 well" style="align-content:center;margin-top:75px">
+            <br />
+            <div class="row">
+                <div class="col-sm-10"><h3 style="font-family:'Lato',sans-serif;">Edit your attachment description</h3><br /></div>
+                <div class="col-sm-2">
+                    <img src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" style="height:30px" />
+                </div>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        Description
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" style="width:150px; float:right" /><br /><br />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

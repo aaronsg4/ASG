@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ASG.Areas.FinancialPlanner.Models.Budget>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Index";
+}
+@{ var userid = User.Identity.GetUserId();
+
+}
+<h2></h2>
+<br /><br />
+<p>
+    <h4> Budgets</h4>
+</p>
+<br /><br /><br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>      
+        <th>
+            @Html.DisplayNameFor(model => model.SuggestedAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BudgetStartDate)
+        </th>
+        <th>
+            Budget Duration Period
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SuggestedAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetDurationPeriod.NumberOfDays) Days
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+<br /><br /><hr />
+<div class="page-head">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Budget Portal</h2>
+                <h4>Click image below to view your budget details</h4><br />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Heading ends -->
+<!-- Page content starts -->
+<div class="content about-two">
+    <div class="container">
+        <div class="row">
+            @foreach (var budget in Model)
+            {
+                <div class="col-md-3 col-sm-6  well" style="margin:0 10px 0 10px; box-shadow: 10px 10px 5px #888888;">
+                    <!-- Staff #1 -->
+                    <div class="staff">
+                        <!-- Picture -->
+                        <a href="@Url.Action("Details", "Budgets", new { id = budget.Id })">
+                            <div class="pic">
+                                <img src="~/img/horizontal-1714232.png" alt="" class="img-responsive" />
+                            </div>
+                        </a>
+                        <!-- Details -->
+                        <div class="details">
+                            <!-- Name and designation -->
+                            <div class="desig pull-left">
+                                <p class="name">@budget.Name</p>
+                                <em>subtitle</em>
+                            </div>
+                            <!-- Social media details. Replace # with profile links -->
+                            <div class="asocial pull-right">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <!-- Description -->
+                            <p class="adesc">@budget.Description </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <br /><br /><br />
+    <p>
+        @if (Request.IsAuthenticated)
+        {
+            <a href="@Url.Action("BudgetsCreateModal","Budgets", new { id = userid })" data-toggle="modal" data-target="#myModal1">Create a New Budget</a>
+        }
+    </p>
+</div>
+<br /><br /><br /><br /><hr />
+

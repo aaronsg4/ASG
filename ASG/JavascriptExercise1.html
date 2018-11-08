@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>This is the fizzBuzz exercise</h1>
+    <p>Enter two values between 1 and 100 below to start the fizzBuzz exercise</p>
+    <p>
+        When you hit submit, the computer will find each number between 1-100 that is divisible by your first number and replace it
+        with fizz.  Then it will find each number between 1-100 that is divisible by your second number and replace it with buzz.
+
+        If a number is divisible by BOTH of your numbers, the computer will write fizzBuzz!
+    </p>
+
+    <input type="number" id="entryone" />
+    <input type="number" id="entrytwo" />
+    <button onclick="fizzbuzz()">Click here to check!</button>
+    <p id="empty"></p>
+    <script>
+        function fizzbuzz() {
+
+            var A = Number(document.getElementById("entryone").value);
+            var B = Number(document.getElementById("entrytwo").value);
+
+            var C = [i];
+
+            for (var i = 1; i <= 100; i++) {
+                if (i % A == 0 && i % B == 0) {
+                    document.write("fizzBuzz! " + " / ");
+                }
+                else if (i % A == 0) {
+                    document.write("fizz " + " / ");
+                }
+                else if (i % B == 0) {
+                    document.write("buzz " + " / ");
+                }
+                else document.write(i);
+            }
+
+            document.getElementById("empty").innerHTML = C;
+        }
+
+    </script>
+
+</body>
+</html>

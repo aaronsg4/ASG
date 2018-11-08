@@ -1,0 +1,183 @@
+﻿@model ASG.Areas.BugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 well" style="align-content:center;margin-top:75px">
+            <br />
+            <div class="row">
+                <div class="col-sm-10"><h3 style="font-family:'Lato',sans-serif;">Edit Ticket</h3><br /></div>
+                <div class="col-sm-2">
+                    <img src="~/Areas/BugTracker/BugTracker_Images/bug-1296767.png" style="height:30px" />
+                </div>
+            </div>
+            <p>
+                Edit a Ticket below and click save to save the changes.
+                <br />                
+                @using (Html.BeginForm("Edit", "Tickets", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">             
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.CreatedDate)
+                        @if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                        {
+                            @Html.HiddenFor(model => model.ProjectId)
+                            @Html.HiddenFor(model => model.TicketTypeId)
+                            @Html.HiddenFor(model => model.TicketStatusId)
+                        }
+                        @ViewBag.ErrorMessage
+                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project, "Project", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        @if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                        {
+                            if (Model.AssignedToUser == User)
+                            {
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TicketType, "TicketType", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TicketType, "TicketType", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TicketPriority, "TicketPriority", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("TicketPriorityId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TicketPriorityId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator"))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TicketStatus, "TicketStatus", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("TicketStatusId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TicketStatusId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Add Attachment</label>
+                            <div class="col-md-10">
+                                <input type="file" name="File" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Delete Attachment</label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("TicketAttachmentId", null, "Please select an attachment", htmlAttributes: new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => Model.TicketAttachments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AssignedToUser, "AssignedToUser", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        @if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                {
+                    if (Model.AssignedToUser == User)
+                    {
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                        {
+                            foreach (var user in Model.Project.Users)
+                            {
+                                if (Model.AssignedToUser == user)
+                                {
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "cr" } })
+                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "cr", rows = "10" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default" /><br /><br />
+                                <div>
+                                    @Html.ActionLink("Back to List", "Index")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @ViewBag.TicketEditMessage               
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+<script src="~/Areas/BugTracker/BugTracker_js/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    <script>
+        $('#cr').tinymce({});
+    </script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

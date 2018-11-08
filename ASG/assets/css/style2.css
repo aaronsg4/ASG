@@ -1,0 +1,411 @@
+﻿
+/*
+ * Author: Carlos Alvarez
+ * URL: http://Alvarez.is
+ *
+ * Project Name: NYC Design
+ * Version: 1.0
+ * Date: 04-20-2014
+ * URL: 
+ */
+
+
+/* ==========================================================================
+   Base Styles, Bootstrap Modifications & Fonts Import
+   ========================================================================== */
+
+@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
+.phil{
+    width:100%;
+    height:auto;
+}
+
+::-moz-selection {
+    background: #f2c2c9;
+    color: #a4003a;
+    text-shadow: none;
+}
+
+::selection {
+    background: #16a085;
+    color: #a4003a;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+ hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+img {
+  vertical-align: middle;
+}
+.img-responsive {
+  display: block;
+  height: auto;
+  width:100%;
+  max-height:200px;
+  max-width: 300px;
+  margin:10px;
+}
+.centered {
+	text-align: center
+}
+
+.mt {
+	margin-top: 80px;
+}
+
+.mb {
+	margin-bottom: 80px;
+}
+
+/* ==========================================================================
+   General styles
+   ========================================================================== */
+
+
+body {
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-family: Roboto Condensed, sans-serif; 
+    letter-spacing: 1px; 
+    /*text-transform:uppercase;*/ 
+    font-weight: 400;
+    font-size: 16px;
+    height:100%;
+
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+.resume_body{
+	margin-top: 53px;
+	/*background-image: url("../img/seagulls.jpg");*/
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: top;
+}
+
+h1, h2, h4, h5, h6 {
+	font-weight: 700;
+    color: #ffffff;
+}
+h3{
+	font-weight: 700;
+	color: #7d7d7d;
+}
+
+
+.navbar-brand {
+	font-weight: 700;
+}
+
+.navbar-default .navbar-brand {
+	color: #428bca;
+}
+
+.navbar-default {
+	background-color: black;
+	border-color: transparent;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	color: #428bca;
+	background-color: transparent;
+	border-bottom: 2px solid #428bca
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: #428bca;
+}
+/* timeline */
+.timeline {
+  /*background-image: url('../img/vertical-line.png?1378694750');*/
+  font-size:16px!important;
+  background-repeat: repeat-y;
+  background-position: 50% 0;
+  max-width: 960px;
+}
+    .timeline .year {
+        background: black;
+        /*background-image: url('../../NEWIMAGES/background-2068283_1920.jpg');*/
+        /*background-image: url('../../NEWIMAGES/branding1.png');*/
+        font-size: 1em;
+        line-height: 4;
+        color: #ffffff;
+        width: 6em;
+        border-radius: 50%;
+        margin-top: 50px;
+        margin-bottom: 0;
+    }
+@media (min-width: 992px) {
+  .timeline .year {
+    margin-bottom: 30px;
+  }
+}
+.timeline .month {
+  display: block;
+  margin-bottom: 15px;
+  color: #ffffff;
+  font-variant:small-caps;
+  font-size: 0.9em;
+}
+.timeline .month .icon {
+  margin-right: 5px;
+}
+.timeline .event {
+    width: 40%;
+    /*background: #ffffff;*/
+    /*background-image: url('../../NEWIMAGES/branding2.png');*/
+    background: rgba(34, 34, 34, .3);
+    /*background-image: url('../../NEWIMAGES/white-painted-concrete-wall-888895_1920.jpg');*/
+    /*background-image: url('../../NEWIMAGES/concrete-1944281_1920.jpg');*/
+    /*background-image: url('../../NEWIMAGES/background-2068283_1920.jpg');*/
+    /*background-image: url('../../NEWIMAGES/paper-1959384_1920.jpg');*/
+    /*border-color: black;*/
+    /*border-right-width:thin;
+    border-right-color:#ffffff;
+    border-bottom-width:medium;
+    border-bottom-color:#ffffff;*/
+    text-align: center;
+    margin: 10px 0;
+    padding: 1.3em;
+    color: #ffffff;
+      /*font-variant:small-caps;*/
+}
+/* ==========================================================================
+   Wrap Sections
+   ========================================================================== */
+
+#headerwrap {
+	background:  url('../FP_Images/back.jpg') no-repeat center top;
+	margin-top: 0px;
+	padding-top: 250px;
+	text-align:center;
+	background-attachment: scroll;
+	background-position: center center;
+	min-height: 600px;
+	width: 100%;
+	
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#headerwrap h1 {
+	color:#ffffff;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	letter-spacing: 4px;
+	font-size: 70px;
+	font-weight: bold;
+}
+
+#headerwrap h4 {
+	font-weight: 400;
+	color: #ffffff
+}
+
+#social {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	background-color: #f2f2f2;
+}
+
+#social i {
+	font-size: 40px;
+	color: #4a4a4a
+}
+
+#social i:hover {
+	color: #428bca
+}
+
+#footerwrap {
+    width:100%;
+	padding-top: 70px;
+	padding-bottom: 50px;
+	background-color: #2f2f2f;
+}
+
+#footerwrap p {
+	color: #f2f2f2;
+	margin-left: 10px;
+}
+
+#workwrap {	
+	background: url(../img/work.jpg) no-repeat center top;
+	margin-top: -70px;
+	padding-top: 250px;
+	text-align:center;
+	background-attachment: scroll;
+	background-position: center center;
+	min-height: 450px;
+	width: 100%;
+	
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#blogpost {
+    background-color:rgba(0,0,0,0.6);
+    border:inset;
+    padding:15px;
+    border-width:3px;
+    border-color:#000;
+}
+#blogwrap {
+    background: url('../img/pinstripe_bg_full - Copy.jpg');
+    width: 100%;
+    padding-top:30px;
+    background-attachment:fixed;
+    min-height:500px;
+    background-position: top center;
+        -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#workwrap h1 {
+	color:#ffffff;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	letter-spacing: 4px;
+	font-size: 80px;
+	font-weight: bold;
+}
+
+#workwrap h4 {
+	font-weight: 400;
+	color: #ffffff
+}
+
+#aboutwrap {
+
+}
+#resumewrap h2{
+	font-weight: 400;
+	color: #ffffff
+}
+#resumewrap {	
+	margin-top: 0px;
+	padding-top: 53px;
+	text-align:center;
+	background-attachment: fixed;
+	background-position: center center;
+    margin-left:auto;
+    margin-right:auto;
+	width: 100%;
+	/*background-image: url("../img/seagulls.jpg");*/
+	background-repeat: no-repeat;
+
+	
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+/* Gallery */
+.gallery {
+    
+}
+
+.gallery img:hover {
+	opacity: 0.4;
+}
+.gallery .C:hover{
+    opacity: 0.4;
+}
+.gallery .C{
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.gallery .c1 {
+    background-color:rgb(0,163,0);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c2 {
+    background-color: rgb(0,171,169);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c3 {
+    background-color: rgb(126,56,120);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c4 {
+    background-color: rgb(227,162,26);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c5 {
+    background-color: rgb(29,29,29);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c6 {
+    background-color: rgb(185,29,71);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c7 {
+    background-color: rgb(255,0,151);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c8 {
+    background-color: rgb(45,137,239);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .c9 {
+    background-color: rgb(238,17,17);
+    min-height:200px;
+    background-clip:content-box;
+}
+.gallery .codeC{
+    line-height:136px;
+}
+
+#innertext {
+    font-size:10px;
+}

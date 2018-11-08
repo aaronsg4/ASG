@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ASG.Areas.Blog.Models.Topic>
+
+<aside class="widget widget_tag_cloud">
+    <div class="widget-title">Tags</div>
+    <div class="post-tags">
+        @foreach (var topic in Model)
+        {
+            if (topic.Posts.Any())
+            {
+                <a href="@Url.Action("Details", "Topics", new { id = topic.Id })">
+
+                    @Html.DisplayFor(modelItem => topic.TopicName)
+                </a>
+            }
+        }
+    </div>
+</aside>
+
+

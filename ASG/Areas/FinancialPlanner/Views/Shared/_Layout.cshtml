@@ -1,0 +1,315 @@
+﻿
+@using Microsoft.AspNet.Identity
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- Title here -->
+    <title>Financial Planner</title>
+    <!-- Description, Keywords and Author -->
+    <meta name="description" content="Your description">
+    <meta name="keywords" content="Your,Keywords">
+    <meta name="author" content="ResponsiveWebInc">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styles -->
+    <!-- Bootstrap CSS -->
+    <link href="~/Areas/FinancialPlanner/FP_css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Pretty Photo -->
+    <link href="~/Areas/FinancialPlanner/FP_css/prettyPhoto.css" rel="stylesheet" />
+    <!-- Flex slider -->
+    <link href="~/Areas/FinancialPlanner/FP_css/flexslider.css" rel="stylesheet" />
+    <!-- Parallax slider -->
+    <link href="~/Areas/FinancialPlanner/FP_css/slider.css" rel="stylesheet" />
+    <!-- Owl Carousel -->
+    <link href="~/Areas/FinancialPlanner/FP_css/owl.carousel.css" rel="stylesheet" />
+    <!-- Font awesome CSS -->
+    <link href="~/Areas/FinancialPlanner/FP_css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Areas/FinancialPlanner/FP_css/style.css" rel="stylesheet" />
+    <!-- Stylesheet for Color -->
+    <link href="~/Areas/FinancialPlanner/FP_css/red.css" rel="stylesheet" />
+    <link href="~/Areas/FinancialPlanner/FP_css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Areas/FinancialPlanner/FP_css/FP_css.css" rel="stylesheet" />
+    <link href="~/assets/css/template.min.css" rel="stylesheet" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Areas/FinancialPlanner/FP_Images/fp.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+</head>
+<body>
+    <div class="container body-content">
+        <header>
+            <div class="container" style="padding-right:0px!important">
+                <div class="row">
+                    <div class="col-md-4 col-sm-3">
+                        <!-- Logo. Use class "color" to add color to the text. -->
+                        <div class="logo" style="text-align:left!important">
+                            <h1><a href="@Url.Action("Index","Home")">Financial<span class="color bold">Planner</span></a></h1>
+                            <p class="meta"   style="float:left!important">Your one-stop personal finance-tracking resource</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-9" style="padding-right:0px!important">
+                        <!-- Navigation -->
+                        <div class="navbar bs-docs-nav" role="banner">
+                            <div class="navbar-header">
+                                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" style="padding-right:0px!important">
+                                <ul class="nav navbar-nav navbar-left">
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        <li class="pull-left">
+                                            @Html.Partial("_LoginPartial")
+                                        </li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                                    }
+                                    else
+                                    {
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Enter <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a onclick="openRegisterModal()">Register</a></li>
+                                                <li><a onclick="openLoginModal()">Login</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Household<b class="caret"></b></a>
+                                        @{ var userId = User.Identity.GetUserId();}
+                                        @{ Html.RenderAction("MyHouseholdDetails", "Households", new { area = "FinancialPlanner" });}
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Budgeter<b class="caret"></b></a>
+                                        @{ Html.RenderAction("BudgetPartial", "Budgets", new { area = "FinancialPlanner" });}
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Transactions<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                <li><a href="@Url.Action("TransactionModal","Transactions", new { id = userId })" data-toggle="modal" data-target="#myModal">Enter Transactions</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a onclick="openRegisterModal()">Register</a></li>
+                                                <li><a onclick="openLoginModal()">Login</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                                    <li><a href="@Url.Action("Index", "Home", new { area = ""})" style="color:#5bc0de">Return to Portfolio</a></li>
+                                </ul>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <ul class="nav navbar-nav navbar-left">
+                                        @if (Request.IsAuthenticated)
+                                        {
+                                            <li class="pull-left" style="visibility:hidden">
+                                                @Html.Partial("_LoginPartial")
+                                            </li>
+                                            <li style="visibility:hidden">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                                            <li style="visibility:hidden">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                                        }
+                                        else
+                                        {
+                                            <li class="dropdown" style="visibility:hidden">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="visibility:hidden"> Enter <b class="caret"></b></a>
+                                                <ul class="dropdown-menu" style="visibility:hidden">
+                                                    <li><a onclick="openRegisterModal()">Register</a></li>
+                                                    <li><a onclick="openLoginModal()">Login</a></li>
+                                                </ul>
+                                            </li>
+                                        }
+                                        <li class="dropdown" style="visibility:hidden">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Household<b class="caret"></b></a>
+                                            @{ Html.RenderAction("MyHouseholdDetails", "Households", new { area = "FinancialPlanner" });}
+                                        </li>
+                                        <li class="dropdown" style="visibility:hidden">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Budgeter<b class="caret"></b></a>
+                                            @{ Html.RenderAction("BudgetPartial", "Budgets", new { area = "FinancialPlanner" });}
+                                        </li>
+                                        <li class="dropdown" style="visibility:hidden">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="visibility:hidden">Transactions<b class="caret"></b></a>
+                                            <ul class="dropdown-menu" style="visibility:hidden">
+                                                @if (Request.IsAuthenticated)
+                                                {
+                                                    <li><a href="@Url.Action("TransactionModal","Transactions", new { id = userId })" data-toggle="modal" data-target="#myModal">Enter Transactions</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li style="visibility:hidden"><a onclick="openRegisterModal()">Register</a></li>
+                                                    <li style="visibility:hidden"><a onclick="openLoginModal()">Login</a></li>
+                                                }
+                                            </ul>
+                                        </li>
+                                        <li style="visibility:hidden"><a href="@Url.Action("Index","Home")">Home</a></li>
+                                        <li><a style="color:#5bc0de; float:right" href="javascript:document.getElementById('logoutForm').submit()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log off</a></li>
+                                    </ul>
+                                                }
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                </div>
+                                                <div class="modal-body">
+                                                </div>
+                                                <div class="modal-footer">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div id="myModal1" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="myModal2" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                            </nav>
+                        </div>
+                        <!--/ Navigation end -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container body-content" style="padding-right: 0px !important; padding-left: 0px!important">
+            @RenderBody()
+            <hr />
+        </div>
+    </div>
+    <div class="container" style="padding:0px 0px 0px 0px !important">
+        <footer style="margin-top:130px; padding:0px 0px 0px 0px !important; margin-left:20px!important;">
+            <div class="container" style="padding:0px 0px 0px 0px !important; margin-top: 10px">
+                <div class="row" style="padding:0px 0px 0px 0px !important">
+                    <div class="col-md-12" style="padding:0px 0px 0px 0px !important">
+                        <div class="row" style="padding:0px 0px 0px 0px !important">
+                            <div class="col-md-4" style="padding:0px 0px 0px 0px !important">
+                                <div class="widget" style="padding-left:10px; height:220px">
+                                    Contact
+                                    <hr />
+                                    <p style="font-size:11px!important">The Financial Planner Team would love to hear from you.</p>
+                                    <hr />
+                                    <i class="fa fa-home"></i> &nbsp; Charlotte, NC
+                                    <hr />
+                                    <i class="fa fa-phone"></i> &nbsp; +704.626.8583
+                                    <hr />
+                                    <i class="fa fa-envelope-o"></i> &nbsp; <a href="mailto:#">aaronsg4@yahoo.com</a><a class="social pull-right" href="https://www.linkedin.com/in/aaron-gay-09bbba9b"><i class="fa fa-linkedin linkedin"></i></a>
+                                    <hr />
+                                    <div class="social">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="widget" style="padding-left:10px; height:220px">
+                                    About Us
+                                    <hr /><br />
+                                    <p style="font-size:11px!important">The Financial Planner is a household budgeter, a Web-based software application designed for creating and managing budgets for household finances and the balanacing of bank accounts.</p><br />
+                                    <p style="font-size:11px!important">The budgeter functions as an online service that may be used by households and families throughout the world.</p><br /><br />
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-right:0px!important; padding-left:0px !important">
+                                <div class="widget" style="padding-left:10px; height:220px">
+                                    Features
+                                    <hr /><br />
+                                    <div class="two-col">
+                                        <div class="col-left" style="font-size:11px!important">
+                                            Multiple Budgets<br />
+                                            Link Bank Accounts<br />
+                                            Track Expenses<br />
+                                            Categorize Transactions<br />
+                                            Visual Graphs<br />
+                                            Warnings for overages<br />
+                                        </div>
+                                        <div class="col-right"style="font-size:11px!important">
+                                            Plan<br />
+                                            Track<br />
+                                            Budget<br />
+                                            Learn<br />
+                                            Save<br />
+                                            Enjoy<br />                                        
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </footer>
+    </div>
+    
+    <span class="totop"><a href="#"><i class="fa fa-chevron-up"></i></a></span>
+
+    <!-- Javascript files -->
+    <!-- jQuery -->
+    
+
+    <script src="~/Areas/FinancialPlanner/FP_js/jquery.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/Areas/FinancialPlanner/FP_js/bootstrap.min.js"></script>
+    <script src="~/Areas/FinancialPlanner/FP_js/jquery-ui-1.12.1.min.js"></script>
+    <!-- Isotope, Pretty Photo JS -->
+    <script src="~/Areas/FinancialPlanner/FP_js/jquery.isotope.js"></script>
+    <script src="~/Areas/FinancialPlanner/FP_js/jquery.prettyPhoto.js"></script>
+    <!-- Filter for support page -->
+    <script src="~/Areas/FinancialPlanner/FP_js/filter.js"></script>
+    <!-- Flex slider -->
+    <script src="~/Areas/FinancialPlanner/FP_js/jquery.flexslider-min.js"></script>
+    <!-- Parallax Slider -->
+    <script src="~/Areas/FinancialPlanner/FP_js/jquery.cslider.js"></script>
+    <!-- Parallax slider extra -->
+    <script src="~/Areas/FinancialPlanner/FP_js/modernizr.custom.28468.js"></script>
+    <!-- Owl Carousel -->
+    <script src="~/Areas/FinancialPlanner/FP_js/owl.carousel.min.js"></script>
+    <!-- Respond JS for IE8 -->
+    <script src="~/Areas/FinancialPlanner/FP_js/respond.min.js"></script>
+    <!-- HTML5 Support for IE -->
+    <script src="~/Areas/FinancialPlanner/FP_js/html5shiv.js"></script>
+    <!-- Custom JS -->
+ 
+    <script src="~/Areas/FinancialPlanner/FP_js/custom.js"></script>
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/custom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+
+

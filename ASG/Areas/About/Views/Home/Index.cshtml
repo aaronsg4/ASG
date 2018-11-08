@@ -1,0 +1,311 @@
+﻿
+@using Microsoft.AspNet.Identity
+
+@{Layout = null;}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ASGay</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="~/assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-touch-icon-114x114.png">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Suranna" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Fonts-->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/themify-icons.css" rel="stylesheet">
+    <!-- Plugins-->
+    <link href="~/assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/css/vertical.min.css" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="~/assets/css/template.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader-->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- Preloader end-->
+    <!-- Menu-->
+    <div class="overlay-menu overlay-menu-animation font-serif">
+        <a class="close-menu" href="#"><span class="ti-close"></span></a>
+        <div class="menu-table">
+            <div class="menu-table-cell">
+                <ul class="navigation">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "About" })">About Me</a></li>
+                    <li class="menu-item-has-children">
+                        <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
+                        <ul class="sub-menu">
+                            <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
+                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a></li>
+                </ul><br />
+            </div>
+        </div>
+    </div>
+    <!-- Menu end-->
+    <!-- Header-->
+    <header class="header">
+        <div class="container">
+            <div class="inner-header">
+                <a class="inner-brand" href="/">
+                    <img class="brand-dark" alt="">Home
+                </a>
+            </div>
+            <div class="header-nav-toogle">
+                <a class="show-menu-btn" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Header end-->
+    <div class="wrapper">
+        <!-- Page Header-->
+        <section class="module appear-childer" data-background="../../Areas/About/About_Images/white-1809005.jpg">
+            <div class="container" style="padding:30px 0px 50px 50px">
+                <h1>About me. </h1>
+                <div class="row" style="padding-top:70px">
+                    <div class="col-sm-8 well" style="background-color:rgba(255,255,255,0.4)">
+                        <p id="aboutparagraph">
+                            <kbd>Hi, I'm Aaron Gay.</kbd> I'm a developer, an entrepreneur, and a problem-solver. <br /><br />
+                            I love to push myself into unfamiliar territory, whether that happens to be a new city or a new concept - I believe novelty is the spice of life.  Thinking outside of the box
+                            and coming up with a fresh perspective on things is what I do best. I'm always up for a challenge.<br /><br />
+                            I've worked as a software developer, as an analyst crunching numbers, and as a business owner working with an extensive network of clients.
+                            Through web development, I'm able to capitalize on my analytical and problem solving skills while continuing to engage with people.<br /><br />
+
+                            Other passions include horticulture, the great outdoors, the stock market, and travel anywhere.  Let's build something together!
+                        </p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3">
+                        <h5>Other</h5>
+                        <p class="m-0" style="font-size:20px; color:black;"><a href="@Url.Action("Resume", "Home")">RESUME →</a></p><br />
+                        <p class="m-0" style="font-size:20px"><a href="@Url.Action("Timeline", "Home")">VISUAL<br />TIMELINE →</a></p><br />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About end-->
+        <!-- Icon with text-->
+        <section class="module module-gray appear-childer">
+            <div class="container">
+                <div class="row">
+                    <p>Technical Skills</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="icon-box">
+                            <div class="icon-box-icon"><span class="ti-marker-alt"></span></div>
+                            <div class="icon-box-title">
+                                <h5>HTML/CSS</h5>
+                            </div>
+                            <div class="icon-box-content">
+                                <p>Demonstrated experience developing multiple front end designs</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="icon-box">
+                            <div class="icon-box-icon"><span class="ti-heart"></span></div>
+                            <div class="icon-box-title">
+                                <h5>JavaScript / Jquery</h5>
+                            </div>
+                            <div class="icon-box-content">
+                                <p>Experience utilizing JavaScript and Jquery in web design</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="icon-box">
+                            <div class="icon-box-icon"><span class="ti-pulse"></span></div>
+                            <div class="icon-box-title">
+                                <h5>Bootstrap</h5>
+                            </div>
+                            <div class="icon-box-content">
+                                <p>Experience implementing bootstrap templates</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="icon-box">
+                            <div class="icon-box-icon"><span class="ti-infinite"></span></div>
+                            <div class="icon-box-title">
+                                <h5>MVC</h5>
+                            </div>
+                            <div class="icon-box-content">
+                                <p>Experience building applications in the MVC pattern </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="icon-box">
+                            <div class="icon-box-icon"><span class="ti-package"></span></div>
+                            <div class="icon-box-title">
+                                <h5>ASP.NET</h5>
+                            </div>
+                            <div class="icon-box-content">
+                                <p>Experience with the ASP.Net framework for web development</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="icon-box">
+                            <div class="icon-box-icon"><span class="ti-gift"></span></div>
+                            <div class="icon-box-title">
+                                <h5>SQL</h5>
+                            </div>
+                            <div class="icon-box-content">
+                                <p>Experience Sql queries and stored procedures</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Icon with text end --->
+        <!-- Testimonials-->
+        <section class="module parallax bg-dark" data-background="../../Areas/About/About_Images/white-1809005.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="tms-slides owl-carousel">
+                            <!-- Testimonials --->
+                            <div class="tms-item">
+                                <div class="tms-icons"><span class="ti-comments"></span></div>
+                                <div class="tms-content">
+                                    <blockquote>
+                                        <p>There is no try.  There is do, and not do.</p>
+                                    </blockquote>
+                                </div>
+                                <div class="tms-author"><span>― Yoda</span></div>
+                            </div>
+                            <!-- Testimonials end --->
+                            <!-- Testimonials --->
+                            <div class="tms-item">
+                                <div class="tms-icons"><span class="ti-comments"></span></div>
+                                <div class="tms-content">
+                                    <blockquote>
+                                        <p>Always do what you are afraid to do.</p>
+                                    </blockquote>
+                                </div>
+                                <div class="tms-author"><span>― Ralph Waldo Emerson</span></div>
+                            </div>
+                            <!-- Testimonials end --->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials end-->
+        <!-- Clinets-->
+        <section class="module-sm module-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="clients-carousel owl-carousel">
+                            <div class="client"><img src="~/Areas/About/About_Images/travelsmall.jpg" alt=""></div>
+                            <div class="client"><img src="~/Areas/About/About_Images/stocksmall.jpg" alt=""></div>
+                            <div class="client"><img src="~/Areas/About/About_Images/horticulturesmall2.jpg" alt=""></div>
+                            <div class="client"><img src="~/Areas/About/About_Images/horticulturesmall.jpg" alt=""></div>
+                            <div class="client"><img src="~/Areas/About/About_Images/outdoorssmall.jpg" alt=""></div>
+                            <div class="client"><img src="~/Areas/About/About_Images/travelsmall2.jpg" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Clinets end-->
+        <!-- Footer-->
+        <footer class="footer parallax" data-background="../../Areas/About/About_Images/white-1809005.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer end-->
+    </div>
+    <!-- Scripts-->
+
+    <script src="~/assets/js/jquery-2.2.4.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/custom.min.js"></script>
+
+    <script>
+        var loading = function () {
+            $('.page-loader').show()
+        }
+    </script>
+</body>
+</html>

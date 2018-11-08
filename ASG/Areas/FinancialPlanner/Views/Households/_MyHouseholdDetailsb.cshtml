@@ -1,0 +1,54 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.Household
+@{
+    ViewBag.Title = "MyHouseholdDetailsb";
+}
+
+<h2></h2>
+@if (Model != null)
+{
+    <a href="@Url.Action("BudgetHousehold", "Budgets", new { id = Model.Id})">
+        <div class="col-md-3 col-sm-3 well" style="margin:0 45px 0 45px; box-shadow: 10px 10px 5px #888888;">
+            <div class="onethree">
+                <div class="onethree-left">
+                    <!-- Font awesome icon -->
+                </div>
+                <div class="onethree-right" style="text-align:center">
+                    <!-- Title and meta -->
+                    MY HOUSEHOLD<br />
+                    <span style="color:#666; font-size:12px">If you've already signed up, click here to proceed to your Financial Planner household</span>
+                    <br />
+                </div>
+                <div class="col-sm-offset-4">
+                    <img src="~/Areas/FinancialPlanner/FP_Images/eco-construction-1894026 (1).png" style="height:80px" />
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <br /><br />
+        </div>
+    </a>
+}
+else
+{
+    <a href="@Url.Action("Details", "Households")">
+        <div class="col-md-3 col-sm-3 well" style="margin:0 45px 0 45px; box-shadow: 10px 10px 5px #888888;">
+            <div class="onethree">
+                <div class="onethree-left">
+                    <!-- Font awesome icon -->
+                </div>
+                <div class="onethree-right" style="text-align:center">
+                    <!-- Title and meta -->
+                    MY HOUSEHOLD<br />
+                    <span style="color:#666; font-size:12px">If you've already signed up, click here to proceed to your Financial Planner household</span>
+                    <br />
+                </div>
+                <div class="col-sm-offset-4">
+                    <img src="~/Areas/FinancialPlanner/FP_Images/eco-construction-1894026 (1).png" style="height:80px" />
+                    @*<img src="~/img/eco-construction-1894026 (1).png" style="height:80px" />*@
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <br /><br />
+        </div>
+    </a>
+}
+

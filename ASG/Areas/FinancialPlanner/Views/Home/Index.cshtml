@@ -1,0 +1,497 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@*@{Layout = null;}*@
+
+
+@using Microsoft.AspNet.Identity
+@{ var userId = User.Identity.GetUserId();}
+<!-- Seperator -->
+
+
+<div class="sep"></div>
+<!--/ Header ends -->
+<!-- Slider starts -->
+<div class="parallax-slider">
+    <!-- Slider (Parallax Slider) -->
+    <div id="da-slider" class="da-slider">
+        <!-- Each slide should be enclosed inside "da-slide" class -->
+        <div class="da-slide">
+            <div class="slide-details">
+                <!-- Heading -->
+                <h2><span>Clean and Professional</span></h2>
+                <!-- Para -->
+                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.</p>
+                <!-- Read more link -->
+                <a href="#" class="da-link">Read more</a>
+                <!-- Image -->
+            </div>
+        </div>
+        <div class="da-slide">
+            <h2><span>40+ Pagest</span></h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <a href="#" class="da-link">Read more</a>
+        </div>
+        <div class="da-slide">
+            <h2><span>6 Colors</span></h2>
+            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+            <a href="#" class="da-link">Read more</a>
+        </div>
+        <div class="da-slide">
+            <h2><span>Quality Control</span></h2>
+            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+            <a href="#" class="da-link">Read more</a>
+        </div>
+        <nav class="da-arrows">
+        </nav>
+    </div>
+</div>
+<!-- Slider ends -->
+<!-- Below slider starts -->
+<br />
+<div class="container" style="font-size:12px!important">
+    <div class="col-md-3 col-sm-3">
+        <h6><i class="fa fa-check-circle-o"></i> Easy to use</h6>
+        <p>Link your bank accounts, set your budget goals, and then track your expenses all in one place!  Register now to start budgeting with the Financial Planner</p>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <!-- Service heading with font awesome icon -->
+        <h6><i class="fa fa-gift"></i> Invite people to join</h6>
+        <!-- Service para -->
+        <p>Do you have friends or family who you want to join you on your budgeting goals?  If so simply invite them to join your household.</p>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <h6><i class="fa fa-fire"></i> Manage your expenses</h6>
+        <p>Already part of a household?  Great - all you need to do is login, where you can track all of your expenses and set up customized budgetsl.</p>
+    </div>
+    <div class="col-md-3 col-sm-3">
+        <h6><i class="fa fa-bullhorn"></i> Get free alerts</h6>
+        <p>The Financial Planner can be set to alert you if you exceed your budget goals, or if your account is ever close to being overdrafted</p>
+    </div>
+    @ViewBag.BudgetAlert
+</div>
+<br /><br /><div style="text-align:center">
+    <span style="text-align:center; color:red; background-color:#fffebc" id="tempMessage">
+        @{ var temporaryhouseholdmessage = TempData["message"];}
+        @{ var temporarybudgetsmessage = TempData["budgetmessage"];}
+        @{ var AlreadyinHousehold = TempData["AlreadyinHouseholdmessage"];}
+        @{ var NotLoggedInmessage = TempData["NotLoggedInmessage"];}
+        @{ var NoHouseholdmessage = TempData["NoHouseholdmessage"];}
+        @NoHouseholdmessage
+        @NotLoggedInmessage
+        @temporaryhouseholdmessage
+        @temporarybudgetsmessage
+        @AlreadyinHousehold
+        @ViewBag.BudgetAlert
+    </span>
+</div><br />
+<div style="text-align:center; border: 1px solid red; padding:20px; float:left; width:100%; margin-bottom:150px">
+    <div style="float:left">
+        <span class="btn btn-info btn-sm" style="color:white; box-shadow: 5px 5px 2px #888888">@Html.ActionLink("DEMO LOGIN", "GuestLogin", "Account", new { Area = "", userName = "GuestUser@Mailinator.com", type = "FinancialPlanner" }, new { style = "color:white" })</span>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span class="fa fa-arrow-left" style="font-size:20px"></span><span style="font-size:14px">&nbsp; &nbsp; Click here to see a Demo version of the Financial Planner in action. </span>
+    </div>
+</div>
+<div class="sep"></div>
+<div class="slider-features">
+    <div class="container">
+        <div class="row">
+            <a href="@Url.Action("Create","Households")" data-toggle="modal" data-target="#myModalCreateHousehold">
+                <div class="col-md-3 col-sm-3 well" style="margin:0 45px 0 45px; box-shadow: 10px 10px 5px #888888;">
+                    <div class="onethree">
+                        <div class="onethree-left">
+                            <!-- Font awesome icon -->
+                        </div>
+                        <div class="onethree-right" style="text-align:center">
+                            <!-- Title and meta -->
+                            SET UP A HOUSEHOLD<br />
+                            <span style="color:#666; font-size:12px">Click here to start creating your own Financial Planner Household Budgeter</span>
+                            <br />
+                        </div>
+                        <div class="col-sm-offset-4">
+                            <img src="~/Areas/FinancialPlanner/FP_Images/eco-construction-1894026 (1).png" style="height:80px" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <br /><br />
+                </div>
+            </a>
+            @if (Request.IsAuthenticated)
+            {
+                { Html.RenderAction("MyHouseholdDetailsb", "Households", new { area = "FinancialPlanner" }); }
+            }
+            else
+            {
+                <a href="@Url.Action("BudgetHousehold", "Budgets")">
+                    <div class="col-md-3 col-sm-3 well" style="margin:0 45px 0 45px; box-shadow: 10px 10px 5px #888888;">
+                        <div class="onethree">
+                            <div class="onethree-left">
+                                <!-- Font awesome icon -->
+                            </div>
+                            <div class="onethree-right" style="text-align:center">
+                                <!-- Title and meta -->
+                                MY HOUSEHOLD<br />
+                                <span style="color:#666; font-size:12px">If you've already signed up, click here to proceed to your Financial Planner household</span>
+                                <br />
+                            </div>
+                            <div class="col-sm-offset-4">
+                                <img src="~/Areas/FinancialPlanner/FP_Images/eco-construction-1894026 (1).png" style="height:80px" />
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </a>
+            }
+            <a href="@Url.Action("JoinHouseholdPopUp","Households")" data-toggle="modal" data-target="#myModal5">
+                <div class="col-md-3 col-sm-3 well" style="margin:0 45px 0 45px; box-shadow: 10px 10px 5px #888888;">
+                    <div class="onethree">
+                        <div class="onethree-left">
+                            <!-- Font awesome icon -->
+                        </div>
+                        <div class="onethree-right" style="text-align:center">
+                            <!-- Title and meta -->
+                            JOIN HOUSEHOLD<br />
+                            <span class="meta" style="font-size:12px">In order to join an existing household, you must have an invitation.  </span>
+                            <br />
+                        </div>
+                        <div class="col-sm-offset-4">
+                            <img src="~/Areas/FinancialPlanner/FP_Images/eco-construction-1894026 (1).png" style="height:80px" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <br /><br />
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- Below slider ends -->
+<!-- CTA Starts -->
+<div id="myModal5" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModalCreateHousehold" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+@{Html.RenderAction("FPLogin", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPRegister", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPForgotPassword", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPForgotPasswordConfirmation", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPResetPassword", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPResetPasswordConfirmation", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPRegistrationConfirmation", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPAccess", "Home", new { area = "FinancialPlanner" });}
+@{Html.RenderAction("FPBudgetOptions", "Home", new { area = "FinancialPlanner" });}
+
+
+@section scripts {
+
+    <script>
+
+        var x = function () {
+            debugger;
+            var resetPassword = false;
+            @if (TempData["resetPassword"] != null) {
+                @:resetPassword = true
+                                      }
+            if (resetPassword) {
+                openResetPasswordModal();
+            }
+            else {
+                @if (Request.IsAuthenticated)
+                {
+                    if (!User.IsInRole("FinancialPlannerUser"))
+                    {
+                        @:openAdditionalRoleNeededModal();
+                                                    }
+                }
+            }
+        }
+        x();
+
+        var didAccept = false;
+        $('#FinancialPlannerAccess').on('hidden.bs.modal', function () {
+            if (!didAccept) {
+                logout();
+            }
+        });
+
+        function openLoginModal(closeModals) {
+            document.getElementById('FPLoginErrors').innerHTML = "";
+            if (closeModals) {
+                $('#FPResetPasswordConfirmation').modal('hide');
+            }
+            $('#FPLogin').modal('toggle');
+        };
+
+        function openRegisterModal(closeModals) {
+            if (closeModals) {
+                $('#FPLogin').modal('hide');
+            }
+            document.getElementById('FPRegisterErrors').innerHTML = "";
+            $('#FPRegister').modal('toggle');
+        };
+
+        function openForgotPasswordModal(closeModals) {
+            if (closeModals) {
+                $('#FPLogin').modal('hide');
+            }
+            document.getElementById('FPForgotPasswordErrors').innerHTML = "";
+            $('#FPForgotPassword').modal('toggle');
+        };
+
+        function openForgotPasswordConfirmationModal(closeModals) {
+            if (closeModals) {
+                $('#FPForgotPassword').modal('hide');
+            }
+            $('#FPForgotPasswordConfirmation').modal('toggle');
+        };
+
+        function openAdditionalRoleNeededModal() {
+            $('#FinancialPlannerAccess').modal('toggle');
+        };
+
+        function openRegistrationConfirmationModal(closeModals) {
+            if (closeModals) {
+                $('#FPRegister').modal('hide');
+            }
+            $('#FinancialPlannerRegistrationConfirmation').modal('toggle');
+        };
+
+        $('#FinancialPlannerRegistrationConfirmation').on('hidden.bs.modal', function () {
+            location.reload();
+        });
+
+        function openResetPasswordModal() {
+            document.getElementById('FPResetPasswordErrors').innerHTML = "";
+            $('#FPResetPassword').modal('toggle');
+        };
+        $('#FPLoginSubmit').click(function () {
+            var form = $("#FPLoginForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/Login",
+                data: $("#FPLoginForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('FPLoginErrors').innerHTML = "Unable to process request";
+                    }
+                    else {
+                        if (data.roleCheck) {
+                            location.reload();
+                        }
+                        else {
+                            location.reload();
+                        }
+                    }
+                }
+            });
+        });
+
+
+
+        $('#FinancialPlannerAddAccessSubmit').click(function () {
+            didAccept = true;
+            var form = $("#FinancialPlannerAccessForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/AddRegistration",
+                data: $("#FinancialPlannerAccessForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('AdditionalFinancialPlannerAccessMessage').innerHTML = "A problem was encountered. Please try again."
+                    }
+                    else {
+                        if (data.accountList.length > 0) {
+                            document.getElementById('AdditionalFinancialPlannerAccessMessage').innerHTML = "Thank you.  You have now been registered!"
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
+                        }
+                        else {
+                            document.getElementById('AdditionalFinancialPlannerAccessMessage').innerHTML = "Thank you.  To register for full access, click the full access link."
+                            setTimeout(function () {
+                                location.reload();
+                            }, 3000);
+                        }
+                    }
+                }
+            });
+        });
+
+        function logout() {
+            $.ajax({
+                type: "POST",
+                url: "/Account/LogOut",
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('RegisterErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        location.reload();
+                    }
+                }
+            });
+        };
+
+
+        $('#FinancialPlannerAddAccessDecline').click(function () {
+            if (!didAccept) {
+                logout();
+            }
+
+
+        });
+
+        $('#FinancialPlannerAdditionalRegisterSubmit').click(function () {
+            var form = $("#additionalRegistrationForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/AddMultipleRegistration",
+                data: $("#additionalRegistrationForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('AdditionalRegistrationMessage').innerHTML = "A problem was encountered. Please try again."
+                    }
+                    else {
+                        document.getElementById('AdditionalRegistrationMessage').innerHTML = "Thank you.  You have now been registered!"
+                    }
+                }
+            });
+        });
+
+        $('#FPRegisterSubmit').click(function () {
+            var form = $("#FPRegisterForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/Register",
+                data: $("#FPRegisterForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('FPRegisterErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        if (data.roles.length > 0) {
+                            if (data.roles.includes("BlogUser")) {
+                                document.getElementById('Blog').checked = true;
+                            }
+                            if (data.roles.includes("FinancialPlannerUser")) {
+                                document.getElementById('FinancialPlanner').checked = true;
+                            }
+                            if (data.roles.includes("BugtrackerUser")) {
+                                document.getElementById('BugTracker').checked = true;
+                            }
+                        }
+                        openRegistrationConfirmationModal(true);
+                    }
+                }
+            });
+        });
+
+
+        $('#FPForgotPasswordSubmit').click(function () {
+            var form = $("#FPForgotPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ForgotPassword",
+                data: $("#FPForgotPasswordForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('FPForgotPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        openForgotPasswordConfirmationModal(true);
+                    }
+                }
+            });
+        });
+
+        $('#FPResetPasswordSubmit').click(function () {
+            var form = $("#FPResetPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ResetPassword",
+                data: $("#FPResetPasswordForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('FPResetPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        $('#FPResetPassword').modal('toggle');
+                        $('#FPResetPasswordConfirmation').modal('toggle');
+                    }
+                }
+            });
+        });
+
+        function budgetOptions() {
+            $('#FPBudgetOptions').modal('toggle');
+        }
+
+        function toggleBack() {
+            document.getElementById('BudgetType').style.display = "block";
+            document.getElementById('HouseholdSetup').style.display = "none";
+        }
+
+        function toggleBack2() {
+            document.getElementById('HouseholdSetup').style.display = "block";
+            document.getElementById('BudgetSetup').style.display = "none";
+        }
+
+        function budgetTypeSelected(e) {
+            var form = document.getElementById('BudgetType');
+            var selection = form.elements.BudgetType.value;
+            if (selection != null) {
+                form.style.display = "none";
+                document.getElementById('HouseholdSetup').style.display = "block";
+            }
+        }
+
+        function setUpBudget(e) {
+            document.getElementById('HouseholdSetup').style.display = "none";
+            document.getElementById('BudgetSetup').style.display = "block";
+        }
+
+        $('#budgetOptions').click(function () {
+            var form = $("#FPResetPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ResetPassword",
+                data: $("#FPResetPasswordForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('FPResetPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        $('#FPResetPassword').modal('toggle');
+                        $('#FPResetPasswordConfirmation').modal('toggle');
+                    }
+                }
+            });
+        });
+
+
+    </script>
+
+}

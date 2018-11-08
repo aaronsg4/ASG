@@ -1,0 +1,183 @@
+﻿
+@model IEnumerable<ASG.Areas.BugTracker.Models.Ticket>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="page-content" style="padding-bottom:200px">
+        <section class="page-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 header-inline">
+                        <div class="header-inline-content">
+                        </div>
+                        <div class="header-inline-content">
+                            <ul class="breadcrumb">
+                                <li class="button"><a href="@Url.Action("Index","Home")" class="btn btn-dark-blue">Home</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End of Page Header -->
+        <!-- Flot Basic -->
+        <div class="admin-content">
+            <div class="row">
+                <div class="well" style="border:none">
+                    <br />
+                    <h2 style="font-family:'Lato',sans-serif;">Closed Tickets</h2><br />
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin"))
+                    {
+                        <p>Below you will find a list of All Archived Tickets and the corresponding fields for each ticket.  To view only the Archived Tickets that were assigned to you, click My Archived Tickets.</p><hr />
+                        <a class="btn btn-dark-blue" href="@Url.Action("MyArchivedTickets", "Tickets")">My Archived Tickets</a>
+                    }
+                    else if (User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                    {
+                        <p>Below you will find a list of All Archived Tickets from All Projects you are assigned to.  To view only the Archived Tickets that were assigned to you, click My Archived Tickets.</p><hr />
+                        <a class="btn btn-dark-blue" href="@Url.Action("MyArchivedTickets", "Tickets")">My Archived Tickets</a>
+                    }
+                    else if (User.IsInRole("Developer1") || User.IsInRole("Developer2") || User.IsInRole("Developer3") || User.IsInRole("Developer4"))
+                    {
+                        <p>Below you will find a list of Archived Tickets that you were assigned to. </p><br />
+                    }
+                </div>
+            </div>
+            @{ var temporary = TempData["message"];}
+            @temporary
+        </div>
+        <div class="section-admin container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="admin-content">
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-theme table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket Priority</th>
+                                        <th>Ticket Name</th>
+                                        <th>Ticket Assigned To</th>
+                                        <th>Ticket Status</th>
+                                        <th>Project</th>
+                                        <th>Ticket Closed Date</th>
+                                        <th>Ticket Closed By</th>
+                                        <th>Ticket Attachments</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ticket in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketPriority.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.Title)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.AssignedToUser.DisplayName)</td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketStatus.Name)</td>
+                                            <td><a href="@Url.Action("Details", "Projects", new { id = ticket.Project.Id })"> @Html.DisplayFor(modelItem => ticket.Project.Name)</a></td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketHistories.FirstOrDefault(th => th.NewValue == "Archived").DateChanged)  </td>
+                                            <td>@Html.DisplayFor(modelItem => ticket.TicketHistories.FirstOrDefault(th => th.NewValue == "Archived").User.FirstName) &nbsp; @Html.DisplayFor(modelItem => ticket.TicketHistories.FirstOrDefault(th => th.NewValue == "Archived").User.LastName) </td>
+                                            <td>
+                                                @foreach (var ticketattachment in ticket.TicketAttachments)
+                                                {
+                                                    string filename = ticketattachment.FilePath.ToString();
+                                                    string word = ".docx";
+                                                    string excel = ".xls";
+                                                    string pdf = ".pdf";
+                                                    string jpeg = ".jpeg";
+                                                    string bmp = ".bmp";
+                                                    string gif = ".gif";
+                                                    string zip = ".zip";
+                                                    string rar = ".rar";
+                                                    if (filename.Contains(word))
+                                                    {
+                                                        <span class="fa fa-file-word-o " aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(excel))
+                                                    {
+                                                        <span class="fa fa-file-excel-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(pdf))
+                                                    {
+                                                        <span class="fa fa-file-pdf-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(jpeg))
+                                                    {
+                                                        <span class="fa fa-file-image-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(bmp))
+                                                    {
+                                                        <span class="fa fa-file-image-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(gif))
+                                                    {
+                                                        <span class="fa fa-file-image-o" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(zip))
+                                                    {
+                                                        <span class="icon-paperclip" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                    else if (filename.Contains(rar))
+                                                    {
+                                                        <span class="icon-paperclip" aria-hidden="true" title="@ticketattachment.Description"></span>
+                                                    }
+                                                }
+                                            </td>
+                                            @{ var projectId = ticket.Project.Id;}
+                                            @{ var userId = ticket.SubmitterUserId;}
+                                            <td>
+                                                <a href="@Url.Action("Details", "Tickets", new { id = ticket.Id })"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div><!-- End of Page Content -->
+        <!-- Footer -->
+
+    </div>
+    @section scripts {
+        <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="~/Areas/BugTracker/BugTracker_ThirdParty/datatables/media/js/dataTables.bootstrap.min.js"></script>
+        <!-- Export functionality -->
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+        <!-- End of Export functionality -->
+
+        <script>
+            $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        </script>
+    }
+</body>
+
+
+
+
+
+
+
+</html>

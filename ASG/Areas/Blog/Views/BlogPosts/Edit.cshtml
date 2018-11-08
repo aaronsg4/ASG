@@ -1,0 +1,72 @@
+﻿@model ASG.Areas.Blog.Models.BlogTopicsViewModel
+<div class="container" style="color:white;padding-bottom:500px">
+    @{
+        ViewBag.Title = "Edit";
+    }
+
+    <h2>Edit</h2>
+
+
+    @using (Html.BeginForm("Edit", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>BlogPost</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Post.Id)
+            @Html.HiddenFor(model => model.Post.Slug)
+            @Html.HiddenFor(model => model.Post.MediaURL)
+            @Html.HiddenFor(model => model.Post.createdDate)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Post.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Post.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Post.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Post.Topics, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.ListBox("Topics", null, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Post.Topics, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Post.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Post.Body, new { htmlAttributes = new { @class = "form-control", id = "cr", rows = "10" } })
+                    @Html.ValidationMessageFor(model => model.Post.Body, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Upload Images</label>
+                <div class="col-md-10">
+                    <input type="file" name="Image" class="form-control" />
+                    <p>Current Image</p>
+                    <div style="height:100px;width:auto">
+                        <img src="@Url.Content(Model.Post.MediaURL)" class="img-responsive" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="PUBLISH" name="button" class="btn btn-default" /><input type="submit" value="Save Pending" name="button" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+@section Scripts {
+
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+    <script>
+        $('#cr').tinymce({});
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

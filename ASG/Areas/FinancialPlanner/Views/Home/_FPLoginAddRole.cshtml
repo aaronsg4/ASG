@@ -1,0 +1,52 @@
+﻿
+@using ASG.Models
+@model ASG.Models.AddRegistrationViewModel
+
+@{
+    ViewBag.Title = "Registration confirmation";
+}
+
+<div class="modal fade" id="FinancialPlannerAccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background-color:rgba(0, 0, 0, 0.7)">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><img src="~/Areas/FinancialPlanner/FP_Images/fp.png" /></h4>
+                </div>
+                <div class="modal-body fpModal" style="padding-bottom:35px">
+                    <div style="padding-top:50px">
+                        It looks like you are registered, but don't yet have full access to the Financial Planner.
+                        <p>In order to use the Financial Planner, you'll need full access.  Would you like to add this now?</p>
+                        <div style="margin-bottom:8px; margin-top:50px">
+                            <section id="additionalFinancialPlannerAccessForm" style="margin-left:25px">
+                                @using (Html.BeginForm("AddRegistration", "Account", new { area = "", ReturnUrl = ViewBag.ReturnUrl, Application = ViewBag.Application }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "FinancialPlannerAccessForm" }))
+                                {
+                                    @Html.HiddenFor(m => m.Application, new { Value = "FinancialPlanner" })
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.FinancialPlanner)
+                                        <span>Yes, Give me full access!</span>
+                                    </div>
+                                }
+                            </section>
+                            <div style="color:lime; text-align:left; margin:15px; font-size:14px; line-height:1" id="AdditionalFinancialPlannerAccessMessage"></div>
+                        </div>
+                        <br /><br />
+                        <p>If you choose to decline access, you will be logged out. You can still experience the Financial Planner's full functionality through the DEMO role.</p>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center; margin-top:10px; padding-bottom:0px!important">
+                    <div class="form-group">
+                        <input class="btn btn-lg btn-primary btn-block  letter-spacing-3" id="FinancialPlannerAddAccessSubmit" value="Add me" />
+                        <button type="button" class="btn btn-lg btn-secondary btn-block  letter-spacing-3" id="FinancialPlannerAddAccessDecline" data-dismiss="modal">No Thanks</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

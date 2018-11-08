@@ -1,0 +1,146 @@
+﻿body {
+}
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching full width */
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
+
+.mdtitle {
+    letter-spacing: 3px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: Roboto, Arial, serif;
+    margin-left: 45px !important;
+     margin-right: 45px !important;
+    padding-bottom:0px !important;
+}
+
+.logo {
+        /*margin-left: 45px !important;*/
+     margin-right: 45px !important;
+     margin-top:10px;
+     font-size:14px;
+}
+
+/*.testing {
+    background-color:red !important;
+    color:pink!important;
+    border:lime!important;
+}*/
+
+
+.fpModal {
+    margin: 25px!important;
+    font-size:12px !important;
+}
+.dl-flex {
+    background-color:#f4f4f4 !important;
+    padding:25px;
+ display: flex;
+ flex-wrap: wrap;
+ align-items: flex-start;
+}
+
+.dl-multicolumn {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: stretch;
+}
+
+dt {
+
+ padding: 2px 0 20px 0;
+}
+
+.dl-flex dt {
+    text-align: right;
+    padding-right:10px;
+ flex: 0 0 35%;
+ overflow: hidden; /* Prevents long words in labels from causing layout to break */
+}
+
+/* Use padding rather than margin in bottom to avoid extra spacing overflowing to the top of the next column */
+dd {
+ padding: 2px 0 20px 0;
+ margin-left: 0;
+}
+
+.dl-flex dd {
+ flex: 65% 0 0;
+ padding-left: 20px;
+ max-width: 65%; /* Fix for IE issue in which box-sizing is not taken into account when using flex */
+}
+
+.dl-flex dd + dd {
+ margin-left: 35%;
+}
+
+@media (min-width: 768px) {
+ .dl-flex dt {
+   flex: 0 0 30%;
+ }
+ .dl-flex dd {
+   flex: 70% 0 0;
+   max-width: 70%;
+ }
+ .dl-flex dd + dd {
+   margin-left: 30%;
+ }
+}
+
+.avoid-break {
+       flex-basis: 50%;
+       text-align: center;
+}
+
+
+/* Styling for demo purposes below this line */
+*,* :after, *:before { box-sizing: border-box; }
+/*body {
+ font-family: arial, helvetica, sans-serif;
+ font-size: 15px;
+ background: #333;
+ color: #eee;
+ padding: 10px;
+}*/
+/*h2 { color: #F5EA53; }*/
+/*dl { margin-bottom: 70px; }*/
+dl.dl-flex { max-width: 900px; }
+dt { background: rgba(251, 251, 251, 0.50); /*color: #fff;*/ }
+dd { background: rgba(223, 215, 215, 0.20); /*color: #fff;*/ }
+dt, dd { box-shadow: inset 0 1px 1px rgba(255, 255, 255, .1); }
+
+
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }

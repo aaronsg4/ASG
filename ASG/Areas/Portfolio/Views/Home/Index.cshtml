@@ -1,0 +1,668 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{Layout = null;}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ASGay</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="~/assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Suranna" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Fonts-->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/themify-icons.css" rel="stylesheet">
+    <!-- Plugins-->
+    <link href="~/assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/css/vertical.min.css" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="~/assets/css/template.css" rel="stylesheet">
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/SyntaxHighlighter/shCore.css" rel="stylesheet" /> 
+    <link href="~/Content/SyntaxHighlighter/shThemeRDark.css" rel="stylesheet" />
+    <style>
+        .bee {     
+            background-image: url('../../Portfolio_Images/bee-157062_640.png');
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader-->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- Preloader end-->
+    <!-- Menu-->
+    <div class="overlay-menu overlay-menu-animation font-serif">
+        <a class="close-menu" href="#"><span class="ti-close"></span></a>
+        <div class="menu-table">
+            <div class="menu-table-cell">
+                <ul class="navigation">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "About" })">About Me</a></li>
+                    <li class="menu-item-has-children">
+                        <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
+                        <ul class="sub-menu">
+                            <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
+                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a></li>
+                </ul><br />
+            </div>
+        </div>
+    </div>
+    <!-- Menu end-->
+    <!-- Header-->
+    <header class="header">
+        <div class="container">
+            <div class="inner-header">
+                <a class="inner-brand" href="/">
+                    Home
+                </a>
+            </div>
+            <div class="header-nav-toogle">
+                <a class="show-menu-btn" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Header end-->
+    <div class="wrapper">        
+        <!-- Page Header-->    
+        <section class="module-header parallax bg-dark" data-background="../../Areas/Portfolio/Portfolio_Images/ladder-1977946_1920.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="font-serif">Latest Works & Projects.</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Page Header end-->
+        <!-- Portfolio-->
+        <section class="module">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="filters" id="filters">               
+                            <li><a href="#" data-filter=".personal">Featured Projects</a></li>
+                            <li><a href="#" data-filter=".mockup">C# Projects</a></li>
+                            <li><a href="#" data-filter=".branding">JavaScript Projects</a></li>
+                            <li><a href="#" data-filter=".design">Coming Soon</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Portfolio-->
+                <div class="row row-portfolio">
+                    <div class="grid-sizer"></div>
+                    <div class="portfolio-item design large">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/design1cb.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Coming Soon!</h6><span class="portfolio-subtitle">C#</span>
+                            </div>
+                        </div><a class="portfolio-link" href="#"></a>
+                    </div>
+                    <div class="portfolio-item branding undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding1.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">PALINDROMES</h6><span class="portfolio-subtitle">Javascript</span>
+                            </div>
+                        </div><a class="portfolio-link" href="" data-toggle="modal" data-target="#max"></a>
+
+                        <div class="modal fade" id="max" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h1 class="modal-title" id="myModalLabel" style="text-align:center" ;>PALINDROMES</h1>
+                                    </div>
+                                    <div class="modal-body" style="background-image: url('../../Areas/Portfolio/Portfolio_Images/ladder2.jpg'); opacity: 0.9; color: white">
+                                        <h5>
+                                            A palindrome is a word, phrase, number, or other sequence of characters which reads the same
+                                            backward or foward.<br /><br /><br />
+                                        </h5>
+
+                                        <p>This exercise will determine if your word is a palindrome!
+                                        <p>Enter a word below to start<p>
+                                            <input type="text" id="userinputPalindrome" style="color:black" />
+                                            <button onclick="palindrome()" style="color:black">Click here</button><br /><br />
+                                        <p id="blank"></p>
+                                        <p id="blank2"></p>
+                                        <pre class="brush: js">
+                                                                THE CODE:
+                                                function palindrome() {
+                                                var A = $("#userinputPalindrome").val();
+                                                var Anospace = A.replace(/[\W_]/g, "");
+                                                var Asmall = Anospace.toLowerCase();
+                                                var B = Asmall.length;
+                                                var C = "";
+                                                for (i = B - 1; i >= 0; i--) {
+                                                    C = C + Asmall.charAt(i);
+                                                }
+                                                if (C == Asmall) {
+                                                    document.getElementById('blank').innerHTML = "The word is a palindrome!"
+                                                }
+                                                else {
+                                                    document.getElementById('blank').innerHTML = "The word is not a palindrome!"
+                                                }
+                                            }
+                                    </pre>
+                                    </div>
+                                    <div class="modal-footer no-margin">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portfolio-item branding undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding2.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">FACTORIALS</h6><span class="portfolio-subtitle">Javascript</span>
+                            </div>
+                        </div><a class="portfolio-link" href="" data-toggle="modal" data-target="#maxOne"></a>
+                    </div>
+                    <!--JavaScript exercise2 modal begins-->
+                    <div class="modal fade" id="maxOne" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h1 class="modal-title" id="myModalLabel" style="text-align:center ">Factorials</h1>
+                                </div>
+                                <div class="modal-body" style="background-image: url('../../Areas/Portfolio/Portfolio_Images/tunnel.jpg'); opacity: 0.9; color: white">
+                                    <h5 id="factorialid">A factorial is the product of an integer and all of the integers below it; e.g. The factorial of 3 is equal to 3 * 2 * 1.</h5><br /><br />
+                                    <p>The following exercise will calculate the factorial of your number.</p><br />
+                                    <p>Enter a number below between 1-20.</p>
+                                    <input type="number" id="userentry" style="color:black" />
+                                    <button onclick="factorial()" style="color:black">Submit</button><br /><br />
+                                    <p id="placeholder"></p>
+                                    <p id="placeholder2"></p>
+                                    <br /><br /><br />
+                                    <pre class="brush: js">
+                                            THE CODE:
+          
+                                        function factorial() {
+                                            var usernumber = $("#userentry").val();
+                                            var A = 1;
+                                            for (i = usernumber; i >= 1; i--) {
+                                                A = A * i;
+                                            }
+                        
+                                            $("#placeholder").html(A);
+            
+                                        }
+    
+                                </pre>
+                                </div>
+                                <div class="modal-footer no-margin">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--JavaScript exercise2 modal ends-->
+                    <div class="portfolio-item design mockup tall">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/design2.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Coming Soon!</h6><span class="portfolio-subtitle">C# Project</span>
+                            </div>
+                        </div><a class="portfolio-link" href="#"></a>
+                    </div>
+                    <div class="portfolio-item branding undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding3.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">FIZZBUZZ!</h6><span class="portfolio-subtitle">Javascript</span>
+                            </div>
+                        </div><a class="portfolio-link" href="" data-toggle="modal" data-target="#maxTwo"></a>
+                    </div>
+                    <!--JavaScript exercise3 modal begins-->
+                    <div class="modal fade" id="maxTwo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h1 class="modal-title" id="myModalLabel" style="text-align:center ">FizzBuzz</h1>
+                                </div>
+                                <div class="modal-body" style="background-image: url('../../Areas/Portfolio/Portfolio_Images/tunnel.jpg'); color:white">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>This is the fizzbuzz program</h5><br /><br />
+                                            <p style="line-height:2.3">
+                                                This program will gather your input, and determine all numbers between 1-100 that are divisible by your inputs.
+                                                If your first number finds a match, the program will write <img src='~/Areas/Portfolio/Portfolio_Images/bee-157062_640.png' style='width:20px; height:35px' />  for Buzz!  If your second number finds a match, the program will write <img src='~/Areas/Portfolio/Portfolio_Images/soda-575433_640.png' style='width:20px; height:35px' /> for Fizz!"
+                                                If both numbers find a divisible match, the program will write FIZZBUZZ!
+                                            </p>
+                                            <p>Enter two numbers between 1-100 below</p>
+                                            <input type="number" id="userinput" style="color:black" />
+                                            <input type="number" id="userinput2" style="color:black" />
+                                            <button onclick="fizzbuzz();" style="color:black">Submit</button><br /><br />
+                                            <p id="placeholder23"></p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <pre class="brush: js">
+                                                    function fizzbuzz() {
+                                                    var A = $("#userinput").val();
+                                                    var B = $("#userinput2").val();
+                                                    var C = [i];
+                                                    var output = '';
+                                                    for (var i = 1; i &lt;= 100; i++) {
+                                                        if (i % A == 0 && i % B == 0) {
+                                                            output= output + "FIZZBUZZ / ";
+                                                        }
+                                                        else if (i % A == 0) {
+                                                            output = output + "Fizz / ";
+                                                        }
+                                                        else if (i % B == 0) {
+                                                            output = output + "Buzz / ";
+                                                        }
+                                                        else output = output + i + " / ";
+                                                    }
+                                                    return $("#placeholder2").text(output);
+                                                    }
+                                        </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer no-margin">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--JavaScript exercise3 modal ends-->
+                    <div class="portfolio-item branding undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding4c.png" style="filter:contrast(90%)"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">ALL ABOUT NUMBERS</h6><span class="portfolio-subtitle">Javascript</span>
+                            </div>
+                        </div><a class="portfolio-link" href="" data-toggle="modal" data-target="#maxThree"></a>
+                    </div>
+                    <!--JavaScript exercise4 modal begins-->
+                    <div class="modal fade" id="maxThree" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h1 class="modal-title" id="myModalLabel" style="text-align:center ">Calculating Numbers</h1>
+                                </div>
+                                <div class="modal-body" style="background-image: url('../../Areas/Portfolio/Portfolio_Images/tunnel.jpg'); color:white">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>Calculating Numbers</h5>
+                                            <p>Enter five numbers below to begin calculating your numbers</p>
+                                            <p>
+                                                The program will check to find your highest number, your lowest number, the average of your
+                                                numbers, the sum of your numbers, and the product of your numbers.
+                                            </p>
+                                            <input type="text" id="userinputone" style="color:black" />
+                                            <input type="text" id="userinputtwo" style="color:black" />
+                                            <input type="text" id="userinputthree" style="color:black" />
+                                            <input type="text" id="userinputfour" style="color:black" />
+                                            <input type="text" id="userinputfive" style="color:black" /><br />
+                                            <button onclick="determine(); fade()" style="color:black" id="calculatingclick">Submit</button><br /><br />
+                                            <div id="calculatingparagraphs">
+                                                <p>The highest number you entered is:</p><br />
+                                                <p id="emptyparagraphone"></p>
+                                                <p>The lowest number you entered is:</p><br />
+                                                <p id="emptyparagraphtwo"></p>
+                                                <p>The average of your numbers is:<br />
+                                                <p id="emptyparagraphthree"></p>
+                                                <p>The sum of your numbers is:</p><br />
+                                                <p id="emptyparagraphfour"></p>
+                                                <p>The product of your numbers is:</p><br />
+                                                <p id="emptyparagraphfive"></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <pre class="brush: js">
+                                                        THE CODE
+                        
+          
+                                                function determine() {
+                                                    var userinputone = $("#userinputone").val();
+                                                    var userinputtwo = $("#userinputtwo").val();
+                                                    var userinputthree = $("#userinputthree").val();
+                                                    var userinputfour = $("#userinputfour").val();
+                                                    var userinputfive = $("#userinputfive").val();
+                                                    var first = parseInt(userinputone);
+                                                    var second = parseInt(userinputtwo);
+                                                    var third = parseInt(userinputthree);
+                                                    var fourth = parseInt(userinputfour);
+                                                    var fifth = parseInt(userinputfive);
+                                                    var A = Math.max(first, second, third, fourth, fifth);
+                                                    var B = Math.min(first, second, third, fourth, fifth);
+                                                    var C = (first + second + third + fourth + fifth) / 5;
+                                                    var D = first + second + third + fourth + fifth;
+                                                    var E = first * second * third * fourth * fifth;
+                                                    $("#emptyparagraphone").html(A);
+                                                    $("#emptyparagraphtwo").html(B);
+                                                    $("#emptyparagraphthree").html(C);
+                                                    $("#emptyparagraphfour").html(D);
+                                                    $("#emptyparagraphfive").html(E);
+                                                }           
+                                        </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer no-margin">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--JavaScript exercise4 modal ends-->
+                    <div class="portfolio-item branding undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding5.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Coming Soon</h6><span class="portfolio-subtitle">Javascript</span>
+                            </div>
+                        </div><a class="portfolio-link" href="#"></a>
+                    </div>
+                    <div class="portfolio-item branding undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding6.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Coming Soon</h6><span class="portfolio-subtitle">Javascript</span>
+                            </div>
+                        </div><a class="portfolio-link" href="#"></a>
+                    </div>
+                    <div class="portfolio-item mockup undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding1.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Blog</h6><span class="portfolio-subtitle">C# Project</span>
+                            </div>
+                        </div><a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })"></a>
+                    </div>
+                    <div class="portfolio-item mockup, personal mockup undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding2.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Bug Tracker</h6><span class="portfolio-subtitle">C# Project</span>
+                            </div>
+                        </div>
+                        @if (Request.IsAuthenticated)
+                        {
+                            var user = User.Identity.Name;
+                            //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                            if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                            {
+                                using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a class="portfolio-link" onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()"></a>
+                                }
+                            }
+                            else
+                            {
+                                <a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })"></a>
+                            }
+                        }
+                        else
+                        {
+                            <a class="portfolio-link"onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })"></a>
+                        }     
+                    </div>
+                    <div class="portfolio-item personal mockup">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding4c.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Car Finder Xamarin - Currently under construction</h6><span class="portfolio-subtitle">C# Project</span>
+                            </div>
+                        </div><a class="portfolio-link" href="#"></a>
+                    </div>
+                    <div class="portfolio-item mockup, personal mockup undefined">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-img-wrap" data-background="../../Areas/Portfolio/Portfolio_Images/branding5.png"></div>
+                            <div class="portfolio-overlay"></div>
+                            <div class="portfolio-caption">
+                                <h6 class="portfolio-title">Financial Planner</h6><span class="portfolio-subtitle">C# Project</span>
+                            </div>
+                        </div>
+                        @if (Request.IsAuthenticated)
+                        {
+                            var user = User.Identity.Name;
+                            //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                            if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                            {
+                                using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a class="portfolio-link" onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()"></a>
+                                }
+                            }
+                            else
+                            {
+                                <a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })"></a>
+                            }
+                        }
+                        else
+                        {
+                            <a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })"></a>
+                        }
+                        @*<a class="portfolio-link" href="http://agay-budgeter.azurewebsites.net/"></a>*@
+                    </div>
+                </div>
+                <div class="row m-t-50">
+                    <div class="col-sm-12 text-center">
+                        <a class="btn btn-gray" onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio end-->
+        <!-- Footer-->
+        <footer class="footer parallax" data-background="../../Areas/Portfolio/Portfolio_Images/ladder2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="social-list m-b-40">                           
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!--<p class="copyright">© 2016 <a href="#">Broke.</a> All rights reserved. Design with love by <a href="http://2the.me/">2theme</a></p>-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer end-->
+    </div>
+    <div style="background-color:lawngreen ">
+    </div>
+    <!-- Scripts-->
+
+    <script src="~/assets/js/jquery-2.2.4.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/custom.min.js"></script>
+    <script src="~/Scripts/SyntaxHighlighter/shCore.js"></script>
+    <script src="~/Scripts/SyntaxHighlighter/shBrushJScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            SyntaxHighlighter.all()
+
+        })
+    </script>
+    <script>
+        function fizzbuzz() {
+            var A = $("#userinput").val();
+            var B = $("#userinput2").val();
+            var C = [i];
+            var output = '';
+
+            if (A < 100 && A > 0 && B < 100 && B > 0) {
+                for (var i = 1; i <= 100; i++)
+                    if (i % A == 0 && i % B == 0) {
+                        output = output + "<span style='background-color:lawngreen; color:black'>FIZZBUZZ!!</span>   ";
+                    }                       
+                    else if (i % A == 0) {
+                        output = output + "<img src='/Areas/Portfolio/Portfolio_Images/bee-157062_640.png' style='width:20px; height:35px'/> ";
+                    }
+                    else if (i % B == 0) {
+                        output = output + "<img src='/Areas/Portfolio/Portfolio_Images/soda-575433_640.png' style='width:20px; height:35px'/>   ";
+                    }
+                    else output = output + "<span>" + i + "</span>  ";
+            }
+            else {
+                output = "Please enter a valid number";
+            }
+            var htmlObj = $("<div class='container'><div class='row'> <div class='col-sm-4'>" + output + "</div></div></div>");
+            $("#placeholder23").html(htmlObj);
+        }
+    </script>
+
+    <script>
+        function factorial() {
+            var usernumber = $("#userentry").val();
+            if (usernumber < 21 && usernumber > 0) {
+                var A = 1;
+                var B = "The factorial of your number is: ";
+                var C = ""
+
+                for (i = usernumber; i >= 1; i--) {
+                    A = A * i;
+                    C = C + i + "*";
+                }
+                $("#placeholder").html(B + " " + A);
+                $("#placeholder2").html(C + "=" + A);
+            }
+            else $("#placeholder").html("Please enter a valid number");
+        }
+    </script>
+
+    <script>
+        function determine() {
+            var userinputone = $("#userinputone").val();
+            var userinputtwo = $("#userinputtwo").val();
+            var userinputthree = $("#userinputthree").val();
+            var userinputfour = $("#userinputfour").val();
+            var userinputfive = $("#userinputfive").val();
+            var first = parseInt(userinputone);
+            var second = parseInt(userinputtwo);
+            var third = parseInt(userinputthree);
+            var fourth = parseInt(userinputfour);
+            var fifth = parseInt(userinputfive);
+
+            var A = Math.max(first, second, third, fourth, fifth);
+            var B = Math.min(first, second, third, fourth, fifth);
+            var C = (first + second + third + fourth + fifth) / 5;
+            var D = first + second + third + fourth + fifth;
+            var E = first * second * third * fourth * fifth;
+
+            $("#emptyparagraphone").html(A);
+            $("#emptyparagraphtwo").html(B);
+            $("#emptyparagraphthree").html(C);
+            $("#emptyparagraphfour").html(D);
+            $("#emptyparagraphfive").html(E);
+        }
+    </script>
+    <script>
+        function palindrome() {
+            var A = $("#userinputPalindrome").val();
+            var Anospace = A.replace(/[\W_]/g, "");
+            var Asmall = Anospace.toLowerCase();
+            var B = Asmall.length;
+            var C = "";
+            for (i = B - 1; i >= 0; i--) {
+                C = C + Asmall.charAt(i);
+            }
+            if (C == Asmall) {
+                document.getElementById('blank').innerHTML = "The word is a palindrome!"
+                document.getElementById('blank2').innerHTML = "***" + C + " IS equal to " + Asmall + "."
+            }
+            else {
+                document.getElementById('blank').innerHTML = "The word is not a palindrome!"
+                document.getElementById('blank2').innerHTML = "***" + C + " is NOT equal to " + Asmall + "."
+            }
+        }
+    </script>
+
+    <script>
+        var loading = function () {
+            $('.page-loader').show()
+        }
+    </script>
+</body>
+</html>
+

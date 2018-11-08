@@ -1,0 +1,552 @@
+﻿@model ASG.Areas.Blog.Models.BlogPost
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>AGay - Blog</title>
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="~/assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-touch-icon-114x114.png">
+    <!-- Web Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Suranna" rel="stylesheet" type="text/css">
+    <!-- Bootstrap core CSS-->
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Fonts-->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/themify-icons.css" rel="stylesheet">
+    <!-- Plugins-->
+    <link href="~/assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/assets/css/magnific-popup.css" rel="stylesheet">
+    <link href="~/assets/css/vertical.min.css" rel="stylesheet">
+    <!-- Template core CSS-->
+    <link href="~/assets/css/template.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader-->
+    <div class="page-loader">
+        <div class="loader">Loading...</div>
+    </div>
+    <!-- Preloader end-->
+    <!-- Menu-->
+    <div class="overlay-menu overlay-menu-animation font-serif">
+        <a class="close-menu" href="#"><span class="ti-close"></span></a>
+        <div class="menu-table">
+            <div class="menu-table-cell">
+                <ul class="navigation">
+                    <li class="menu-item-has-children">
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "About" })">About Me</a></li>
+                    <li class="menu-item-has-children">
+                        <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
+                        <ul class="sub-menu">
+                            <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
+                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "FinancialPlanner" })">Financial Planner</a></li>
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "ProjectManager@Mailinator.com") || (user == "Administrator@Mailinator.com") || (user == "Developer@Mailinator.com") || (user == "GuestUser@mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })">Bug Tracker</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Contact" })">Contact</a></li>
+                </ul><br />
+            </div>
+        </div>
+    </div>
+    <!-- Menu end-->
+    <!-- Header-->
+    <header class="header">
+        <div class="container">
+            <div class="inner-header">
+                <a class="inner-brand" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Home</a>
+            </div>
+            <div class="header-nav-toogle">
+                <a class="show-menu-btn" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Header end-->
+    <div class="wrapper">
+        <!-- Page Header-->
+        <section class="module-header parallax bg-dark" data-background="@Url.Content(Model.MediaURL)" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="font-serif m-b-10"> @Html.DisplayFor(model => model.Title) </h1>
+                        <ul class="post-meta">
+                            <li>@Html.DisplayFor(model => model.createdDate) </ li >
+                            <li>
+                                <a href="#">
+                                    @foreach (var topics in Model.Topics.Take(3))
+                                    {
+                                        @Html.DisplayFor(modelItem => topics.TopicName)<span>&nbsp;</span>
+                                    }
+                                </a>
+                            </li>
+                            <li><a href="#comments">@Model.Comments.Count Comments</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Page Header end-->
+        <!-- Single post-->
+        <section class="module">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 well">
+                        <!-- Post-->
+                        <article class="post">
+                            <div class="post-content">
+                                <span class="ti-marker-alt"></span>
+                                <h4> @Html.DisplayFor(model => model.Title)</h4>@Html.DisplayFor(model => model.createdDate)<br /><br />
+                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                {
+                                    @Html.ActionLink("Edit Post", "Edit", new { id = Model.Id })<br />
+
+                                    @Html.ActionLink("Delete Post", "Delete", new { id = Model.Id })<br /><br />
+                                }
+                                <p>@Html.Raw(Model.Body)</p>
+                            </div>
+                            <div class="post-footer">
+                                <div class="post-tags">
+                                    @foreach (var topics in Model.Topics)
+                                    {
+                                        <a href="@Url.Action("Details", "Topics", new { id = topics.Id })">@Html.DisplayFor(modelItem => topics.TopicName)</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </article>
+                        <!-- Post end-->
+                        <!-- Comments area-->
+                        <div class="comments-area">
+                            @if (@Model.Published == false)
+                            {
+                                @Html.ActionLink("PUBLISH", "PublishPending", new { PendingPostId = Model.Id })<br />
+                            }
+                            <hr style="height:2px;border:none;color:#333;background-color:#a19f9f;" />
+                            <h5 class="comments-title">@Model.Comments.Count Comments </h5>
+                            <div class="comment-list">
+                                <!-- Comment-->
+                                @foreach (var comment in Model.Comments)
+                                {
+                                    <div class="comment" id="comments">
+                                        <div class="comment-author"><img class="avatar" src="~/assets/images/avatar/1.jpg" alt=""></div>
+                                        <div class="comment-body">
+                                            <div class="comment-meta">
+                                                <div class="comment-meta-author"><a href="#"><p>@comment.Commenter.FirstName</a></div>
+                                                <div class="comment-meta-date">
+                                                    <a href="#">
+                                                        <time datetime="2015-05-05T04:51:41+00:00">@comment.createdDate </time>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="comment-content">
+                                                <span>@Html.Raw(comment.Body)</span>
+                                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-9"></div>
+                                                        <div class="col-md-3">
+                                                            <span>@Html.ActionLink("Edit Comment", "EditComment", new { id = comment.Id })</span>
+                                                            <span>@Html.ActionLink("Delete Comment", "DeleteComment", new { id = comment.Id }) </span><br />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                            @if (Request.IsAuthenticated && User.IsInRole("BlogUser"))
+                                            {
+                                                using (Html.BeginForm("CommentReply", "Comments", new { CommentId = comment.Id }, FormMethod.Post, null))
+                                                {
+                                                    <input name="Body" type="text" class="form-control" style="display:inline-block" placeholder="reply to comment" /><br />
+                                                    <button class="search-button" style="top:5px !important; position: relative !important; float:right" type="submit">
+                                                        <span>&nbsp; &nbsp; Submit</span>
+                                                    </button>
+                                                }
+                                            }
+                                        </div>
+                                        @foreach (var reply in comment.Replies)
+                                        {
+                                        <!-- Subcomment-->
+                                            <div class="children">
+                                                <div class="comment">
+                                                    <div class="comment-author"><img class="avatar" src="~/assets/images/avatar/2.jpg" alt=""></div>
+                                                    <div class="comment-body">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-meta-author"><a href="#">@reply.Replier.FirstName</a></div>
+                                                            <div class="comment-meta-date">
+                                                                <a href="#">
+                                                                    <time datetime="2015-05-05T04:51:41+00:00">@reply.createdDate</time>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-content">
+                                                            <span>@reply.Body</span>
+                                                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                                            {
+                                                                <div class="row">
+                                                                    <div class="col-md-9"></div>
+                                                                    <div class="col-md-3">
+                                                                        <span>@Html.ActionLink("Edit Reply", "EditReply", new { id = reply.Id })</span>
+                                                                        <span>@Html.ActionLink("Delete Reply", "DeleteReply", new { id = reply.Id }) </span><br />
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <!-- Comment-->
+                            </div>
+                            <div class="widget widget_search">
+                                @if (Request.IsAuthenticated && User.IsInRole("BlogUser"))
+                                {
+                                    <h4>Leave a comment</h4>
+                                    using (Html.BeginForm("CreateComment", "Comments", new { PostId = Model.Id }, FormMethod.Post, null))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-group col-sm-12">
+                                            <textarea class="form-control" rows="8" placeholder="Comment *" name="Body"></textarea>
+                                            <input class="btn btn-brand" type="submit" value="Post Comment" style="margin:3px">
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <ul class="nav navbar-nav navbar-left">
+                                        <li>
+                                            @if (Request.IsAuthenticated && (!User.IsInRole("BlogUser")))
+                                            {
+                                                <a onclick="openBlogAccessModal()">Add Comment</a>
+                                            }
+                                            else
+                                            {
+                                                <a onclick="openLoginModal()">Login/Register to Add Comments</a>
+                                            }
+                                        </li>
+                                    </ul>
+                                    <br />
+                                        <br />
+                                }
+                            </div>
+                            <ul class="nav navbar-nav navbar-left">
+                                <li>
+                                    @Html.ActionLink("Back to List", "Index")
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Comments area end-->
+                    </div>
+                    <!-- Sidebar-->
+                    <div class="col-sm-4">
+                        <div class="sidebar">
+                            <div class="well">@{Html.RenderAction("BlogPartialUpper", "BlogPosts"); }</div>
+                            <div class="well">@{Html.RenderAction("BlogPartialMid", "BlogPosts");}</div>
+                            <div class="well">@{Html.RenderAction("BlogPartialLower", "BlogPosts"); }</div>
+                            <div class="well">@{Html.RenderAction("BlogPartialLowLower", "BlogPosts");}</div>
+                        </div>
+                    </div>
+                    <!-- Sidebar end-->
+                </div>
+            </div>
+        </section>
+
+        <!-- Single post end-->
+        <!-- Footer-->
+        <footer class="footer parallax" data-background="@Url.Content(Model.MediaURL)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="social-list m-b-40"></ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer end-->
+    </div>
+    @{Html.RenderAction("BlogLogin", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("BlogRegister", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("BlogForgotPassword", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("BlogForgotPasswordConfirmation", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("BlogResetPassword", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("BlogResetPasswordConfirmation", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("RegistrationConfirmation", "BlogPosts", new { area = "Blog" });}
+    @{Html.RenderAction("BlogAccess", "BlogPosts", new { area = "Blog" });}
+    <!-- Scripts-->
+    <script src="~/assets/js/jquery-2.2.4.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0rANX07hh6ASNKdBr4mZH0KZSqbHYc3Q"></script>
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/custom.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var resetPassword = false;
+            @if(TempData["resetPassword"] != null) {
+                @:resetPassword = true
+                                    }
+            if (resetPassword) {
+                openResetPasswordModal();
+            };
+        });
+
+        function openLoginModal(closeModals) {
+            document.getElementById('BlogLoginErrors').innerHTML = "";
+            if (closeModals) {
+                $('#blogResetPasswordConfirmation').modal('hide');
+            }
+            $('#blogLogin').modal('toggle');
+        }
+
+        function openRegisterModal(closeModals) {
+            if (closeModals) {
+                $('#blogLogin').modal('hide');
+            }
+            document.getElementById('BlogRegisterErrors').innerHTML = "";
+            $('#blogRegister').modal('toggle');
+        }
+
+        function openForgotPasswordModal(closeModals) {
+            if (closeModals) {
+                $('#blogLogin').modal('hide');
+            }
+            document.getElementById('BlogForgotPasswordErrors').innerHTML = "";
+            $('#blogForgotPassword').modal('toggle');
+        }
+
+        function openForgotPasswordConfirmationModal(closeModals) {
+            if (closeModals) {
+                $('#blogForgotPassword').modal('hide');
+            }
+            $('#blogForgotPasswordConfirmation').modal('toggle');
+        }
+
+        function openRegistrationConfirmationModal(closeModals) {
+            if (closeModals) {
+                $('#blogRegister').modal('hide');
+            }
+            $('#blogRegistrationConfirmation').modal('toggle');
+        }
+
+        function openResetPasswordModal() {
+            document.getElementById('BlogResetPasswordErrors').innerHTML = "";
+            $('#blogResetPassword').modal('toggle');
+        }
+
+        function openBlogAccessModal() {
+            document.getElementById('AdditionalBlogAccessMessage').innerHTML = "";
+            $('#blogAccess').modal('toggle');
+        }
+
+        $('#blogRegistrationConfirmation').on('hidden.bs.modal', function () {
+            location.reload();
+
+        })
+        $('#BlogLoginSubmit').click(function () {
+            var form = $("#blogLoginForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/Login",
+                data: $("#blogLoginForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('BlogLoginErrors').innerHTML = "Unable to process request";
+                    }
+                    else {
+                        if (data.roleCheck) {
+                            location.reload();
+                        }
+                        else {
+                            $('#blogLogin').modal('hide');
+                            $('#blogAccess').modal('toggle');
+                        }
+                    }
+                }
+            });
+        });
+
+
+        $('#BlogRegisterSubmit').click(function () {
+            var form = $("#blogRegisterForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/Register",
+                data: $("#blogRegisterForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('BlogRegisterErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        if (data.roles.length > 0) {
+                            if (data.roles.includes("BlogUser")) {
+                                document.getElementById('Blog').checked = true;
+                            }
+                            if (data.roles.includes("FinancialPlannerUser")) {
+                                document.getElementById('FinancialPlanner').checked = true;
+                            }
+                            if (data.roles.includes("BugtrackerUser")) {
+                                document.getElementById('BugTracker').checked = true;
+                            }
+                        }
+                        openRegistrationConfirmationModal(true);
+                    }
+                }
+            });
+        });
+
+
+        $('#BlogForgotPasswordSubmit').click(function () {
+            var form = $("#blogForgotPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ForgotPassword",
+                data: $("#blogForgotPasswordForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('BlogForgotPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        openForgotPasswordConfirmationModal(true);
+                    }
+                }
+            });
+        });
+
+        $('#BlogResetPasswordSubmit').click(function () {
+            var form = $("#blogResetPasswordForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/ResetPassword",
+                data: $("#blogResetPasswordForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('BlogResetPasswordErrors').innerHTML = data.ex.join('<br />');
+                    }
+                    else {
+                        $('#blogResetPassword').modal('toggle');
+                        $('#blogResetPasswordConfirmation').modal('toggle');
+                    }
+                }
+            });
+        });
+
+        $('#BlogAdditionalRegisterSubmit').click(function () {
+            var form = $("#additionalRegistrationForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/AddMultipleRegistration",
+                data: $("#additionalRegistrationForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('AdditionalRegistrationMessage').innerHTML = "A problem was encountered. Please try again."
+                    }
+                    else {
+                        document.getElementById('AdditionalRegistrationMessage').innerHTML = "Thank you.  You have now been registered!"
+                    }
+                }
+            });
+        });
+
+        $('#BlogAddAccessSubmit').click(function () {
+            var form = $("#blogAccessForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Account/AddRegistration",
+                data: $("#blogAccessForm").serialize(),
+                success: function (data) {
+                    if (!data.success) {
+                        document.getElementById('AdditionalBlogAccessMessage').innerHTML = "A problem was encountered. Please try again."
+                    }
+                    else {
+                        if (data.accountList.length > 0) {
+                            document.getElementById('AdditionalBlogAccessMessage').innerHTML = "Thank you.  You have now been registered!"
+                            setTimeout(function () {
+                                location.reload();
+                            }, 6000);
+                        }
+                        else {
+                            document.getElementById('AdditionalBlogAccessMessage').innerHTML = "Thank you.  To register for full access, click the full access link."
+                            setTimeout(function () {
+                                location.reload();
+                            }, 6000);
+                        }
+                    }
+                }
+            });
+        });
+
+        $('#BlogAddAccessDecline').click(function () {
+            location.reload();
+        });
+
+        var loading = function () {
+            $('.page-loader').show()
+        }
+    </script>
+</body>
+</html>

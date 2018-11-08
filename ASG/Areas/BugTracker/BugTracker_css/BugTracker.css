@@ -1,0 +1,141 @@
+﻿body {
+   
+}
+.flicker {
+  -webkit-animation: flicker 2s 5s;
+  /*text-align:center;
+  margin-top:3em;
+  font-family:'Lato', sans-serif;
+  font-size:3em;*/
+}
+
+@-webkit-keyframes flicker
+{
+0% {opacity:0;}
+9% {opacity:0;}
+10% {opacity:.5;}
+13% {opacity:0;}
+20% {opacity:.5;}
+25% {opacity:1;}
+}
+ .tab {
+     /*color:black;*/
+     color:white;
+    overflow: hidden;
+ 
+    /*box-shadow:rgb(255, 216, 0) 10px 10px inset;*/
+    /*border: 1px solid #ccc;*/
+    /*background-color: #808080;*/
+    background-color:#2F343E;
+    /*background-color:rgba(0,0,0,.1)*/
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    /*font-variant:small-caps;*/
+    background-color: inherit;
+    float: right;
+       font-family: Roboto Condensed, sans-serif;
+   letter-spacing: 2px;
+   text-transform:uppercase;
+   border-radius: 0 !important;
+/*-webkit-box-shadow: 10px 0px 5px -10px rgba(0,0,0,1);
+-moz-box-shadow: 10px 0px 5px -10px rgba(0,0,0,1);
+box-shadow: 10px 0px 5px -10px rgba(0,0,0,1);*/
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    /*font-size: 17px;*/
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+     color:white;
+    background-color: #100f0f;
+/*-webkit-box-shadow: inset 11px -7px 5px -8px rgba(0,0,0,1);
+-moz-box-shadow: inset 11px -7px 5px -8px rgba(0,0,0,1);
+box-shadow: inset 11px -7px 5px -8px rgba(0,0,0,1);*/
+/*-webkit-box-shadow: inset -4px -4px 7px -4px rgba(0,0,0,0.75);
+-moz-box-shadow: inset -4px -4px 7px -4px rgba(0,0,0,0.75);
+box-shadow: inset -4px -4px 7px -4px rgba(0,0,0,0.75);*/
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+         color:white;
+    background-color: #100f0f;
+    /*color:black !important;
+    background-color: #ccc !important;*/
+/*-webkit-box-shadow: inset 11px -7px 5px -8px rgba(0,0,0,1);
+-moz-box-shadow: inset 11px -7px 5px -8px rgba(0,0,0,1);
+box-shadow: inset 11px -7px 5px -8px rgba(0,0,0,1);*/
+/*-webkit-box-shadow: inset -4px -4px 7px -4px rgba(0,0,0,0.75);
+-moz-box-shadow: inset -4px -4px 7px -4px rgba(0,0,0,0.75);
+box-shadow: inset -4px -4px 7px -4px rgba(0,0,0,0.75);*/
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    max-width:inherit; /* For Bootstrap 4 - to avoid the modal window stretching full width */
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
+
+.mdtitle {
+    letter-spacing: 3px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: Roboto, Arial, serif;
+    margin-left: 45px !important;
+     margin-right: 45px !important;
+    padding-bottom:0px !important;
+}
+
+[data-toggle="collapse"] .fa:before {   
+  content: "\f139";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+  content: "\f13a";
+}
+
+
+.dataTables_filter label  {
+   color: #4d4c4c;
+}

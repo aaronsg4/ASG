@@ -1,0 +1,51 @@
+﻿
+@using ASG.Models
+@model ASG.Models.AddRegistrationViewModel
+
+@{
+    ViewBag.Title = "Registration confirmation";
+}
+
+
+<div class="modal fade" id="blogAccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="background-color:rgba(0, 0, 0, 0.7)">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header mdtitle">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="width:90%; text-align:center; padding:30px 50px 20px 50px; margin:auto">
+                    <div>
+                        <h6>It looks like you are registered, but don't yet have full access to the Blog.</h6><br /><br />
+                        <p>In order to comment on blog posts, you'll need full access.  Would you like to add this now?</p>
+                        <div style="margin-bottom:20px; margin-top:20px">
+                            <section id="additionalBlogAccessForm">
+                                @using (Html.BeginForm("AddRegistration", "Account", new { area = "", ReturnUrl = ViewBag.ReturnUrl, Application = ViewBag.Application }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "blogAccessForm" }))
+                                {
+                                    @Html.HiddenFor(m => m.Application, new { Value = "Blog" })
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.Blog)
+                                        <span>Yes, Give me full access!</span>
+                                    </div>
+                                }
+                            </section><br />
+                            <div style="color:lime; text-align:left; margin:15px; font-size:14px; line-height:1" id="AdditionalBlogAccessMessage"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center; margin-top:10px">
+                    <div class="form-group">
+                        <input class="btn btn-lg btn-primary btn-block  letter-spacing-3" id="BlogAddAccessSubmit" value="Add me" style="margin:25px; width:90%; margin:auto" />
+                        <button type="button" class="btn btn-lg btn-secondary btn-block  letter-spacing-3" id="BlogAddAccessDecline" data-dismiss="modal" style="margin:25px; width:90%; margin:auto">No Thanks</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

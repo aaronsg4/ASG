@@ -1,0 +1,57 @@
+﻿@model ASG.Areas.FinancialPlanner.Models.FinancialAccount
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="col-md-offset-2 col-md-10" style="margin-top:50px; margin-bottom:50px">
+            <h5>Edit your account details</h5>
+        </div>        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Name">Account Name</label>     
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(m=>m.ActualBalance)
+        @Html.HiddenFor(m => m.ReconciledBalance)
+        @Html.HiddenFor(m => m.CreatedDate)
+        @Html.HiddenFor(m => m.UpdatedDate)
+        @Html.HiddenFor(m => m.Include)  
+        @Html.HiddenFor(m=>m.AccountHolderUserId)
+        @Html.HiddenFor(m => m.HouseholdId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.AccountTypeId, "Account Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownList("AccountTypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccountTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10"><br /><br />
+                <input type="submit" value="Save" class="btn btn-default" />
+                <div><br /><br />
+                    @Html.ActionLink("Back to Statement", "Details", new { id = Model.Id })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
