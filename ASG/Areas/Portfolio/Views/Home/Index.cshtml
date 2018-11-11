@@ -61,7 +61,28 @@
                         <a onclick="loading()" style="color:lime" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a>
                         <ul class="sub-menu">
                             <li><a onclick="loading()" href="@Url.Action("Index", "Home", new { area = "Portfolio" })">Portfolio</a></li>
-                            <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                var user = User.Identity.Name;
+                                //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                                if ((user == "Administrator@Mailinator.com"))
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "Blog" }, FormMethod.Post, new { id = "logoutForm1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm1').submit()">Blog</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })">Blog</a></li>
+                            }
+
                             @if (Request.IsAuthenticated)
                             {
                                 var user = User.Identity.Name;
@@ -147,7 +168,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <ul class="filters" id="filters">               
+                        <ul class="filters" id="filters">
                             <li><a href="#" data-filter=".personal">Featured Projects</a></li>
                             <li><a href="#" data-filter=".mockup">C# Projects</a></li>
                             <li><a href="#" data-filter=".branding">JavaScript Projects</a></li>
@@ -387,10 +408,12 @@
                                                 <p id="emptyparagraphfive"></p>
                                             </div>
                                         </div>
+
+
                                         <div class="col-md-8">
                                             <pre class="brush: js">
                                                         THE CODE
-                        
+                       
           
                                                 function determine() {
                                                     var userinputone = $("#userinputone").val();
@@ -449,7 +472,28 @@
                             <div class="portfolio-caption">
                                 <h6 class="portfolio-title">Blog</h6><span class="portfolio-subtitle">C# Project</span>
                             </div>
-                        </div><a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })"></a>
+                        </div>
+                        @if (Request.IsAuthenticated)
+                        {
+                            var user = User.Identity.Name;
+                            //if you're in one of the demo roles, log you out when you log into another app.  The demo roles can still work, but want them to explicity choose the role they want to be in
+                            if ((user == "Administrator@Mailinator.com"))
+                            {
+                                using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "Blog" }, FormMethod.Post, new { id = "logoutForm1" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a class="portfolio-link" onclick="loading()" style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm1').submit()"></a>
+                                }
+                            }
+                            else
+                            {
+                                <a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })"></a>
+                            }
+                        }
+                        else
+                        {
+                            <a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "BlogPosts", new { area = "Blog" })"></a>
+                        }
                     </div>
                     <div class="portfolio-item mockup, personal mockup undefined">
                         <div class="portfolio-wrapper">
@@ -478,8 +522,8 @@
                         }
                         else
                         {
-                            <a class="portfolio-link"onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })"></a>
-                        }     
+                            <a class="portfolio-link" onclick="loading()" href="@Url.Action("Index", "Home", new { area = "BugTracker" })"></a>
+                        }
                     </div>
                     <div class="portfolio-item personal mockup">
                         <div class="portfolio-wrapper">

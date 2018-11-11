@@ -20,7 +20,7 @@
     </div>
     <!-- Page Content -->
     <div class="page-content" style="padding-bottom:200px">
-        <section class="page-top">
+        @*<section class="page-top">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 header-inline">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-        </section><!-- End of Page Header -->
+        </section> End of Page Header*@ 
         <!-- Flot Basic -->
         <div class="section-admin container-fluid" style="padding-right:70px">
             <br />
@@ -43,14 +43,17 @@
                     <br />.
                     <div class="well" style="border:none">
                         <br />
-                        <h2 style="font-family:'Lato',sans-serif;">Bug Tracker Users</h2>
+                        <h2 style="font-family:'Lato',sans-serif;">
+                            Bug Tracker Users
+                            <a style="float:right" href="@Url.Action("Index","Home")" class="btn btn-dark-blue">Home</a>
+                        </h2>
                         <p>
                             Below you will find a list of current users in the Bug Tracker System, along with their roles and the projects/tickets they are working on. <br />
                             You can also view your personal profile by clicking 'My Profile' below.
                         </p>
                         <hr />
                         @{ var x = User.Identity.GetUserId();}
-                        <a href="@Url.Action("Details", "Users", new { Id = x })" class="btn btn-dark-blue" id="btn">My Profile</a>
+                        <a href="@Url.Action("Details", "Users", new { Id = x })" class="btn btn-dark-blue" id="btn">My Profile</a>                        
                         <br /><br />
                         @{ var temporary = TempData["message"];}
                         @temporary

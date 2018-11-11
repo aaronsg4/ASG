@@ -11,7 +11,7 @@
 
 <body>
     <div class="page-content" style="padding-bottom:200px">
-        <section class="page-top">
+        @*<section class="page-top">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 header-inline">
@@ -25,9 +25,9 @@
                     </div>
                 </div>
             </div>
-        </section><!-- End of Page Header -->
+        </section> End of Page Header*@ 
         <!-- Flot Basic -->
-        <div class="row">
+        @*<div class="row">
             <div class="admin-content">
                 <div class="row">
                     <div class="well" style="border:none">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="row">
             <div>
                 <div class="section-admin container-fluid">
@@ -53,6 +53,7 @@
                                         var users = project.ListUsersOnAProject(projectId); ;
                                         <div class="row well">
                                             <div class="col-md-4">
+                                                Project:
                                                 <h2>
                                                     @Html.DisplayFor(modelItem => project.Name)
                                                     @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
@@ -63,6 +64,7 @@
                                             </div>
                                             @{var id = string.Concat("projectmembers", project.Id);}
                                             <div class="col-md-6" data-toggle="collapse" data-target="#@id">
+                                                <br />
                                                 <h5>
                                                     <u>
                                                         Project Team Members:
@@ -91,6 +93,10 @@
                                                         }
                                                     }
                                                 </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <br />
+                                                <a style="float:right; margin-top:10px" href="@Url.Action("Landing","Home")" class="btn btn-dark-blue">Home</a>
                                             </div>
                                         </div>
                                         <hr />

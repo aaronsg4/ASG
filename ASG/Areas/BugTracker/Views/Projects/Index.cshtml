@@ -12,11 +12,15 @@
 </head>
 <body>
     <div class="page-content" style="padding-bottom:200px">
-        <section class="page-top">
+        @*<section class="page-top">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 header-inline">
                         <div class="header-inline-content">
+                            @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                            {                           
+                                <a href="@Url.Action("MyProjects", "Projects")" class="btn btn-dark-blue" id="btn">My Projects</a>
+                            }
                         </div>
                         <div class="header-inline-content">
                             <ul class="breadcrumb">
@@ -26,8 +30,8 @@
                     </div>
                 </div>
             </div>
-        </section><!-- End of Page Header -->
-        <div class="section-admin container-fluid">
+        </section> End of Page Header*@ 
+        <div class="section-admin container-fluid" style="margin-bottom:50px">
             <div class="row admin text-center">
                 <div class="col-md-12">
                     <div class="row">
@@ -75,7 +79,7 @@
             </div>
         </div>
         <!-- Flot Basic -->
-        <div class="admin-content">
+        @*<div class="admin-content">
             <div class="row">
                 <div class="well" style="border:none">
                     <br />
@@ -91,7 +95,7 @@
                     }
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="section-admin container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -103,7 +107,7 @@
                                     @{ int projectId = project.Id;}
                                     @{ var users = project.ListUsersOnAProject(projectId);}
                                     <div style="padding-left:18px">
-                                        <h2 style="color:#4d4c4c !important; margin:15px; float:right" id="@project.Name">
+                                        <h2 style="color:#4d4c4c !important; float:left" id="@project.Name">
                                             Project : @Html.DisplayFor(modelItem => project.Name)
                                             @if (User.IsInRole("Admin") || User.IsInRole("Administrator") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
                                             {
@@ -157,6 +161,13 @@
                                                     }
                                                 }
                                             </div>
+                                        </div>
+                                        <div class="col-md-2" style="float:right"><br />
+                                            @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("Project Manager1") || User.IsInRole("Project Manager2") || User.IsInRole("Project Manager3"))
+                                            {
+                                                <a href="@Url.Action("MyProjects", "Projects")" class="btn btn-dark-blue" id="btn">My Projects</a>
+                                            }
+                                            <a href="@Url.Action("Landing","Home")" class="btn btn-dark-blue">Home</a>
                                         </div>
                                     </div>
                                     <hr />

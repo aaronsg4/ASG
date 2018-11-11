@@ -839,7 +839,7 @@ namespace ASG.Areas.BugTracker.Models.Controllers
                 }                
 
                 TempData["Devs"] = Developers;
-                ViewBag.AssignedToUserId = new SelectList(Developers, "Id", "FirstName");
+                ViewBag.AssignedToUserId = new SelectList(Developers, "Id", "FullName");
                 return View(ticket);
             }
 

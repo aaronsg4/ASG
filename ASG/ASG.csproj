@@ -3020,7 +3020,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="GResume.html" />
     <Content Include="images\apple-touch-icon-114x114.png" />
     <Content Include="images\apple-touch-icon-72x72.png" />
     <Content Include="images\apple-touch-icon.png" />
@@ -3104,8 +3103,6 @@
     <Content Include="images\widgets\7.jpg" />
     <Content Include="images\widgets\8.jpg" />
     <Content Include="images\widgets\9.jpg" />
-    <Content Include="JavascriptExercise1.html" />
-    <Content Include="modal.html" />
     <Content Include="NEWIMAGES\02482d30-5a1e-4851-8acb-fc096758ca51cloud.JPG" />
     <Content Include="NEWIMAGES\051f507e-c407-4cf0-9f89-a9d7a916cacb55ssalonmidres_2017011960624.jpg" />
     <Content Include="NEWIMAGES\1bfe70eb-f27c-4c8b-916c-0b807707bcc0rolls-royce-1935654.jpg" />
@@ -3541,7 +3538,6 @@
     <Content Include="packages\TinyMCE.4.5.7\content\scripts\tinymce\tinymce.min.js" />
     <Content Include="packages\WebGrease.1.5.2\lib\WebGrease.dll" />
     <Content Include="packages\WebGrease.1.5.2\tools\WG.exe" />
-    <Content Include="Resume.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -4311,7 +4307,6 @@
     <Content Include="SyntaxHighlighter\shThemeMDUltra.css" />
     <Content Include="SyntaxHighlighter\shThemeMidnight.css" />
     <Content Include="SyntaxHighlighter\shThemeRDark.css" />
-    <Content Include="Timeline.html" />
     <Content Include="Uploads\5b4234bb-3a4e-48d9-af60-4ed54519fc4dfitness.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -4363,31 +4358,7 @@
     <None Include="SyntaxHighlighter\PublishProfiles\agay-site - Web Deploy.pubxml" />
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
-    <Content Include="Views\BlogPosts\Create.cshtml" />
-    <Content Include="Views\BlogPosts\Delete.cshtml" />
-    <Content Include="Views\BlogPosts\DeleteComment.cshtml" />
-    <Content Include="Views\BlogPosts\DeleteReply.cshtml" />
-    <Content Include="Views\BlogPosts\Details.cshtml" />
-    <Content Include="Views\BlogPosts\Edit.cshtml" />
-    <Content Include="Views\BlogPosts\EditComment.cshtml" />
-    <Content Include="Views\BlogPosts\EditReply.cshtml" />
-    <Content Include="Views\BlogPosts\Index.cshtml" />
-    <Content Include="Views\BlogPosts\PendingPosts.cshtml" />
-    <Content Include="Views\BlogPosts\_LowerBlogPartialView.cshtml" />
-    <Content Include="Views\BlogPosts\_LowLowerBlogPartialView.cshtml" />
-    <Content Include="Views\BlogPosts\_MidBlogPartialView.cshtml" />
-    <Content Include="Views\BlogPosts\_UpperBlogPartialView.cshtml" />
-    <Content Include="Views\Comments\Create.cshtml" />
-    <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Comments\Details.cshtml" />
-    <Content Include="Views\Comments\Edit.cshtml" />
-    <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Home\blog.cshtml" />
-    <Content Include="Views\Topics\Create.cshtml" />
-    <Content Include="Views\Topics\Delete.cshtml" />
-    <Content Include="Views\Topics\Details.cshtml" />
-    <Content Include="Views\Topics\Edit.cshtml" />
-    <Content Include="Views\Topics\Index.cshtml" />
     <Content Include="Views\Account\_RegisterPartial.cshtml" />
     <Content Include="Uploads\d19626d4-7e9a-45a2-b31b-06c1522559fdpiano.pdf" />
   </ItemGroup>
